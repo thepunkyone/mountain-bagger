@@ -4,13 +4,12 @@
   "description": "Mountain Bagger App",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/thepunkyone/mountain-bagger.git"
   },
-  "author": "",
+  "author": "Mountain Bagger Team",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/thepunkyone/mountain-bagger/issues"
