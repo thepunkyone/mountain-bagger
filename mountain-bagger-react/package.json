@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "eslint-config-mcr-codes": "^1.3.0",
+    "material-icons-react": "^1.0.4",
+    "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
@@ -16,7 +18,7 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "mcr-codes/react"
   },
   "browserslist": {
     "production": [
@@ -31,6 +33,7 @@
     ]
   },
   "devDependencies": {
+    "babel-eslint": "10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-babel": "^5.1.0",
     "eslint-plugin-import": "^2.12.0",
