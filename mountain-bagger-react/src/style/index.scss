@@ -1,0 +1,49 @@
+/*    VARIABLES   */
+$green-main: #79D317;
+$green-accent: #20B11D;
+$brown-accent: #816856;
+$grey-dark: #444444;
+$grey-light: #888888;
+$white: #FFFFFF;
+
+@mixin photo-background {
+  background-image: url('../img/jake-colling-1554403-unsplash.jpg');
+  background-size: cover;
+  height: 100vh;
+  text-align: center;
+}
+
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+button {
+  display: block;
+  margin: 0 auto;
+  padding: 0.5em;
+  min-width: 40%;
+  border: none;
+  border-radius: 5px;
+  background-color: $green-accent;
+  color: $white;
+}
+
+._underlined-link {
+  text-decoration-line: underline;
+  color: $green-main;
+}

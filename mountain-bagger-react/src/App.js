@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import './App.css';
+import './style/App.css';
+import Login from './Login';
+import Splash from './Splash';
 
 function App() {
   return (
@@ -8,7 +10,12 @@ function App() {
       <Route
         exact
         path="/"
-        render=""
+        render={(props) => <Splash {...props} />}
+      />
+      <Route
+        exact
+        path="/login"
+        render={Login}
       />
     </Switch>
   );
