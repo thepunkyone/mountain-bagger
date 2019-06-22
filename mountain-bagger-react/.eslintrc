@@ -1,5 +1,5 @@
 {
   "extends": [
-    "mcr-codes"
+    "mcr-codes/react"
   ]
 }
