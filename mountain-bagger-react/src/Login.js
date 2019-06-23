@@ -5,7 +5,7 @@ const Login = () => {
   return (
     <div className="Login">
       <h1>Welcome to MountainBagger</h1>
-      <h3>Log in</h3>
+      <h3>Sign in</h3>
       <form>
         <label>
           <span>

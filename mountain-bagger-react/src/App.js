@@ -4,13 +4,13 @@ import './style/App.css';
 import Login from './Login';
 import Splash from './Splash';
 
-function App() {
+const App = () => {
   return (
     <Switch>
       <Route
         exact
         path="/"
-        render={(props) => <Splash {...props} />}
+        render={Splash}
       />
       <Route
         exact
