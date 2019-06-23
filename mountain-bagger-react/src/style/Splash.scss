@@ -11,4 +11,13 @@
   button {
     margin-bottom: 0.4em;
   }
+
+  ._add-box {
+    background: $green-main;
+    width: 80%;
+    padding: 0.5em;
+    margin: 1em auto;
+    border-radius: $border-radius;
+    font-size: 1.3em;
+  }
 }
