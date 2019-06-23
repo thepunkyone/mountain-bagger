@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
+import 'react-awesome-slider/dist/styles.css';
 import './style/Splash.scss';
 import AwesomeSlider from 'react-awesome-slider';
-import 'react-awesome-slider/dist/styles.css';
 
 const Slider = () => {
   return (
@@ -24,8 +24,9 @@ const Splash = () => {
     <div className="Splash">
       <h1>Welcome to MountainBagger</h1>
       <button className="_action">Sign in</button>
-      <button className="_action">Register</button>
+      <button className="_action _outlined">Register</button>
       <Slider />
+      <button className="_action _slider-button">Get started</button>
       <h3>MountainBagger<br />Climb every mountain.</h3>
     </div>
   );

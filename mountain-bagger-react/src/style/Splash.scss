@@ -12,13 +12,45 @@
     margin-bottom: 0.4em;
   }
 
+  ._outlined {
+    background: transparent;
+    border: 1px solid $white;
+  }
+
+  ._slider-button {
+    position: relative;
+    top: -80px;
+    z-index: 6;
+  }
+
   ._add-box {
     background: $green-main;
-    width: 200px;
+    width: 100%;
     height: 30vh;
     padding: 0.5em;
-    border-radius: $border-radius;
     font-size: 1.3em;
-    flex-grow: 1;
+    margin: 0.5em;
+    border-radius: $border-radius;
+  }
+
+  .aws-sld__wrapper {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .aws-sld {
+    margin-top: 2em;
+  }
+
+  .aws-sld__content {
+    background-color: transparent;
+  }
+
+  .aws-sld__bullets button {
+    background-color: $green-accent;
+  }
+
+  .aws-sld__bullets {
+    bottom: -30px;
   }
 }
