@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import './style/App.css';
+import '../style/App.css';
 import Login from './Login';
 import Splash from './Splash';
 

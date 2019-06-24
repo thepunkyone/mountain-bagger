@@ -1,36 +1,39 @@
-@import './index.scss';
+@import './variables.scss';
 
 .Splash {
   @include photo-background;
-  height: 100vh;
-
-  h1 {
-    padding-top: 2em;
-  }
 
   ._action {
     margin-bottom: 0.4em;
   }
 
-  ._outlined {
-    background: transparent;
-    border: 1px solid $white;
-  }
-
   ._slider-button {
     position: relative;
-    top: -80px;
+    top: -60px;
     z-index: 6;
   }
 
   ._add-box {
     background: $green-main;
     width: 100%;
-    height: 30vh;
-    padding: 0.5em;
-    font-size: 1.3em;
-    margin: 0.5em;
+    height: calc(100% - 2em);
     border-radius: $border-radius;
+    padding: $box-padding;
+    margin: 0.5em;
+    font-size: 1.3em;
+    p {
+      margin-top: 0.2em;
+      text-align: left;
+      color: $dark-green-accent;
+    }
+    h3 {
+      margin: 0.3em 0 0 0;
+    }
+  }
+
+  ._tagline {
+    background: $green-main;
+    padding: 0.3em;
   }
 
   .aws-sld__wrapper {
@@ -52,5 +55,9 @@
 
   .aws-sld__bullets {
     bottom: -30px;
+  }
+
+  .aws-sld__prev, .aws-sld__next {
+    opacity: 0;
   }
 }

@@ -1,24 +1,9 @@
-@import './index.scss';
+@import './variables.scss';
 
 .Login {
   @include photo-background;
-  color: white;
-
-  h1 {
-    padding-top: 2em;
-  }
 
   form {
-    text-align: center;
-  }
-
-  label {
-    display:block;
-  }
-
-  span {
-    display: inline-block;
-    width:25%;
-    text-align: left;
+    margin-top: 2em;
   }
 }

@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './style/normalize.css';
 import './style/index.scss';
-import App from './App';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
 render(
