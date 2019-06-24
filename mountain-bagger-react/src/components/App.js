@@ -1,8 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import '../style/App.css';
-import Login from './Login';
 import Splash from './Splash';
+import Login from './Login';
+import Home from './Home';
 
 const App = () => {
   return (
@@ -17,8 +18,13 @@ const App = () => {
         path="/login"
         render={Login}
       />
+      <Route
+        exact
+        path="/home"
+        render={Home}
+      />
     </Switch>
   );
-}
+};
 
 export default App;
