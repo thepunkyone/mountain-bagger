@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-import TerrainIcon from '@material-ui/icons/Terrain';
 import '../style/WelcomeHeader.scss';
+import Logo from './Logo';
 
-const logoStyle = {
+const iconStyle = {
   width: '50px',
   height: '50px',
   marginBottom: '-12px',
@@ -15,8 +15,7 @@ const WelcomeHeader = () => {
         Welcome to
       </h2>
       <h1>
-        MountainBagger
-        <TerrainIcon style={logoStyle} />
+        <Logo iconStyle={iconStyle} />
       </h1>
     </Fragment>
   );

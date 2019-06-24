@@ -4,13 +4,14 @@
   @include photo-background;
 
   ._action {
-    margin-bottom: 0.4em;
+    margin-bottom: 0.8em;
   }
 
   ._slider-button {
     position: relative;
     top: -60px;
     z-index: 6;
+    padding: 1em;
   }
 
   ._add-box {

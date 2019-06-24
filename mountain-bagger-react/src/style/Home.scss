@@ -2,4 +2,24 @@
 
 .Home {
   @include photo-background;
+  padding: 0;
+
+  .UserNav {
+    background: $green-main;
+    height: 70px;
+  }
+
+  .LocationNav {
+    background: $white;
+    height: 70px;
+  }
+
+  .Map {
+    height: calc(100vh - 210px);
+  }
+
+  .ToolsNav {
+    background: $green-main;
+    height: 70px;
+  }
 }
