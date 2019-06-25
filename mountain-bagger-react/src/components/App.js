@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Profile from './Profile';
-import CreateRoute from './CreateRoute';
+import Profile from './profile';
+import CreateRoute from './create-route';
 import '../styles/App.css';
 
 class App extends Component {

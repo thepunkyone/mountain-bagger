@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/Profile.css';
+import '../styles/profile.css';
 
 const Profile = (props) => {
   return (
