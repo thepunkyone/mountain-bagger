@@ -5,6 +5,7 @@ import Splash from './Splash';
 import Login from './Login';
 import Register from './Register';
 import Home from './Home';
+import LocationFinder from './LocationFinder';
 
 const App = () => {
   return (
@@ -28,6 +29,11 @@ const App = () => {
         exact
         path="/home"
         render={Home}
+      />
+      <Route
+        exact
+        path="/location-finder"
+        component={LocationFinder}
       />
     </Switch>
   );
