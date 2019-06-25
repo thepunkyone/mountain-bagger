@@ -1,0 +1,9 @@
+@import './variables.scss';
+
+.user-form {
+  @include photo-background;
+
+  form {
+    margin-top: 2em;
+  }
+}

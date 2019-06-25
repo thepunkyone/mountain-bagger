@@ -1,0 +1,43 @@
+@import './variables.scss';
+
+.Home {
+  @include photo-background;
+  padding: 0;
+
+  .UserNav {
+    background: $green-main;
+    color: $dark-green-accent;
+    h2 {
+      margin-top: 0;
+    }
+  }
+
+  .LocationNav {
+    background: $white;
+    p {
+      font-size: 0.8em;
+      text-align: left;
+      margin: 4px;
+    }
+    span {
+      display: block;
+    }
+    .menu-icon-light {
+      color: $grey-light;
+    }
+  }
+
+  .Map {
+    height: calc(100vh - 174px);
+    color: $white;
+    text-align: right;
+    span {
+      margin-right: $box-padding;
+    }
+  }
+
+  .ToolsNav {
+    background: $green-main;
+    justify-content: space-around;
+  }
+}
