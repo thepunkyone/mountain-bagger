@@ -55,11 +55,14 @@ class Map extends Component {
       .then(data => data.routes[0].geometry.coordinates)
       .then(data => {
         const geojson = {
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'LineString',
-            coordinates: data,
+          type: 'geojson',
+          data: {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'LineString',
+              coordinates: data,
+            },
           },
         };
         this.setState({
@@ -108,25 +111,24 @@ class Map extends Component {
           }
 
           {
-
-            // { route } &&
-            // (
-            //   <Layer
-            //     id="route"
-            //     type="line"
-            //     sourceId={route}
-            //     layout={{
-            //       'line-join': 'round',
-            //       'line-cap': 'round',
-            //     }}
-            //     paint={{
-            //       'line-color': '#3887b4',
-            //       'line-width': 5,
-            //       'line-opacity': 0.75,
-            //     }}
-            //   />
-            // )
-          }
+            Object.keys(route).length !== 0 && (
+              <Layer
+                id="route"
+                type="line"
+                sourceId={route}
+                layout={{
+                  'line-join': 'round',
+                  'line-cap': 'round',
+                }}
+                paint={{
+                  'line-color': '#3887b4',
+                  'line-width': 5,
+                  'line-opacity': 0.75,
+                }}
+              />
+            )
+          } */}
+          
         </MapBox>
         <Geocoder
           viewport={viewport}
