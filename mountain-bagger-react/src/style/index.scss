@@ -77,3 +77,15 @@ form {
   text-decoration-line: underline;
   color: $white;
 }
+
+.nav-main {
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .nav-metrics {
+    width: 45%;
+    display: flex;
+    justify-content: space-between;
+  }
+}
