@@ -7,6 +7,7 @@ import Register from './Register';
 import Home from './Home';
 import Profile from './Profile';
 import CreateRoute from './CreateRoute';
+import LocationFinder from './LocationFinder';
 
 class App extends Component {
   constructor(props) {
@@ -19,41 +20,46 @@ class App extends Component {
 
   render() {
     return (
-    <Switch>
-      <Route
-        exact
-        path="/"
-        render={Splash}
-      />
-      <Route
-        exact
-        path="/login"
-        render={Login}
-      />
-      <Route
-        exact
-        path="/register"
-        render={Register}
-      />
-      <Route
-        exact
-        path="/home"
-        render={Home}
-      />
-	    <Route
-        exact
-        path="/"
-        // component={Profile}
-        render={(props) => <Profile {...props} name={this.state.name} id={this.state.id} />}
-      />
-      <Route
-        exact
-        path="/create-route"
-        component={CreateRoute}
-      />
-    </Switch>
-  );
-}
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={Splash}
+        />
+        <Route
+          exact
+          path="/login"
+          render={Login}
+        />
+        <Route
+          exact
+          path="/register"
+          render={Register}
+        />
+        <Route
+          exact
+          path="/home"
+          render={Home}
+        />
+        <Route
+          exact
+          path="/"
+          // component={Profile}
+          render={(props) => <Profile {...props} name={this.state.name} id={this.state.id} />}
+        />
+        <Route
+          exact
+          path="/create-route"
+          component={CreateRoute}
+        />
+        <Route
+          exact
+          path="/location-finder"
+          component={LocationFinder}
+        />
+      </Switch>
+    );
+  }
 };
 
 export default App;
