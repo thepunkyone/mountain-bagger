@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import '../style/App.css';
 import Splash from './Splash';
 import Login from './Login';
+import Register from './Register';
 import Home from './Home';
 
 const App = () => {
@@ -17,6 +18,11 @@ const App = () => {
         exact
         path="/login"
         render={Login}
+      />
+      <Route
+        exact
+        path="/register"
+        render={Register}
       />
       <Route
         exact

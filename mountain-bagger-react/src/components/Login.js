@@ -1,10 +1,10 @@
 import React from 'react';
-import '../style/Login.scss';
+import '../style/user-form-page.scss';
 import WelcomeHeader from './WelcomeHeader';
 
 const Login = () => {
   return (
-    <div className="Login">
+    <div className="user-form">
       <WelcomeHeader />
       <form>
         <h2>Sign in</h2>
@@ -12,7 +12,7 @@ const Login = () => {
           <span>
             Email
           </span>
-          <input type="text" />
+          <input type="email" />
         </label>
         <label>
           <span>
