@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import ReactMapboxG1, { Layer, Feature } from 'react-mapbox-gl';
+import ReactMapboxG1, { Layer, Feature, } from 'react-mapbox-gl';
 import '../styles/map.css';
 import Geocoder from 'react-mapbox-gl-geocoder';
-import { isNullOrUndefined } from 'util';
 
 const MapBox = ReactMapboxG1({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
 });
+
+const BASE_URL = 'https://api.mapbox.com/directions/v5/mapbox';
+const URL_QUERY = '?steps=true&geometries=geojson&access_token=';
 
 class Map extends Component {
   constructor(props) {
@@ -18,10 +20,8 @@ class Map extends Component {
       zoom: 1.5,
       endLng: null,
       endLat: null,
+      route: {},
     };
-  }
-
-  componentDidMount() {
   }
 
   onSelected = (viewport, item) => {
@@ -42,14 +42,40 @@ class Map extends Component {
       endLng: coordinates[0],
       endLat: coordinates[1],
     });
+    this.getRoute();
+  };
+
+  getRoute = () => {
+    const travel = 'walking';
+    const { lng, lat, endLng, endLat } = this.state;
+    const token = process.env.REACT_APP_MAPBOX_TOKEN;
+    const apiRequest = `${BASE_URL}/${travel}/${lng},${lat};${endLng},${endLat}${URL_QUERY}${token}`;
+    fetch(apiRequest)
+      .then(response => response.json())
+      .then(data => data.routes[0].geometry.coordinates)
+      .then(data => {
+        const geojson = {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: data,
+          },
+        };
+        this.setState({
+          ...this.state,
+          route: geojson,
+        });
+      });
   };
 
   render() {
-    const { endLng, endLat, lng, lat, viewport } = this.state;
+    const { endLng, endLat, lng, lat, viewport, route, zoom } = this.state;
+    console.log(route);
     return (
       <div>
         <div>
-          <div>{`Longitude: ${lng} Latitude: ${lat}`}</div>
+          <div>{`Longitude: ${lng} Latitude: ${lat} Zoom: ${zoom}`}</div>
         </div>
         <MapBox
           style="mapbox://styles/mapbox/outdoors-v10/"
@@ -62,7 +88,7 @@ class Map extends Component {
         >
           <Layer
             type="symbol"
-            id="marker"
+            id="marker-start"
             layout={{ 'icon-image': 'marker-15' }}
           >
             <Feature coordinates={[lng, lat]} />
@@ -73,12 +99,33 @@ class Map extends Component {
             (
               <Layer
                 type="symbol"
-                id="marker"
+                id="marker-end"
                 layout={{ 'icon-image': 'marker-15' }}
               >
                 <Feature coordinates={[endLng, endLat]} />
               </Layer>
-            ) 
+            )
+          }
+
+          {
+
+            // { route } &&
+            // (
+            //   <Layer
+            //     id="route"
+            //     type="line"
+            //     sourceId={route}
+            //     layout={{
+            //       'line-join': 'round',
+            //       'line-cap': 'round',
+            //     }}
+            //     paint={{
+            //       'line-color': '#3887b4',
+            //       'line-width': 5,
+            //       'line-opacity': 0.75,
+            //     }}
+            //   />
+            // )
           }
         </MapBox>
         <Geocoder
@@ -86,7 +133,6 @@ class Map extends Component {
           onSelected={this.onSelected}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         />
-
       </div>
     );
   }
