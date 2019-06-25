@@ -7,11 +7,11 @@ const Splash = () => {
   return (
     <div className="Splash">
       <WelcomeHeader />
-      <button className="_action">Sign in</button>
-      <button className="_action _outlined _transparent">Register</button>
+      <button className="action">Sign in</button>
+      <button className="action outlined transparent">Register</button>
       <Slider />
-      <button className="_action _outlined _slider-button">Get started</button>
-      <h3 className="_tagline">
+      <button className="action outlined slider-button">Get started</button>
+      <h3 className="tagline">
         MountainBagger
         <br />
         Climb every mountain.

@@ -3,18 +3,18 @@
 .Splash {
   @include photo-background;
 
-  ._action {
+  .action {
     margin-bottom: 0.8em;
   }
 
-  ._slider-button {
+  .slider-button {
     position: relative;
     top: -60px;
     z-index: 6;
     padding: 1em;
   }
 
-  ._add-box {
+  .slider-ad {
     background: $green-main;
     width: 100%;
     height: calc(100% - 2em);
@@ -32,7 +32,7 @@
     }
   }
 
-  ._tagline {
+  .tagline {
     background: $green-main;
     padding: 0.3em;
   }

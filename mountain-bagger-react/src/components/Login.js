@@ -20,12 +20,12 @@ const Login = () => {
           </span>
           <input type="text" />
         </label>
-        <button value="Submit" className="_action">
+        <button value="Submit" className="action">
           Sign in
         </button>
         <p>
           Don't have an account?&nbsp;
-          <span className="_underlined-link">
+          <span className="underlined-link">
             Register
           </span>
         </p>

@@ -51,7 +51,7 @@ class Slider extends Component {
   render() {
     return (
       <AwesomeSlider className="Slider" selected={this.state.index}>
-        <div className="_add-box">
+        <div className="slider-ad">
           <h3>
             Find your way
           </h3>
@@ -60,7 +60,7 @@ class Slider extends Component {
             with hi-res terrain maps and GPS tracker.
           </p>
         </div>
-        <div className="_add-box">
+        <div className="slider-ad">
           <h3>
             Off the beaten path
           </h3>
@@ -69,7 +69,7 @@ class Slider extends Component {
             with custom routes and maps for offline use.
           </p>
         </div>
-        <div className="_add-box">
+        <div className="slider-ad">
           <h3>
             Share your stats
           </h3>

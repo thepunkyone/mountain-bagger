@@ -45,7 +45,7 @@ const Home = () => {
       </nav>
       <nav className="LocationNav nav-main">
         <div className="nav-metrics">
-          <p className="_menu-icon-light">
+          <p className="menu-icon-light">
             <span>
               Altitude
             </span>
@@ -53,7 +53,7 @@ const Home = () => {
               156m
             </span>
           </p>
-          <p className="_menu-icon-light">
+          <p className="menu-icon-light">
             <span>
               Speed
             </span>

@@ -48,13 +48,13 @@ form {
     color: $dark-green-accent;
   }
 
-  ._action {
+  .action {
     width: 100%;
     margin-top: 1em;
   }
 }
 
-._action {
+.action {
   display: block;
   margin: 0 auto;
   padding: 0.8em;
@@ -65,15 +65,15 @@ form {
   color: $white;
 }
 
-._outlined {
+.outlined {
   border: 1px solid $white;
 }
 
-._transparent {
+.transparent {
   background: transparent;
 }
 
-._underlined-link {
+.underlined-link {
   text-decoration-line: underline;
   color: $white;
 }
