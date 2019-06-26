@@ -18,7 +18,6 @@ class LocationFinder extends Component {
     const placeName = encodeURI(this.state.placeName);
     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
     const apiKey = process.env.REACT_APP_API_KEY;
-    console.log(apiKey);
     const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${placeName}&inputtype=textquery&fields=geometry&key=${apiKey}`;
     fetch(proxyurl + url)
       .then((result) => {
