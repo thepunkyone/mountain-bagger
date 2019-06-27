@@ -8,6 +8,7 @@ import Home from './Home';
 import Profile from './Profile';
 import CreateRoute from './CreateRoute';
 import LocationFinder from './LocationFinder';
+import Mercator from './MercatorCalc';
 
 class App extends Component {
   constructor(props) {
@@ -56,6 +57,11 @@ class App extends Component {
           exact
           path="/location-finder"
           component={LocationFinder}
+        />
+        <Route
+          exact
+          path="/mercator"
+          component={Mercator}
         />
       </Switch>
     );
