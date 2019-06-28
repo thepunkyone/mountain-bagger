@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactMapboxG1, { Layer, Feature } from 'react-mapbox-gl';
-import '../styles/map.css';
+// import '../styles/map.css';
 import Geocoder from 'react-mapbox-gl-geocoder';
 
 const MapBox = ReactMapboxG1({
