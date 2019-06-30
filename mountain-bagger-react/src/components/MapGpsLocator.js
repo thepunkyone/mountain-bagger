@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import ReactMapboxG1, { Layer, Feature, Marker } from 'react-mapbox-gl';
+import MapboxElevation from 'mapbox-elevation';
 import '../style/Map.scss';
 import GpsFixedIcon from '../img/gps_fixed_24px.svg';
 
 const MapBox = ReactMapboxG1({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
 });
+
+const getElevation = MapboxElevation(process.env.REACT_APP_MAPBOX_TOKEN);
 
 class Map extends Component {
   constructor(props) {
@@ -16,12 +19,19 @@ class Map extends Component {
       lat: 54.4542,
       zoom: [13],
       locationWatchId: null,
+      elevation: '',
     };
   }
 
   componentDidMount() {
     this.watchUserLocation();
   }
+
+  onClick = (coords) => {
+    getElevation(coords, (err, elevation) => {
+      this.setState({ elevation: elevation });
+    });
+  };
 
   stopWatchingLocation = () => {
     navigator.geolocation.clearWatch(this.state.locationWatchId);
@@ -59,12 +69,15 @@ class Map extends Component {
   };
 
   render() {
-    const { endLng, endLat, lng, lat, viewport, route, zoom } = this.state;
+    const { endLng, endLat, lng, lat, viewport, route, zoom, elevation } = this.state;
     return (
       <div className="Map">
         <div>
-          <div>{`Longitude: ${lng} Latitude: ${lat} Zoom: ${zoom}`}</div>
+          <div>{`Longitude: ${lng} Latitude: ${lat} Zoom: ${zoom} Elevation: ${elevation}m`}</div>
         </div>
+        <button onClick={() => this.onClick([this.state.lng, this.state.lat])}>
+          Get Elevation
+        </button>
         <button onClick={() => this.stopWatchingLocation()}>
           Stop Location Tracking
         </button>
