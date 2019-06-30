@@ -25,6 +25,7 @@ class Map extends Component {
 
   stopWatchingLocation = () => {
     navigator.geolocation.clearWatch(this.state.locationWatchId);
+    this.setState({ lng: -3.2116, lat: 54.4542, locationWatchId: null });
   };
 
   watchUserLocation = () => {
@@ -79,12 +80,16 @@ class Map extends Component {
           onZoom={this.onZoom}
           movingMethod="jumpTo"
         >
-          <Marker
-            coordinates={[lng, lat]}
-            anchor="center"
-          >
-            <img src={GpsFixedIcon} />
-          </Marker>
+          {this.state.locationWatchId !== null &&
+            (
+              <Marker
+                coordinates={[lng, lat]}
+                anchor="center"
+              >
+                <img src={GpsFixedIcon} />
+              </Marker>
+            )
+          }
         </MapBox>
       </div>
     );
