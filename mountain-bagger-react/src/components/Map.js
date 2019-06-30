@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactMapboxG1, { Layer, Feature } from 'react-mapbox-gl';
-// import '../styles/map.css';
+import '../style/Map.scss';
 import Geocoder from 'react-mapbox-gl-geocoder';
 
 const MapBox = ReactMapboxG1({
@@ -118,7 +118,7 @@ class Map extends Component {
     const { endLng, endLat, lng, lat, viewport, route, zoom } = this.state;
     console.log(route);
     return (
-      <div>
+      <div className="Map">
         <div>
           <div>{`Longitude: ${lng} Latitude: ${lat} Zoom: ${zoom}`}</div>
         </div>
@@ -139,7 +139,7 @@ class Map extends Component {
           <Layer
             type="symbol"
             id="marker-start"
-            layout={{ 'icon-image': 'marker-15' }}
+            layout={{ 'icon-image': 'mountain-15' }}
           >
             <Feature coordinates={[lng, lat]} />
           </Layer>

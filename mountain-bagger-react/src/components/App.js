@@ -8,6 +8,7 @@ import Home from './Home';
 import Profile from './Profile';
 import CreateRoute from './CreateRoute';
 import LocationFinder from './LocationFinder';
+import MapGpsLocator from './MapGpsLocator';
 import Mercator from './MercatorCalc';
 
 class App extends Component {
@@ -57,6 +58,11 @@ class App extends Component {
           exact
           path="/location-finder"
           component={LocationFinder}
+        />
+        <Route
+          exact
+          path="/gps-locator"
+          component={MapGpsLocator}
         />
         <Route
           exact
