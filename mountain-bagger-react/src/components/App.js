@@ -43,7 +43,7 @@ class App extends Component {
 	    <Route
         exact
         path="/"
-        // component={Profile}
+        //component={Profile}
         render={(props) => <Profile {...props} name={this.state.name} id={this.state.id} />}
       />
       <Route

@@ -30,7 +30,7 @@ class Register extends React.Component {
     } else if (email !== confirmEmail) {
       alert('Email does not match');
     } else {
-      axios.post('', {
+      axios.post('http://localhost:3030/user', {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         email: this.state.email,

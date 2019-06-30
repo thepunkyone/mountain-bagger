@@ -16,18 +16,17 @@ class Login extends React.Component {
 
   handleInputChange = (event) => {
     const { name, value } = event.target;
-
     this.setState({ [name]: value });
   };
 
   handleLogin = () => {
-    axios.post('', {
+    axios.post('http://localhost:3030/user', {
       email: this.state.email,
       password: this.state.password,
     })
       .then((response) => {
         this.props.onLogin(response.data);
-        this.props.history.push('/');
+        this.props.history.push('/profile');
       })
       .catch((error) => {
         this.setState({ errorMessage: error.response.data.message });
@@ -50,7 +49,7 @@ class Login extends React.Component {
             <span>
             Password
             </span>
-            <input type="text" name="password" value={this.state.password} onChange={this.handleInputChange} />
+            <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange} />
           </label>
           <button value="Submit" className="action" onClick={this.handleLogin}>
           Sign in
