@@ -20,12 +20,18 @@ class Map extends Component {
       zoom: [13],
       locationWatchId: null,
       elevation: '',
+      bounds: '',
     };
   }
 
   componentDidMount() {
     this.watchUserLocation();
   }
+
+  getBoundingBox = (map) => {
+    const bounds = map.getBounds();
+    this.setState({ bounds: bounds });
+  };
 
   onClick = (coords) => {
     getElevation(coords, (err, elevation) => {
@@ -69,6 +75,7 @@ class Map extends Component {
   };
 
   render() {
+    console.log('BOUNDS', this.state.bounds);
     const { endLng, endLat, lng, lat, viewport, route, zoom, elevation } = this.state;
     return (
       <div className="Map">
@@ -83,6 +90,9 @@ class Map extends Component {
         </button>
         <MapBox
           style="mapbox://styles/thepunkyone/cjx34gegp2owc1cqym1n43a11"
+          onStyleLoad={(map) => this.getBoundingBox(map)}
+          onZoomEnd={(map) => this.getBoundingBox(map)}
+          onMoveEnd={(map) => this.getBoundingBox(map)}
           center={[lng, lat]}
           containerStyle={{
             height: '600px',
