@@ -1,11 +1,14 @@
-import React, { Component } from 'react';
-import ReactMapboxG1, { Layer, Feature } from 'react-mapbox-gl';
+import React, { Component, Fragment } from 'react';
+import ReactMapboxG1, { Layer, Feature, Source } from 'react-mapbox-gl';
 import '../style/Map.scss';
 import Geocoder from 'react-mapbox-gl-geocoder';
+import MapboxElevation from 'mapbox-elevation';
 
 const MapBox = ReactMapboxG1({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
 });
+
+const getElevation = MapboxElevation(process.env.REACT_APP_MAPBOX_TOKEN);
 
 const BASE_URL = 'https://api.mapbox.com/directions/v5/mapbox';
 const URL_QUERY = '?steps=true&geometries=geojson&access_token=';
@@ -22,6 +25,7 @@ class Map extends Component {
       endLat: null,
       route: {},
       imageUrl: '',
+      elevation: '',
     };
   }
 
@@ -111,16 +115,26 @@ class Map extends Component {
           ...this.state,
           route: geojson,
         });
+
+        const altitudeArray = [];
+
+        this.state.route.data.geometry.coordinates
+          .map(coordinatePair => {
+            getElevation(coordinatePair, (err, elevation) => {
+              altitudeArray.push(elevation);
+              this.setState({ elevation: altitudeArray });
+            });
+          });
       });
   };
 
   render() {
-    const { endLng, endLat, lng, lat, viewport, route, zoom } = this.state;
+    const { endLng, endLat, lng, lat, viewport, route, zoom, elevation } = this.state;
     console.log(route);
     return (
       <div className="Map">
         <div>
-          <div>{`Longitude: ${lng} Latitude: ${lat} Zoom: ${zoom}`}</div>
+          <div>{`Longitude: ${lng} Latitude: ${lat} Zoom: ${zoom} Altitude diff: ${elevation[0] - elevation[elevation.length - 1]}m`}</div>
         </div>
         <button onClick={() => this.generateStaticMap(this.state.route)}>
           Create static map
@@ -145,7 +159,7 @@ class Map extends Component {
           </Layer>
 
           {
-            { endLng } &&
+            endLng &&
             (
               <Layer
                 type="symbol"
@@ -159,20 +173,23 @@ class Map extends Component {
 
           {
             Object.keys(route).length !== 0 && (
-              <Layer
-                id="route"
-                type="line"
-                sourceId={route}
-                layout={{
-                  'line-join': 'round',
-                  'line-cap': 'round',
-                }}
-                paint={{
-                  'line-color': '#3887b4',
-                  'line-width': 5,
-                  'line-opacity': 0.75,
-                }}
-              />
+              <Fragment>
+                <Source id="route_geo" geoJsonSource={route} />
+                <Layer
+                  id="route"
+                  type="line"
+                  sourceId="route_geo"
+                  layout={{
+                    'line-join': 'round',
+                    'line-cap': 'round',
+                  }}
+                  paint={{
+                    'line-color': '#3887b4',
+                    'line-width': 5,
+                    'line-opacity': 0.75,
+                  }}
+                />
+              </Fragment>
             )
           }
         </MapBox>
