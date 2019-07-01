@@ -1,3 +1,16 @@
 .Map {
   text-align: left;
+
+  .map-container {
+    position: relative;
+  }
+
+  .gps-icon, .static-map {
+    position: absolute;
+  }
+
+  .gps-icon, .static-map {
+    top: 0;
+    left: 0;
+  }
 }

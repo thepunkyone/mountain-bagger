@@ -10,7 +10,6 @@ import CreateRoute from './CreateRoute';
 import LocationFinder from './LocationFinder';
 import MapGpsLocator from './MapGpsLocator';
 import StaticGpsLocator from './StaticGpsLocator';
-import Mercator from './MercatorCalc';
 
 class App extends Component {
   constructor(props) {
@@ -69,11 +68,6 @@ class App extends Component {
           exact
           path="/static-gps"
           component={StaticGpsLocator}
-        />
-        <Route
-          exact
-          path="/mercator"
-          component={Mercator}
         />
       </Switch>
     );

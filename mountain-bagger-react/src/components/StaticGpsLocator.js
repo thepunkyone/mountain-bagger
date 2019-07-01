@@ -8,6 +8,8 @@ class StaticGpsLocator extends Component {
     this.state = {
       lng: '',
       lat: '',
+      pxX: '',
+      pxY: '',
       locationWatchId: null,
       mapDimensions: {
         width: 600,
@@ -56,12 +58,7 @@ class StaticGpsLocator extends Component {
     var x = (lon-imageWestLong) * pixelsPerLong;
     var y = Math.abs(lat-imageNorthLat) * pixelsPerLat;
 
-    console.log('XY', x, y);
-
-    return {
-      'left' : x,
-      'top' : y
-    };
+    this.setState({pxX: x, pxY: y});
   };
 
   stopWatchingLocation = () => {
@@ -96,6 +93,10 @@ class StaticGpsLocator extends Component {
   };
 
   render() {
+    const gpsIconStyle = {
+      top: this.state.pxY - 12,
+      left: this.state.pxX - 12,
+    };
     return (
       <div className="Map">
         <div>
@@ -104,8 +105,9 @@ class StaticGpsLocator extends Component {
         <button onClick={() => this.stopWatchingLocation()}>
           Stop Location Tracking
         </button>
-        <div>
-        <img src="https://api.mapbox.com/styles/v1/thepunkyone/cjx34gegp2owc1cqym1n43a11/static/-1.1743196999999999,52.3555177,13,0,0/600x600?access_token=pk.eyJ1IjoidGhlcHVua3lvbmUiLCJhIjoiY2p4MzJjd3g1MG9wZDN5cGtwb2VwY2x0NyJ9.S0cbsxNX2LA2_Zcud97cYw" />
+        <div className="map-container">
+          <img className="static-map" src="https://api.mapbox.com/styles/v1/thepunkyone/cjx34gegp2owc1cqym1n43a11/static/-1.1743196999999999,52.3555177,13,0,0/600x600?access_token=pk.eyJ1IjoidGhlcHVua3lvbmUiLCJhIjoiY2p4MzJjd3g1MG9wZDN5cGtwb2VwY2x0NyJ9.S0cbsxNX2LA2_Zcud97cYw" />
+          {this.state.pxY && <img src={GpsFixedIcon} style={gpsIconStyle} className="gps-icon" />}
         </div>
       </div>
     );
