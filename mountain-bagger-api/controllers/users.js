@@ -7,7 +7,7 @@ exports.createUser = (req, res) => {
     email: req.body.email,
     password: req.body.password,
   });
-
+  console.log(req.body);
   user.save().then((data) => {
     console.log(data);
     res.status(201).json(data);
