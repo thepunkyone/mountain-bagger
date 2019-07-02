@@ -1,10 +1,12 @@
 const express = require('express');
+const { createUser, getUser } = require('../controllers/users');
 
 const app = express();
+app.use(express.json());
 
-app.get('/user', (req, res) => {
-  res.status(200).json({ message: 'User get status 200' });
-});
+app.get('/user', getUser);
+
+app.post('/user', createUser);
 
 app.get('/point', (req, res) => {
   res.status(200).json({ message: 'Point get status 200' });
@@ -12,10 +14,6 @@ app.get('/point', (req, res) => {
 
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Root get status 200' });
-});
-
-app.post('/user', (req, res) => {
-  res.status(200).json({ message: 'User post status 200' });
 });
 
 app.post('/point', (req, res) => {
