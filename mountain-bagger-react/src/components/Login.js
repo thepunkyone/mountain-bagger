@@ -20,7 +20,7 @@ class Login extends React.Component {
   };
 
   handleLogin = () => {
-    axios.post('http://localhost:3030/user', {
+    axios.get('http://localhost:3030/user', {
       email: this.state.email,
       password: this.state.password,
     })
@@ -43,13 +43,13 @@ class Login extends React.Component {
             <span>
             Email
             </span>
-            <input type="email" name="email" value={this.state.email} onChange={this.handleInputChange} />
+            <input type="email" name="email" value={this.state.email} onChange={this.handleInputChange} required />
           </label>
           <label>
             <span>
             Password
             </span>
-            <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange} />
+            <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange} required />
           </label>
           <button value="Submit" className="action" onClick={this.handleLogin}>
           Sign in
