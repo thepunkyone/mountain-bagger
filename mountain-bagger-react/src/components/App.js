@@ -40,9 +40,9 @@ class App extends Component {
         path="/home"
         render={Home}
       />
-	    <Route
+      <Route
         exact
-        path="/"
+        path="/profile"
         // component={Profile}
         render={(props) => <Profile {...props} name={this.state.name} id={this.state.id} />}
       />
