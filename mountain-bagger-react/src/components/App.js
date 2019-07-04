@@ -43,6 +43,7 @@ class App extends Component {
 
   render() {
     return (
+
       <Switch>
         <Route
           exact
@@ -79,6 +80,8 @@ class App extends Component {
       </Switch>
     );
   }
+
+
 }
 
 export default App;
