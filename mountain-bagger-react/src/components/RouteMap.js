@@ -226,6 +226,9 @@ class RouteMap extends Component {
             <button onClick={this.handleClearRoute}>Clear Route</button>
           </div>
           <SaveForm saveRoute={this.onSaveRoute} />
+          <button onClick={() => this.generateStaticMap(this.state.route)}>
+            Save offline map
+          </button>
           <div className="static-map">
             { this.state.imageUrl && <img src={this.state.imageUrl} /> }
           </div>
@@ -244,9 +247,6 @@ class RouteMap extends Component {
                   {`Time: ${duration}mins`}
                 </div>
               </div>
-              <button onClick={() => this.generateStaticMap(this.state.route)}>
-                Create static map
-              </button>
             </div>
           )
         }
