@@ -6,8 +6,7 @@ const Profile = (props) => {
   return (
     <div>
       <Link to="/create-route">Create Route</Link>
-      <h1>{props.firstName}</h1>
-      <h2>{props.id}</h2>
+      <h1>{props.name}</h1>
     </div>
   );
 }

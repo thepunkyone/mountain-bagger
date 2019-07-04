@@ -49,9 +49,7 @@ class Register extends React.Component {
   };
 
   render() {
-    console.log(this.state);
-    const {
-      confirmPassword, confirmEmail, emailCheck, passwordCheck } = this.state;
+    const { confirmPassword, confirmEmail, emailCheck, passwordCheck } = this.state;
     return (
       <div className="user-form">
         <WelcomeHeader />
@@ -79,7 +77,7 @@ class Register extends React.Component {
             <span>
             Repeat email
             </span>
-            <input type="email" name="confirmEmail" value={this.state.confirmEmail} onChange={this.handleInputChange} required />
+            <input type="email" name="confirmEmail" value={confirmEmail} onChange={this.handleInputChange} required />
           </label>
           { emailCheck ? <span>{emailCheck}</span> : ''}
           <label>
@@ -92,7 +90,7 @@ class Register extends React.Component {
             <span>
             Repeat password
             </span>
-            <input type="password" name="confirmPassword" value={this.state.confirmPassword} onChange={this.handleInputChange} required />
+            <input type="password" name="confirmPassword" value={confirmPassword} onChange={this.handleInputChange} required />
           </label>
           { passwordCheck ? <span>{passwordCheck}</span> : ''}
           <button value="Submit" className="action">
