@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get('/user', getUser);
+app.post('/login', getUser);
 
 app.post('/user', createUser);
 
@@ -23,6 +23,6 @@ app.post('/point', (req, res) => {
   res.status(200).json({ message: 'Point post status 200' });
 });
 
-app.listen(3030, () => console.log(`Example app listening on port ${3030}!`))
+// app.listen(3030, () => console.log(`Example app listening on port ${3030}!`))
 
 module.exports = app;

@@ -27,17 +27,19 @@ class App extends Component {
 
   handleLogin = (e) => {
     e.preventDefault();
-    axios.get('http://localhost:3030/user', {
+    const config = {
       email: this.state.email,
       password: this.state.password,
-    })
+    };
+
+    console.log(config);
+    axios.post('http://localhost:3030/login', config)
       .then((response) => {
-        console.log(response);
         this.setState({ id: response.data.userId, firstName: response.data.firstName });
         // this.props.history.push('/profile');
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error, 'error catch');
       });
   };
 
