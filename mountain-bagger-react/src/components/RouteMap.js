@@ -179,7 +179,7 @@ class RouteMap extends Component {
             <Layer
               type="symbol"
               id="marker-start"
-              layout={{ 'icon-image': 'marker-15' }}
+              layout={{ 'icon-image': 'mountain-15' }}
             >
               <Feature coordinates={[longitude, latitude]} />
             </Layer>

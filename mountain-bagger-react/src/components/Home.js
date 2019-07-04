@@ -87,16 +87,16 @@ class Home extends Component {
           <SearchIcon style={menuIconStyle} />
         </nav>
         <div className="content">
-          {selectedTab === 'home' &&
-            (
+          {/* {selectedTab === 'home' &&
+            ( */}
               <div>
                 <Map />
                 <span>
                   <CloudDownloadIcon style={downloadIconStyle} />
                 </span>
               </div>
-            )
-          }
+            {/* )
+          } */}
           {selectedTab === 'weather' && <Weather />}
           {selectedTab === 'metrics' && <Metrics />}
           {selectedTab === 'saved' && <Saved />}

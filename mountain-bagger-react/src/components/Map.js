@@ -17,7 +17,7 @@ class Map extends Component {
       height: window.innerHeight - 174,
       longitude: -3.2116,
       latitude: 54.4542,
-      zoom: [13],
+      // zoom: [13],
       endLongitude: null,
       endLatitude: null,
       // imageUrl: '',
@@ -93,7 +93,7 @@ class Map extends Component {
               width: this.state.width,
               height: this.state.height,
             }}
-            // zoom={zoom}
+            // zoom={this.state.zoom}
             // onZoom={this.onZoom}
           />
         </div>
