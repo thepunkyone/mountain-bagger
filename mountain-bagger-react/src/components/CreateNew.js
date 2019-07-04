@@ -10,18 +10,19 @@ const style = {
 };
 
 const CreateNew = () => {
-  return (
-    <div style={style}>
-      <div>
-        Record walk
-      </div>
-      <div>
-        Create route
-      </div>
-      <div>
-        Create offline map
-      </div>
-    </div>
-  );
+  return '';
+  // return (
+  //   <div style={style}>
+  //     <div>
+  //       Record walk
+  //     </div>
+  //     <div>
+  //       Create route
+  //     </div>
+  //     <div>
+  //       Create offline map
+  //     </div>
+  //   </div>
+  // );
 };
 export default CreateNew;

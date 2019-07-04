@@ -11,7 +11,7 @@ const MapBox = ReactMapboxG1({
 const BASE_URL = 'https://api.mapbox.com/directions/v5/mapbox';
 const URL_QUERY = '?steps=true&geometries=geojson&access_token=';
 
-class Map extends Component {
+class RouteMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -164,26 +164,6 @@ class Map extends Component {
     const modeOfTravel = walkingOrCycling.charAt(0).toUpperCase() + walkingOrCycling.slice(1);
     return (
       <div>
-        {
-          duration && (
-            <div>
-              <div className="routeInfomation">
-                <div className="modeOfTransport">
-                  {`${modeOfTravel}:`}
-                </div>
-                <div className="distance">
-                  {`Distance: ${distance}km`}
-                </div>
-                <div className="duration">
-                  {`Time: ${duration}mins`}
-                </div>
-              </div>
-              <button onClick={() => this.generateStaticMap(this.state.route)}>
-                Create static map
-              </button>
-            </div>
-          )
-        }
         <div className="map_div">
           <MapBox
             style="mapbox://styles/thepunkyone/cjx34gegp2owc1cqym1n43a11"
@@ -237,20 +217,42 @@ class Map extends Component {
             }
           </MapBox>
         </div>
-        {/* <div>
-          <button onClick={this.handleModeOfTransport} value="walking">Walking</button>
-          <button onClick={this.handleModeOfTransport} value="cycling">Cycling</button>
+        <div className="save-options">
+          <div className="modes-of-transport">
+            <button onClick={this.handleModeOfTransport} value="walking">Walking</button>
+            <button onClick={this.handleModeOfTransport} value="cycling">Cycling</button>
+          </div>
+          <div className="clear-route">
+            <button onClick={this.handleClearRoute}>Clear Route</button>
+          </div>
+          <SaveForm saveRoute={this.onSaveRoute} />
+          <div className="static-map">
+            { this.state.imageUrl && <img src={this.state.imageUrl} /> }
+          </div>
         </div>
-        <div>
-          <button onClick={this.handleClearRoute}>Clear Route</button>
-        </div>
-        <SaveForm saveRoute={this.onSaveRoute} />
-        <div className="static-map">
-          { this.state.imageUrl && <img src={this.state.imageUrl} /> }
-        </div> */}
+        {
+          duration && (
+            <div className="route-estimates">
+              <div className="routeInfomation">
+                <div className="modeOfTransport">
+                  {`${modeOfTravel}:`}
+                </div>
+                <div className="distance">
+                  {`Distance: ${distance}km`}
+                </div>
+                <div className="duration">
+                  {`Time: ${duration}mins`}
+                </div>
+              </div>
+              <button onClick={() => this.generateStaticMap(this.state.route)}>
+                Create static map
+              </button>
+            </div>
+          )
+        }
       </div>
     );
   }
 }
 
-export default Map;
+export default RouteMap;

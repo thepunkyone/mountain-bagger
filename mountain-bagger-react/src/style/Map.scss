@@ -1,8 +1,21 @@
 .mapboxgl-map {
+  position: relative;
   text-align: left; 
   cursor: crosshair;
 }
 
 .mapboxgl-canvas {
   cursor: crosshair;
+}
+
+.route-estimates {
+  position: absolute;
+  bottom: 100px;
+  left: 30%;
+}
+
+.save-options {
+  position: absolute;
+  top: 0;
+  left: 0;
 }

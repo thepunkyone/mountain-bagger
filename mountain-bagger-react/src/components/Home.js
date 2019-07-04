@@ -6,6 +6,7 @@ import Weather from './Weather';
 import Metrics from './Metrics';
 import Saved from './Saved';
 import CreateNew from './CreateNew';
+import Map from './Map';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -88,9 +89,12 @@ class Home extends Component {
         <div className="content">
           {selectedTab === 'home' &&
             (
-              <span>
-                <CloudDownloadIcon style={downloadIconStyle} />
-              </span>
+              <div>
+                <Map />
+                <span>
+                  <CloudDownloadIcon style={downloadIconStyle} />
+                </span>
+              </div>
             )
           }
           {selectedTab === 'weather' && <Weather />}

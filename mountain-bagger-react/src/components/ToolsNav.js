@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import MapIcon from '@material-ui/icons/Map';
 import InsertChartIcon from '@material-ui/icons/InsertChart';
@@ -63,8 +63,11 @@ const ToolsNav = (props) => {
         <div id="metrics" className="tab-overlay" />
       </Link>
       <Link
-        to="#"
-        onClick={(e) => props.handleClick(e)}
+        to="/home"
+        onClick={(e) => {
+          props.history.push('/home');
+          props.handleClick(e);
+        }}
       >
         <HomeIcon
           style={selectedTab === 'home' ? selectedIconLargeStyle : menuIconLargeStyle}
@@ -81,8 +84,11 @@ const ToolsNav = (props) => {
         <div id="saved" className="tab-overlay" />
       </Link>
       <Link
-        to="#"
-        onClick={(e) => props.handleClick(e)}
+        to="/create-route"
+        onClick={(e) => {
+          props.history.push('/create-route');
+          props.handleClick(e);
+        }}
       >
         <AddBoxIcon
           style={selectedTab === 'create-new' ? selectedIconLargeStyleLastChild : menuIconLargeStyleLastChild}
@@ -93,4 +99,4 @@ const ToolsNav = (props) => {
   );
 };
 
-export default ToolsNav;
+export default withRouter(ToolsNav);
