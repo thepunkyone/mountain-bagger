@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../style/Splash.scss';
 import WelcomeHeader from './WelcomeHeader';
 import Slider from './Slider';
@@ -7,8 +8,8 @@ const Splash = () => {
   return (
     <div className="Splash">
       <WelcomeHeader />
-      <button className="action">Sign in</button>
-      <button className="action outlined transparent">Register</button>
+      <Link to="/login" className="action">Sign in</Link>
+      <Link to="/register" className="action outlined transparent">Register</Link>
       <Slider />
       <button className="action outlined slider-button">Get started</button>
       <h3 className="tagline">
