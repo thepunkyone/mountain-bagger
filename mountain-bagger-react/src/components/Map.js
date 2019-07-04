@@ -3,6 +3,7 @@ import ReactMapboxG1, { Layer, Feature } from 'react-mapbox-gl';
 import '../style/Map.scss';
 import Geocoder from 'react-mapbox-gl-geocoder';
 import SaveForm from './SaveForm';
+import Search from './Search';
 
 const MapBox = ReactMapboxG1({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
@@ -236,6 +237,7 @@ class Map extends Component {
           onSelected={this.onSelected}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         />
+        {/* <Search /> */}
         <div>
           <button onClick={this.handleClearRoute}>Clear Route</button>
         </div>

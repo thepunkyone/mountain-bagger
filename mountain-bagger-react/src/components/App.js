@@ -19,41 +19,41 @@ class App extends Component {
 
   render() {
     return (
-    <Switch>
-      <Route
-        exact
-        path="/"
-        render={Splash}
-      />
-      <Route
-        exact
-        path="/login"
-        render={Login}
-      />
-      <Route
-        exact
-        path="/register"
-        render={Register}
-      />
-      <Route
-        exact
-        path="/home"
-        render={(props) => <Home {...props} name={this.state.name} id={this.state.id} />}
-      />
-      <Route
-        exact
-        path="/profile"
-        // component={Profile}
-        render={(props) => <Profile {...props} name={this.state.name} id={this.state.id} />}
-      />
-      <Route
-        exact
-        path="/create-route"
-        component={CreateRoute}
-      />
-    </Switch>
-  );
-}
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={Splash}
+        />
+        <Route
+          exact
+          path="/login"
+          render={Login}
+        />
+        <Route
+          exact
+          path="/register"
+          render={Register}
+        />
+        <Route
+          exact
+          path="/home"
+          render={(props) => <Home {...props} name={this.state.name} id={this.state.id} />}
+        />
+        <Route
+          exact
+          path="/profile"
+          // component={Profile}
+          render={(props) => <Profile {...props} name={this.state.name} id={this.state.id} />}
+        />
+        <Route
+          exact
+          path="/create-route"
+          component={CreateRoute}
+        />
+      </Switch>
+    );
+  }
 };
 
 export default App;
