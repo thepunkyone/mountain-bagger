@@ -24,7 +24,8 @@ class Register extends React.Component {
     this.setState({ [name]: value });
   };
 
-  handleLogin = () => {
+  handleRegister = (e) => {
+    e.preventDefault();
     const { email, confirmEmail, password, confirmPassword } = this.state;
     this.setState({ emailCheck: '', passwordCheck: '' });
     if (email !== confirmEmail) {
@@ -48,11 +49,13 @@ class Register extends React.Component {
   };
 
   render() {
-    const { confirmPassword, confirmEmail, emailCheck, passwordCheck } = this.state;
+    console.log(this.state);
+    const {
+      confirmPassword, confirmEmail, emailCheck, passwordCheck } = this.state;
     return (
       <div className="user-form">
         <WelcomeHeader />
-        <form>
+        <form onSubmit={this.handleRegister}>
           <h2>Register</h2>
           <label>
             <span>
@@ -91,8 +94,8 @@ class Register extends React.Component {
             </span>
             <input type="password" name="confirmPassword" value={this.state.confirmPassword} onChange={this.handleInputChange} required />
           </label>
-          { confirmPassword ? <span>{passwordCheck}</span> : ''}
-          <button value="Submit" className="action" onClick={this.handleLogin}>
+          { passwordCheck ? <span>{passwordCheck}</span> : ''}
+          <button value="Submit" className="action">
           Register
           </button>
           <p>
