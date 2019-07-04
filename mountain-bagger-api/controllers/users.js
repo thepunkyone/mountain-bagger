@@ -19,7 +19,7 @@ exports.getUser = (req,res) => {
 
   User.find({ email: email, password: password }, (err, user) => {
     if (user) {
-      res.status(200).json({userId: user[0]._id})
+      res.status(200).json({userId: user[0]._id, firstName: user[0].firstName})
     } else {
       res.status(404).json({ error: 'password or email not matched'})
     }
