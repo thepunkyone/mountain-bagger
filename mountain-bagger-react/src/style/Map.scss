@@ -1,3 +1,8 @@
 .mapboxgl-map {
-  text-align: left;
+  text-align: left; 
+  cursor: crosshair;
+}
+
+.mapboxgl-canvas {
+  cursor: crosshair;
 }

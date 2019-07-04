@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactMapboxG1, { Layer, Feature } from 'react-mapbox-gl';
 import '../style/Map.scss';
 import Geocoder from 'react-mapbox-gl-geocoder';
+import SaveForm from './SaveForm';
 
 const MapBox = ReactMapboxG1({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
@@ -24,6 +25,7 @@ class Map extends Component {
       walkingOrCycling: 'walking',
       duration: null,
       distance: null,
+      routeName: '',
       // imageUrl: '',
     };
   }
@@ -65,6 +67,18 @@ class Map extends Component {
   //   }
   // };
 
+  handleClearRoute = () => {
+    this.setState({
+      ...this.state,
+      endLongitude: null,
+      endLatitude: null,
+      route: {},
+      walkingOrCycling: 'walking',
+      duration: null,
+      distance: null,
+    });
+  };
+
   onSelected = (viewport, item) => {
     this.setState({
       viewport,
@@ -87,6 +101,15 @@ class Map extends Component {
   // onZoom = (map, event) => {
   //   this.setState({ zoom: [...[map.getZoom()]] });
   // };
+
+  onSaveRoute = (routeName) => {
+    this.setState({
+      routeName,
+    }, () => {
+      console.log(this.state.routeName);
+    });
+    console.log(this.state.route);
+  };
 
   handleModeOfTransport = (event) => {
     const endLongitude = this.state.endLongitude;
@@ -151,57 +174,59 @@ class Map extends Component {
             </div>
           )
         }
-        <MapBox
-          style="mapbox://styles/thepunkyone/cjx34gegp2owc1cqym1n43a11"
-          center={[longitude, latitude]}
-          containerStyle={{
-            height: '600px',
-            width: '600px',
-          }}
-          onClick={this.onMapClick}
-          // zoom={zoom}
-          // onZoom={this.onZoom}
-        >
-          <Layer
-            type="symbol"
-            id="marker-start"
-            layout={{ 'icon-image': 'marker-15' }}
+        <div className="map_div">
+          <MapBox
+            style="mapbox://styles/thepunkyone/cjx34gegp2owc1cqym1n43a11"
+            center={[longitude, latitude]}
+            containerStyle={{
+              height: '600px',
+              width: '600px',
+            }}
+            onClick={this.onMapClick}
+            // zoom={zoom}
+            // onZoom={this.onZoom}
           >
-            <Feature coordinates={[longitude, latitude]} />
-          </Layer>
+            <Layer
+              type="symbol"
+              id="marker-start"
+              layout={{ 'icon-image': 'marker-15' }}
+            >
+              <Feature coordinates={[longitude, latitude]} />
+            </Layer>
 
-          {
-            { endLongitude } &&
-            (
-              <Layer
-                type="symbol"
-                id="marker-end"
-                layout={{ 'icon-image': 'marker-15' }}
-              >
-                <Feature coordinates={[endLongitude, endLatitude]} />
-              </Layer>
-            )
-          }
-          
-          {
-            Object.keys(route).length !== 0 && (
-              <Layer
-                type="line"
-                layout={{
-                  'line-join': 'round',
-                  'line-cap': 'round',
-                }}
-                paint={{
-                  'line-color': '#3887b4',
-                  'line-width': 5,
-                  'line-opacity': 0.75,
-                }}
-              >
-                <Feature coordinates={route} />
-              </Layer>
-            )
-          }
-        </MapBox>
+            {
+              { endLongitude } &&
+              (
+                <Layer
+                  type="symbol"
+                  id="marker-end"
+                  layout={{ 'icon-image': 'marker-15' }}
+                >
+                  <Feature coordinates={[endLongitude, endLatitude]} />
+                </Layer>
+              )
+            }
+            
+            {
+              Object.keys(route).length !== 0 && (
+                <Layer
+                  type="line"
+                  layout={{
+                    'line-join': 'round',
+                    'line-cap': 'round',
+                  }}
+                  paint={{
+                    'line-color': '#3887b4',
+                    'line-width': 5,
+                    'line-opacity': 0.75,
+                  }}
+                >
+                  <Feature coordinates={route} />
+                </Layer>
+              )
+            }
+          </MapBox>
+        </div>
         <div>
           <button onClick={this.handleModeOfTransport} value="walking">Walking</button>
           <button onClick={this.handleModeOfTransport} value="cycling">Cycling</button>
@@ -211,6 +236,10 @@ class Map extends Component {
           onSelected={this.onSelected}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         />
+        <div>
+          <button onClick={this.handleClearRoute}>Clear Route</button>
+        </div>
+        <SaveForm saveRoute={this.onSaveRoute} />
         <div className="static-map">
           { this.state.imageUrl && <img src={this.state.imageUrl} /> }
         </div>
