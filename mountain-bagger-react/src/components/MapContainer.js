@@ -17,7 +17,6 @@ class MapContainer extends Component {
       zoom: [13],
       endLongitude: null,
       endLatitude: null,
-      bounds: '',
       route: '',
       walkingOrCycling: 'walking',
       duration: null,
@@ -25,21 +24,25 @@ class MapContainer extends Component {
       routeName: '',
       staticMap: {
         name: '',
+        bounds: '',
         staticImageUrl: '',
       },
     };
   }
 
-  generateStaticMap = (name) => {
-    const { longitude, latitude } = this.state;
+  generateStaticMap = (name, map) => {
+    const bounds = this.getBoundingBox(map);
+
+    const { longitude, latitude, width, height } = this.state;
     const { route, zoom } = this.state;
 
     if (!route) {
-      fetch(`${STYLES_URL}/static/${longitude},${latitude},${zoom},0,0/600x600?access_token=${MAPBOX_TOKEN}`)
+      fetch(`${STYLES_URL}/static/${longitude},${latitude},${zoom},0,0/${width}x${height}?access_token=${MAPBOX_TOKEN}`)
         .then((data) => {
           this.setState({
             staticMap: {
               name: name || '',
+              bounds: bounds,
               staticImageUrl: data.url,
             },
           });
@@ -72,6 +75,7 @@ class MapContainer extends Component {
           this.setState({
             staticMap: {
               name: name || '',
+              bounds: bounds,
               staticImageUrl: data.url,
             },
           });
@@ -81,8 +85,7 @@ class MapContainer extends Component {
   };
 
   getBoundingBox = (map) => {
-    const bounds = map.getBounds();
-    this.setState({ bounds: bounds });
+    return map.getBounds();
   };
 
   getRoute = (endLongitude, endLatitude, walkingOrCycling) => {
@@ -167,7 +170,7 @@ class MapContainer extends Component {
   };
 
   render() {
-    console.log(this.state.staticMap);
+    console.log(this.state.bounds);
     window.onresize = this.setMapDimensions;
 
     const {
