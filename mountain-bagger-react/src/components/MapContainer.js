@@ -12,9 +12,9 @@ class MapContainer extends Component {
     this.state = {
       width: window.innerWidth,
       height: window.innerHeight - 174,
-      // longitude: -3.2116,
-      // latitude: 54.4542,
-      zoom: [13],
+      longitude: -3.2116,
+      latitude: 54.4542,
+      zoom: [11],
       endLongitude: null,
       endLatitude: null,
       route: '',
@@ -27,7 +27,7 @@ class MapContainer extends Component {
   }
 
   generateStaticMap = (route) => {
-    const { longitude, latitude } = this.props;
+    const { longitude, latitude } = this.state;
     const { zoom } = this.state;
 
     if (!route) {
@@ -67,7 +67,7 @@ class MapContainer extends Component {
   };
 
   getRoute = (endLongitude, endLatitude, walkingOrCycling) => {
-    const { longitude, latitude } = this.props;
+    const { longitude, latitude } = this.state;
     const token = MAPBOX_TOKEN;
     const apiRequest = `${BASE_URL}/${walkingOrCycling}/${longitude},${latitude};${endLongitude},${endLatitude}${URL_QUERY}${token}`;
     fetch(apiRequest)
@@ -153,13 +153,15 @@ class MapContainer extends Component {
     const {
       userId,
       selectedTab,
-      longitude,
-      latitude
+      gpsLongitude,
+      gpsLatitude
     } = this.props;
 
     const {
       width,
       height,
+      longitude,
+      latitude,
       zoom,
       endLongitude,
       endLatitude,
@@ -184,8 +186,10 @@ class MapContainer extends Component {
 
         width = {width}
         height = {height}
-        latitude = {latitude}
         longitude = {longitude}
+        latitude = {latitude}
+        gpsLongitude = {gpsLongitude}
+        gpsLatitude = {gpsLatitude}
         zoom = {zoom}
         endLongitude = {endLongitude}
         endLatitude = {endLatitude}

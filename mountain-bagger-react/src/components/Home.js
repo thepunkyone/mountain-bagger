@@ -44,8 +44,8 @@ class Home extends Component {
     super(props);
     this.state = {
       selectedTab: 'home',
-      lng: -3.2116,
-      lat: 54.4542,
+      gpsLongitude: '',
+      gpsLatitude: '',
       locationWatchId: null,
     };
   }
@@ -58,13 +58,13 @@ class Home extends Component {
 
   stopWatchingLocation = () => {
     navigator.geolocation.clearWatch(this.state.locationWatchId);
-    this.setState({ lng: -3.2116, lat: 54.4542, locationWatchId: null });
+    this.setState({ gpsLongitude: '', gpsLatitude: '', locationWatchId: null });
   };
 
   watchUserLocation = () => {
     const success = (position) => {
       const { latitude, longitude, speed, altitude, heading } = position.coords;
-      this.setState({ lng: longitude, lat: latitude });
+      this.setState({ gpsLongitude: longitude, gpsLatitude: latitude });
     };
 
     const error = () => {
@@ -141,8 +141,8 @@ class Home extends Component {
             <MapContainer
               userId={this.props.id}
               selectedTab={this.state.selectedTab}
-              longitude={this.state.lng}
-              latitude={this.state.lat}
+              gpsLongitude={this.state.gpsLongitude}
+              gpsLatitude={this.state.gpsLatitude}
             />
             <span>
               <CloudDownloadIcon style={{ ...downloadIconStyle, cursor: 'pointer' }} />
