@@ -15,6 +15,7 @@ class MapContainer extends Component {
       longitude: -3.2116,
       latitude: 54.4542,
       zoom: [13],
+      bounds: '',
       endLongitude: null,
       endLatitude: null,
       route: '',
@@ -24,16 +25,19 @@ class MapContainer extends Component {
       routeName: '',
       staticMap: {
         name: '',
-        bounds: '',
+        dimensions: {
+          width: '',
+          height: '',
+        },
+        boundingBox: '',
         staticImageUrl: '',
       },
     };
   }
 
-  generateStaticMap = (name, map) => {
-    const bounds = this.getBoundingBox(map);
+  generateStaticMap = (name) => {
 
-    const { longitude, latitude, width, height } = this.state;
+    const { longitude, latitude, bounds, width, height } = this.state;
     const { route, zoom } = this.state;
 
     if (!route) {
@@ -42,7 +46,11 @@ class MapContainer extends Component {
           this.setState({
             staticMap: {
               name: name || '',
-              bounds: bounds,
+              dimensions: {
+                width: width,
+                height: height,
+              },
+              boundingBox: bounds,
               staticImageUrl: data.url,
             },
           });
@@ -75,7 +83,11 @@ class MapContainer extends Component {
           this.setState({
             staticMap: {
               name: name || '',
-              bounds: bounds,
+              dimensions: {
+                width: width,
+                height: height,
+              },
+              boundingBox: bounds,
               staticImageUrl: data.url,
             },
           });
@@ -85,7 +97,8 @@ class MapContainer extends Component {
   };
 
   getBoundingBox = (map) => {
-    return map.getBounds();
+    const bounds = map.getBounds();
+    this.setState({ bounds: bounds });
   };
 
   getRoute = (endLongitude, endLatitude, walkingOrCycling) => {
@@ -158,8 +171,9 @@ class MapContainer extends Component {
     console.log(this.state.route);
   };
 
-  saveZoomSetting = (map, event) => {
+  saveZoomSetting = (map) => {
     this.setState({ zoom: [...[map.getZoom()]] });
+    this.getBoundingBox(map);
   };
 
   setMapDimensions = () => {
@@ -170,7 +184,7 @@ class MapContainer extends Component {
   };
 
   render() {
-    console.log(this.state.bounds);
+    console.log(this.state.staticMap);
     window.onresize = this.setMapDimensions;
 
     const {
@@ -200,6 +214,7 @@ class MapContainer extends Component {
         userId={userId}
         selectedTab={selectedTab}
 
+        onBoundingBox={this.getBoundingBox}
         onClearRoute={this.handleClearRoute}
         onGenerateStaticMap={this.generateStaticMap}
         onGetBoundingBox={this.getBoundingBox}

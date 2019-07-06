@@ -8,10 +8,12 @@ const MapBox = ReactMapboxG1({
 });
 
 const Map = (props) => {
+
   const {
     userId,
     selectedTab,
 
+    onBoundingBox,
     onClearRoute,
     onGenerateStaticMap,
     onHandleModeOfTransport,
@@ -48,10 +50,12 @@ const Map = (props) => {
             width: width,
             height: height,
           }}
-          movingMethod="easeTo"
+          movingMethod="jumpTo"
           onClick={onMapClick}
           zoom={zoom}
-          onZoom={onZoom}
+          onZoomEnd={onZoom}
+          onMoveEnd={onBoundingBox}
+          onStyleLoad={onBoundingBox}
         >
           <Layer
             type="symbol"
@@ -102,7 +106,10 @@ const Map = (props) => {
         <div className="clear-route">
           <button onClick={onClearRoute}>Clear Route</button>
         </div>
-        <SaveForm saveRoute={onSaveRoute} saveStaticMap={onGenerateStaticMap} />
+        <SaveForm
+          saveRoute={onSaveRoute}
+          saveStaticMap={onGenerateStaticMap}
+        />
       </div>
       {
         duration && (
