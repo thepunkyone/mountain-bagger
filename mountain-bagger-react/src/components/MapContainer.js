@@ -14,7 +14,7 @@ class MapContainer extends Component {
       height: window.innerHeight - 174,
       longitude: -3.2116,
       latitude: 54.4542,
-      zoom: [11],
+      zoom: [13],
       endLongitude: null,
       endLatitude: null,
       route: '',
