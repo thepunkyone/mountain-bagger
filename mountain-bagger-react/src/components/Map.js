@@ -1,7 +1,8 @@
 import React from 'react';
-import ReactMapboxG1, { Layer, Feature } from 'react-mapbox-gl';
+import ReactMapboxG1, { Layer, Feature, Marker } from 'react-mapbox-gl';
 import SaveForm from './SaveForm';
 import '../style/Map.scss';
+import GpsFixedIcon from '../img/gps_fixed_24px.svg';
 
 const MapBox = ReactMapboxG1({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
@@ -15,6 +16,8 @@ const Map = (props) => {
   const {
     userId,
     selectedTab,
+    gpsLongitude,
+    gpsLatitude,
 
     onClearRoute,
     onGenerateStaticMap,
@@ -97,6 +100,17 @@ const Map = (props) => {
                 <Feature coordinates={route} />
               </Layer>
             )
+          }
+          {
+           gpsLongitude && gpsLatitude &&
+           (
+             <Marker
+               coordinates={[gpsLongitude, gpsLatitude]}
+               anchor="center"
+             >
+               <img src={GpsFixedIcon} />
+             </Marker>
+           ) 
           }
         </MapBox>
       </div>

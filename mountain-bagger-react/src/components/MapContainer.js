@@ -207,6 +207,8 @@ class MapContainer extends Component {
     const {
       userId,
       selectedTab,
+      gpsLongitude,
+      gpsLatitude,
     } = this.props;
 
     const {
@@ -229,6 +231,8 @@ class MapContainer extends Component {
       <Map
         userId={userId}
         selectedTab={selectedTab}
+        gpsLongitude={gpsLongitude}
+        gpsLatitude={gpsLatitude}
 
         onBoundingBox={this.getBoundingBox}
         onClearRoute={this.handleClearRoute}
