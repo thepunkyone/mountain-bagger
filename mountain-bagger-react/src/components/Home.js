@@ -1,28 +1,14 @@
 import React, { Component } from 'react';
 import '../style/Home.scss';
-import Logo from './Logo';
+
 import LocationNav from './LocationNav';
+import UserNav from './UserNav';
 import ToolsNav from './ToolsNav';
 import Weather from './Weather';
 import Metrics from './Metrics';
 import Saved from './Saved';
 import CreateNew from './CreateNew';
 import MapContainer from './MapContainer';
-
-import MenuIcon from '@material-ui/icons/Menu';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
-const logoIconStyle = {
-  width: '40px',
-  height: '40px',
-  marginBottom: '-10px',
-};
-
-const menuIconStyle = {
-  width: '42px',
-  height: '42px',
-  padding: '5px',
-};
 
 class Home extends Component {
   constructor(props) {
@@ -77,13 +63,7 @@ class Home extends Component {
 
     return (
       <div className="Home">
-        <nav className="UserNav nav-main">
-          <MenuIcon style={{ ...menuIconStyle, cursor: 'pointer' }} />
-          <h2>
-            <Logo iconStyle={logoIconStyle} />
-          </h2>
-          <ExitToAppIcon style={{ ...menuIconStyle, cursor: 'pointer' }} />
-        </nav>
+        <UserNav />
         <LocationNav
           locationWatchId={locationWatchId}
           onWatchUserLocation={this.watchUserLocation}
