@@ -12,8 +12,9 @@ const Map = (props) => {
     userId,
     selectedTab,
 
-    onGenerateStaticMap,
     onClearRoute,
+    onGenerateStaticMap,
+    onGetBoundingBox,
     onHandleModeOfTransport,
     onMapClick,
     onSaveRoute,
@@ -50,6 +51,9 @@ const Map = (props) => {
           }}
           movingMethod="easeTo"
           onClick={onMapClick}
+          onStyleLoad={(map) => onGetBoundingBox(map)}
+          onZoomEnd={(map) => onGetBoundingBox(map)}
+          onMoveEnd={(map) => onGetBoundingBox(map)}
           zoom={zoom}
           onZoom={onZoom}
         >

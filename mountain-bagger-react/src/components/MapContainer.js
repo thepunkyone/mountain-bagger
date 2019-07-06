@@ -17,6 +17,7 @@ class MapContainer extends Component {
       zoom: [13],
       endLongitude: null,
       endLatitude: null,
+      bounds: '',
       route: '',
       walkingOrCycling: 'walking',
       duration: null,
@@ -64,6 +65,11 @@ class MapContainer extends Component {
         })
         .catch(() => console.log('image can\'t be retrieved'));
     }
+  };
+
+  getBoundingBox = (map) => {
+    const bounds = map.getBounds();
+    this.setState({ bounds: bounds });
   };
 
   getRoute = (endLongitude, endLatitude, walkingOrCycling) => {
@@ -174,30 +180,31 @@ class MapContainer extends Component {
 
     return (
       <Map
-        userId = {userId}
-        selectedTab = {selectedTab}
+        userId={userId}
+        selectedTab={selectedTab}
 
-        onGenerateStaticMap = {this.generateStaticMap}
-        onClearRoute = {this.handleClearRoute}
-        onHandleModeOfTransport = {this.handleModeOfTransport}
-        onMapClick = {this.handleMapClick}
-        onSaveRoute = {this.saveRoute}
-        onZoom = {this.saveZoomSetting}
+        onClearRoute={this.handleClearRoute}
+        onGenerateStaticMap={this.generateStaticMap}
+        onGetBoundingBox={this.getBoundingBox}
+        onHandleModeOfTransport={this.handleModeOfTransport}
+        onMapClick={this.handleMapClick}
+        onSaveRoute={this.saveRoute}
+        onZoom={this.saveZoomSetting}
 
-        width = {width}
-        height = {height}
-        longitude = {longitude}
-        latitude = {latitude}
-        gpsLongitude = {gpsLongitude}
-        gpsLatitude = {gpsLatitude}
-        zoom = {zoom}
-        endLongitude = {endLongitude}
-        endLatitude = {endLatitude}
-        route = {route}
-        walkingOrCycling = {walkingOrCycling}
-        duration = {duration}
-        distance = {distance}
-        routeName = {routeName}
+        width={width}
+        height={height}
+        longitude={longitude}
+        latitude={latitude}
+        gpsLongitude={gpsLongitude}
+        gpsLatitude={gpsLatitude}
+        zoom={zoom}
+        endLongitude={endLongitude}
+        endLatitude={endLatitude}
+        route={route}
+        walkingOrCycling={walkingOrCycling}
+        duration={duration}
+        distance={distance}
+        routeName={routeName}
       />
     );
   }
