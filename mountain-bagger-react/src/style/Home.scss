@@ -34,11 +34,6 @@
     height: calc(100vh - 174px);
     color: $white;
     position: relative;
-    span {
-      position: absolute;
-      top: $box-padding;
-      right: $box-padding;
-    }
   }
 
   .ToolsNav {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../style/Home.scss';
 import Logo from './Logo';
+import LocationNav from './LocationNav';
 import ToolsNav from './ToolsNav';
 import Weather from './Weather';
 import Metrics from './Metrics';
@@ -9,12 +10,7 @@ import CreateNew from './CreateNew';
 import MapContainer from './MapContainer';
 
 import MenuIcon from '@material-ui/icons/Menu';
-import SettingsIcon from '@material-ui/icons/Settings';
-import ExploreIcon from '@material-ui/icons/Explore';
-import GpsFixedIcon from '@material-ui/icons/GpsFixed';
-import GpsNotFixedIcon from '@material-ui/icons/GpsNotFixed';
-import SearchIcon from '@material-ui/icons/Search';
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const logoIconStyle = {
   width: '40px',
@@ -26,17 +22,6 @@ const menuIconStyle = {
   width: '42px',
   height: '42px',
   padding: '5px',
-};
-
-const downloadIconStyle = {
-  ...menuIconStyle,
-  filter: 'drop-shadow(1px 1px 2px #222222)',
-};
-
-const menuIconLightStyle = {
-  width: '42px',
-  height: '42px',
-  color: '#888888',
 };
 
 class Home extends Component {
@@ -88,7 +73,7 @@ class Home extends Component {
   };
 
   render() {
-    const { selectedTab } = this.state;
+    const { selectedTab, locationWatchId } = this.state;
 
     return (
       <div className="Home">
@@ -97,45 +82,13 @@ class Home extends Component {
           <h2>
             <Logo iconStyle={logoIconStyle} />
           </h2>
-          <SettingsIcon style={{ ...menuIconStyle, cursor: 'pointer' }} />
+          <ExitToAppIcon style={{ ...menuIconStyle, cursor: 'pointer' }} />
         </nav>
-        <nav className="LocationNav nav-main">
-          <div className="nav-metrics">
-            <p className="menu-icon-light">
-              <span>
-                Altitude
-              </span>
-              <span>
-                156m
-              </span>
-            </p>
-            <p className="menu-icon-light">
-              <span>
-                Speed
-              </span>
-              <span>
-                2km/h
-              </span>
-            </p>
-            <ExploreIcon style={menuIconLightStyle} />
-          </div>
-          {this.state.locationWatchId === null ?
-            (
-              <GpsNotFixedIcon
-                style={{ ...menuIconStyle, cursor: 'pointer' }}
-                onClick={() => this.watchUserLocation()}
-              />
-            )
-            :
-            (
-              <GpsFixedIcon
-                style={{ ...menuIconStyle, cursor: 'pointer' }}
-                onClick={() => this.stopWatchingLocation()}
-              />
-            )
-          }
-          <SearchIcon style={{ ...menuIconStyle, cursor: 'pointer' }} />
-        </nav>
+        <LocationNav
+          locationWatchId={locationWatchId}
+          onWatchUserLocation={this.watchUserLocation}
+          onStopWatchingLocation={this.stopWatchingLocation}
+        />
         <div className="content">
           <div>
             <MapContainer
@@ -144,9 +97,6 @@ class Home extends Component {
               gpsLongitude={this.state.gpsLongitude}
               gpsLatitude={this.state.gpsLatitude}
             />
-            <span>
-              <CloudDownloadIcon style={{ ...downloadIconStyle, cursor: 'pointer' }} />
-            </span>
           </div>
           {selectedTab === 'weather' && <Weather />}
           {selectedTab === 'metrics' && <Metrics />}

@@ -3,10 +3,21 @@ import ReactMapboxG1, { Layer, Feature, Marker } from 'react-mapbox-gl';
 import SaveForm from './SaveForm';
 import '../style/Map.scss';
 import GpsFixedIcon from '../img/gps_fixed_24px.svg';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
 const MapBox = ReactMapboxG1({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
 });
+
+const downloadIconStyle = {
+  width: '42px',
+  height: '42px',
+  padding: '5px',
+  position: 'absolute',
+  top: '1rem',
+  right: '1rem',
+  filter: 'drop-shadow(1px 1px 2px #222222)',
+};
 
 let center;
 let bounds;
@@ -114,6 +125,10 @@ const Map = (props) => {
           }
         </MapBox>
       </div>
+      <CloudDownloadIcon
+        style={{ ...downloadIconStyle, cursor: 'pointer' }}
+        onClick={onGenerateStaticMap('Map', bounds)}
+      />
       <div className="save-options">
         <div className="modes-of-transport">
           <button onClick={onHandleModeOfTransport} value="walking">Walking</button>

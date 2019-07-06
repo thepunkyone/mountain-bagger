@@ -50,7 +50,7 @@ class MapContainer extends Component {
     const { longitude, latitude, width, height } = this.state;
     const { route, zoom } = this.state;
 
-    if (!route) {
+    if (!route && bounds) {
       fetch(`${STYLES_URL}/static/${longitude},${latitude},${zoom},0,0/${width}x${height}?access_token=${MAPBOX_TOKEN}`)
         .then((data) => {
           this.setState({
@@ -67,7 +67,7 @@ class MapContainer extends Component {
         })
         .catch(() => alert('image can\'t be retrieved'));
 
-    } else {
+    } else if (route && bounds) {
       const geojson = {
         "type": "FeatureCollection",
         "features": [{
@@ -103,6 +103,8 @@ class MapContainer extends Component {
           });
         })
         .catch(() => console.log('image can\'t be retrieved'));
+    } else {
+      console.log('Error: can\'t retrieve map data!');
     }
   };
 
