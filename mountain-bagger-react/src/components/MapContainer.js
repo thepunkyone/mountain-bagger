@@ -201,8 +201,6 @@ class MapContainer extends Component {
 
   render() {
     console.log(this.state.staticMap);
-    console.log('GPS', this.props.gpsLongitude, this.props.gpsLatitude)
-    console.log('LONG, LAT', this.state.longitude, this.state.latitude);
 
     window.onresize = this.setMapDimensions;
 
