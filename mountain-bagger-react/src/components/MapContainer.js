@@ -35,8 +35,14 @@ class MapContainer extends Component {
     };
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     this.getCenterCoords();
+    if (this.props.gpsLongitude && this.props.gpsLongitude !== prevProps.gpsLongitude) {
+      this.setState({
+        longitude: this.props.gpsLongitude,
+        latitude: this.props.gpsLatitude,
+      });
+    }
   }
 
   generateStaticMap = (name, bounds) => {
@@ -195,14 +201,14 @@ class MapContainer extends Component {
 
   render() {
     console.log(this.state.staticMap);
-    console.log('LONG-LAT', this.state.longitude, this.state.latitude);
+    console.log('GPS', this.props.gpsLongitude, this.props.gpsLatitude)
+    console.log('LONG, LAT', this.state.longitude, this.state.latitude);
+
     window.onresize = this.setMapDimensions;
 
     const {
       userId,
       selectedTab,
-      gpsLongitude,
-      gpsLatitude,
     } = this.props;
 
     const {
@@ -239,8 +245,6 @@ class MapContainer extends Component {
         height={height}
         longitude={longitude}
         latitude={latitude}
-        gpsLongitude={gpsLongitude}
-        gpsLatitude={gpsLatitude}
         zoom={zoom}
         marker={marker}
         endLongitude={endLongitude}

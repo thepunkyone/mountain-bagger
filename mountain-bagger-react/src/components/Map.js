@@ -28,8 +28,6 @@ const Map = (props) => {
     height,
     longitude,
     latitude,
-    gpsLongitude,
-    gpsLatitude,
     zoom,
     marker,
     endLongitude,
@@ -47,9 +45,7 @@ const Map = (props) => {
       <div className="map_div">
         <MapBox
           style="mapbox://styles/thepunkyone/cjx34gegp2owc1cqym1n43a11"
-          center={
-            gpsLongitude ? [gpsLongitude, gpsLatitude] : [longitude, latitude]
-          }
+          center={[longitude, latitude]}
           containerStyle={{
             width: width,
             height: height,
