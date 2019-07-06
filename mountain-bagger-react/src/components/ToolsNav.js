@@ -84,11 +84,8 @@ const ToolsNav = (props) => {
         <div id="saved" className="tab-overlay" />
       </Link>
       <Link
-        to="/create-route"
-        onClick={(e) => {
-          props.history.push('/create-route');
-          props.handleClick(e);
-        }}
+        to="#"
+        onClick={(e) => props.handleClick(e)}
       >
         <AddBoxIcon
           style={selectedTab === 'create-new' ? selectedIconLargeStyleLastChild : menuIconLargeStyleLastChild}

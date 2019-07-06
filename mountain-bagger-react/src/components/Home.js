@@ -6,7 +6,7 @@ import Weather from './Weather';
 import Metrics from './Metrics';
 import Saved from './Saved';
 import CreateNew from './CreateNew';
-import Map from './Map';
+import MapContainer from './MapContainer';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -68,7 +68,7 @@ class Home extends Component {
     };
 
     const error = () => {
-      alert('Unable to retrieve your location');
+      console.log('Unable to retrieve your location');
     };
 
     const options = {
@@ -88,8 +88,8 @@ class Home extends Component {
   };
 
   render() {
-    console.log(this.state);
     const { selectedTab } = this.state;
+
     return (
       <div className="Home">
         <nav className="UserNav nav-main">
@@ -138,7 +138,12 @@ class Home extends Component {
         </nav>
         <div className="content">
           <div>
-            <Map />
+            <MapContainer
+              userId={this.props.id}
+              selectedTab={this.state.selectedTab}
+              longitude={this.state.lng}
+              latitude={this.state.lat}
+            />
             <span>
               <CloudDownloadIcon style={{ ...downloadIconStyle, cursor: 'pointer' }} />
             </span>
