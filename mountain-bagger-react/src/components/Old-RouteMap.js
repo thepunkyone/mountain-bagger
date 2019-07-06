@@ -100,9 +100,9 @@ class RouteMap extends Component {
     this.getRoute(endLongitude, endLatitude, walkingOrCycling);
   };
 
-  // onZoom = (map, event) => {
-  //   this.setState({ zoom: [...[map.getZoom()]] });
-  // };
+  onZoom = (map, event) => {
+    this.setState({ zoom: [...[map.getZoom()]] });
+  };
 
   onSaveRoute = (routeName) => {
     this.setState({
@@ -173,8 +173,6 @@ class RouteMap extends Component {
               height: this.state.height,
             }}
             onClick={this.onMapClick}
-            // zoom={zoom}
-            // onZoom={this.onZoom}
           >
             <Layer
               type="symbol"

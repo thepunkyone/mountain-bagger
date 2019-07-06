@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactMapboxG1, { Layer, Feature } from 'react-mapbox-gl';
-import '../style/Map.scss';
 import SaveForm from './SaveForm';
+import '../style/Map.scss';
 
 const MapBox = ReactMapboxG1({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
 });
+
+let center;
+let bounds;
 
 const Map = (props) => {
 
@@ -13,9 +16,9 @@ const Map = (props) => {
     userId,
     selectedTab,
 
-    onBoundingBox,
     onClearRoute,
     onGenerateStaticMap,
+    onGetCenterCoords,
     onHandleModeOfTransport,
     onMapClick,
     onSaveRoute,
@@ -28,6 +31,7 @@ const Map = (props) => {
     gpsLongitude,
     gpsLatitude,
     zoom,
+    marker,
     endLongitude,
     endLatitude,
     route,
@@ -53,16 +57,18 @@ const Map = (props) => {
           movingMethod="jumpTo"
           onClick={onMapClick}
           zoom={zoom}
-          onZoomEnd={onZoom}
-          onMoveEnd={onBoundingBox}
-          onStyleLoad={onBoundingBox}
+          onZoom={onZoom}
+          
+          onZoomEnd={(map) => {bounds = map.getBounds(); center = map.getCenter(); onGetCenterCoords(center)}}
+          onMoveEnd={(map) => {bounds = map.getBounds(); center = map.getCenter(); onGetCenterCoords(center)}}
+          onStyleLoad={(map) => {bounds = map.getBounds(); center = map.getCenter(); onGetCenterCoords(center)}}
         >
           <Layer
             type="symbol"
             id="marker-start"
             layout={{ 'icon-image': 'mountain-15' }}
           >
-            <Feature coordinates={[longitude, latitude]} />
+            <Feature coordinates={marker} />
           </Layer>
 
           {
@@ -107,6 +113,7 @@ const Map = (props) => {
           <button onClick={onClearRoute}>Clear Route</button>
         </div>
         <SaveForm
+          boundingBox={bounds}
           saveRoute={onSaveRoute}
           saveStaticMap={onGenerateStaticMap}
         />

@@ -27,7 +27,7 @@ class SaveForm extends Component {
         <form onSubmit={this.onSubmit}>
           <input type="text" name="save" onChange={this.onChange} value={this.state.saveName} placeholder="Name of route" />
           <button type="submit">Save Route</button>
-          <button onClick={() => this.props.saveStaticMap(this.state.saveName)}>
+          <button onClick={() => this.props.saveStaticMap(this.state.saveName, this.props.boundingBox)}>
             Save offline map
           </button>
         </form>

@@ -15,7 +15,7 @@ class MapContainer extends Component {
       longitude: -3.2116,
       latitude: 54.4542,
       zoom: [13],
-      bounds: '',
+      marker: [-3.2116, 54.4542],
       endLongitude: null,
       endLatitude: null,
       route: '',
@@ -35,9 +35,13 @@ class MapContainer extends Component {
     };
   }
 
-  generateStaticMap = (name) => {
+  componentDidUpdate() {
+    this.getCenterCoords();
+  }
 
-    const { longitude, latitude, bounds, width, height } = this.state;
+  generateStaticMap = (name, bounds) => {
+
+    const { longitude, latitude, width, height } = this.state;
     const { route, zoom } = this.state;
 
     if (!route) {
@@ -96,15 +100,22 @@ class MapContainer extends Component {
     }
   };
 
-  getBoundingBox = (map) => {
-    const bounds = map.getBounds();
-    this.setState({ bounds: bounds });
+  getCenterCoords = (center) => {
+    const centerCoords = center;
+    const prevState = this.state;
+
+    if (centerCoords !== undefined && centerCoords.lng !== prevState.longitude) {
+      this.setState({
+        longitude: centerCoords.lng,
+        latitude: centerCoords.lat,
+      });
+    }
   };
 
   getRoute = (endLongitude, endLatitude, walkingOrCycling) => {
-    const { longitude, latitude } = this.state;
+    const { marker } = this.state;
     const token = MAPBOX_TOKEN;
-    const apiRequest = `${BASE_URL}/${walkingOrCycling}/${longitude},${latitude};${endLongitude},${endLatitude}${URL_QUERY}${token}`;
+    const apiRequest = `${BASE_URL}/${walkingOrCycling}/${marker[0]},${marker[1]};${endLongitude},${endLatitude}${URL_QUERY}${token}`;
     fetch(apiRequest)
       .then(response => response.json())
       .then(data => data.routes[0])
@@ -173,7 +184,6 @@ class MapContainer extends Component {
 
   saveZoomSetting = (map) => {
     this.setState({ zoom: [...[map.getZoom()]] });
-    this.getBoundingBox(map);
   };
 
   setMapDimensions = () => {
@@ -185,6 +195,7 @@ class MapContainer extends Component {
 
   render() {
     console.log(this.state.staticMap);
+    console.log('LONG-LAT', this.state.longitude, this.state.latitude);
     window.onresize = this.setMapDimensions;
 
     const {
@@ -200,6 +211,7 @@ class MapContainer extends Component {
       longitude,
       latitude,
       zoom,
+      marker,
       endLongitude,
       endLatitude,
       route,
@@ -217,7 +229,7 @@ class MapContainer extends Component {
         onBoundingBox={this.getBoundingBox}
         onClearRoute={this.handleClearRoute}
         onGenerateStaticMap={this.generateStaticMap}
-        onGetBoundingBox={this.getBoundingBox}
+        onGetCenterCoords={this.getCenterCoords}
         onHandleModeOfTransport={this.handleModeOfTransport}
         onMapClick={this.handleMapClick}
         onSaveRoute={this.saveRoute}
@@ -230,6 +242,7 @@ class MapContainer extends Component {
         gpsLongitude={gpsLongitude}
         gpsLatitude={gpsLatitude}
         zoom={zoom}
+        marker={marker}
         endLongitude={endLongitude}
         endLatitude={endLatitude}
         route={route}

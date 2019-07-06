@@ -6,7 +6,7 @@ import Weather from './Weather';
 import Metrics from './Metrics';
 import Saved from './Saved';
 import CreateNew from './CreateNew';
-import RouteMap from './RouteMap';
+import RouteMap from './Old-RouteMap';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import SettingsIcon from '@material-ui/icons/Settings';
