@@ -51,9 +51,9 @@ const Map = (props) => {
           }}
           movingMethod="easeTo"
           onClick={onMapClick}
+          onMoveEnd={(map) => onGetBoundingBox(map)}
           onStyleLoad={(map) => onGetBoundingBox(map)}
           onZoomEnd={(map) => onGetBoundingBox(map)}
-          onMoveEnd={(map) => onGetBoundingBox(map)}
           zoom={zoom}
           onZoom={onZoom}
         >
@@ -106,10 +106,7 @@ const Map = (props) => {
         <div className="clear-route">
           <button onClick={onClearRoute}>Clear Route</button>
         </div>
-        <SaveForm saveRoute={onSaveRoute} />
-        <button onClick={() => onGenerateStaticMap(route)}>
-          Save offline map
-        </button>
+        <SaveForm saveRoute={onSaveRoute} saveStaticMap={onGenerateStaticMap} />
       </div>
       {
         duration && (

@@ -23,18 +23,26 @@ class MapContainer extends Component {
       duration: null,
       distance: null,
       routeName: '',
-      staticImageUrl: '',
+      staticMap: {
+        name: '',
+        staticImageUrl: '',
+      },
     };
   }
 
-  generateStaticMap = (route) => {
+  generateStaticMap = (name) => {
     const { longitude, latitude } = this.state;
-    const { zoom } = this.state;
+    const { route, zoom } = this.state;
 
     if (!route) {
       fetch(`${STYLES_URL}/static/${longitude},${latitude},${zoom},0,0/600x600?access_token=${MAPBOX_TOKEN}`)
         .then((data) => {
-          this.setState({ staticImageUrl: data.url });
+          this.setState({
+            staticMap: {
+              name: name || '',
+              staticImageUrl: data.url,
+            },
+          });
         })
         .catch(() => alert('image can\'t be retrieved'));
 
@@ -45,7 +53,7 @@ class MapContainer extends Component {
           "type": "Feature",
           "geometry": {
             "type": "LineString",
-            "coordinates": route.data.geometry.coordinates,
+            "coordinates": route,
           },
           "properties": {
             "stroke": "#3887b4",
@@ -61,7 +69,12 @@ class MapContainer extends Component {
 
       fetch(`${STYLES_URL}/static/${encodeGeoJson()}${longitude},${latitude},${zoom},0,0/600x600?access_token=${MAPBOX_TOKEN}`)
         .then((data) => {
-          this.setState({ staticImageUrl: data.url });
+          this.setState({
+            staticMap: {
+              name: name || '',
+              staticImageUrl: data.url,
+            },
+          });
         })
         .catch(() => console.log('image can\'t be retrieved'));
     }
@@ -154,13 +167,14 @@ class MapContainer extends Component {
   };
 
   render() {
+    console.log(this.state.staticMap);
     window.onresize = this.setMapDimensions;
 
     const {
       userId,
       selectedTab,
       gpsLongitude,
-      gpsLatitude
+      gpsLatitude,
     } = this.props;
 
     const {
