@@ -44,6 +44,7 @@ const Map = (props) => {
             width: width,
             height: height,
           }}
+          movingMethod="easeTo"
           onClick={onMapClick}
           zoom={zoom}
           onZoom={onZoom}
