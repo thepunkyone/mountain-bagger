@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import ExploreIcon from '@material-ui/icons/Explore';
 import GpsFixedIcon from '@material-ui/icons/GpsFixed';
@@ -61,7 +62,15 @@ const LocationNav = (props) => {
           />
         )
       }
-      <SearchIcon style={{ ...menuIconStyle, cursor: 'pointer' }} />
+      <Link
+        to="#"
+        onClick={(e) => props.handleClick(e)}
+      >
+        <SearchIcon
+          style={{ ...menuIconStyle, cursor: 'pointer' }}
+        />
+        <div id="search" className="tab-overlay" />
+      </Link>
     </nav>
   );
 };

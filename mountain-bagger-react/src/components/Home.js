@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../style/Home.scss';
 
 import LocationNav from './LocationNav';
+import SearchBox from './SearchBox';
 import UserNav from './UserNav';
 import ToolsNav from './ToolsNav';
 import Weather from './Weather';
@@ -17,6 +18,9 @@ class Home extends Component {
       selectedTab: 'home',
       gpsLongitude: '',
       gpsLatitude: '',
+      gpsSpeed: '',
+      gpsAltitude: '',
+      gpsHeading: '',
       locationWatchId: null,
     };
   }
@@ -35,7 +39,13 @@ class Home extends Component {
   watchUserLocation = () => {
     const success = (position) => {
       const { latitude, longitude, speed, altitude, heading } = position.coords;
-      this.setState({ gpsLongitude: longitude, gpsLatitude: latitude });
+      this.setState({
+        gpsLongitude: longitude,
+        gpsLatitude: latitude,
+        gpsSpeed: speed,
+        gpsAltitude: altitude,
+        gpsHeading: heading,
+      });
     };
 
     const error = () => {
@@ -59,12 +69,19 @@ class Home extends Component {
   };
 
   render() {
-    const { selectedTab, locationWatchId } = this.state;
+    console.log(this.state.selectedTab);
+
+    const {
+      selectedTab,
+      locationWatchId,
+
+    } = this.state;
 
     return (
       <div className="Home">
         <UserNav />
         <LocationNav
+          handleClick={this.selectTab}
           locationWatchId={locationWatchId}
           onWatchUserLocation={this.watchUserLocation}
           onStopWatchingLocation={this.stopWatchingLocation}
@@ -78,6 +95,7 @@ class Home extends Component {
               gpsLatitude={this.state.gpsLatitude}
             />
           </div>
+          {selectedTab === 'search' && <SearchBox />}
           {selectedTab === 'weather' && <Weather />}
           {selectedTab === 'metrics' && <Metrics />}
           {selectedTab === 'saved' && <Saved />}
