@@ -26,6 +26,10 @@ class SearchBox extends Component {
     const apiKey = process.env.REACT_APP_API_KEY;
     const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${placeName}&inputtype=textquery&fields=geometry&locationbias=circle:35000@47.54.493881,-3.104226&key=${apiKey}`;
     fetch(proxyurl + url)
+      .then(
+        this.props.onLoading(true),
+        this.props.onResetSelectedTab()
+      )
       .then((result) => {
         return result.json();
       })
@@ -33,6 +37,7 @@ class SearchBox extends Component {
         const { lng, lat } = data.candidates[0].geometry.location;
         const locationCoords = [lng, lat];
         this.props.onSearchLocation(locationCoords);
+        this.props.onLoading(false);
       })
       .catch(() => {
         console.log('Can\'t get coordinates!');

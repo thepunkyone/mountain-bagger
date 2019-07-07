@@ -16,6 +16,7 @@ class Home extends Component {
     super(props);
     this.state = {
       selectedTab: 'home',
+      loading: false,
       gpsLongitude: '',
       gpsLatitude: '',
       gpsSpeed: '',
@@ -30,6 +31,10 @@ class Home extends Component {
     this.setState({ searchLocationCoords: locationCoords });
   };
 
+  resetSelectedTab = () => {
+    this.setState({ selectedTab: 'home' });
+  };
+
   selectTab = (e) => {
     e.preventDefault();
     const selectedId = e.target.id;
@@ -39,6 +44,10 @@ class Home extends Component {
   stopWatchingLocation = () => {
     navigator.geolocation.clearWatch(this.state.locationWatchId);
     this.setState({ gpsLongitude: '', gpsLatitude: '', locationWatchId: null });
+  };
+
+  toggleLoading = (boolean) => {
+    this.setState({ loading: boolean });
   };
 
   watchUserLocation = () => {
@@ -74,14 +83,16 @@ class Home extends Component {
   };
 
   render() {
+    console.log('Loading', this.state.loading);
     const {
       selectedTab,
+      loading,
       gpsLongitude,
       gpsLatitude,
       locationWatchId,
       searchLocationCoords,
     } = this.state;
-    
+
     return (
       <div className="Home">
         <UserNav />
@@ -101,11 +112,20 @@ class Home extends Component {
               searchLocationCoords={searchLocationCoords}
             />
           </div>
-          {selectedTab === 'search' && <SearchBox onSearchLocation={this.handleSearchLocation} />}
+          {selectedTab === 'search' &&
+            (
+              <SearchBox
+                onSearchLocation={this.handleSearchLocation}
+                onLoading={this.toggleLoading}
+                onResetSelectedTab={this.resetSelectedTab}
+              />
+            )
+          }
           {selectedTab === 'weather' && <Weather />}
           {selectedTab === 'metrics' && <Metrics />}
           {selectedTab === 'saved' && <Saved />}
           {selectedTab === 'create-new' && <CreateNew />}
+          {loading && <div className="loading-animation"><div className="lds-ripple"><div /><div /></div></div>}
         </div>
         <ToolsNav
           handleClick={this.selectTab}
