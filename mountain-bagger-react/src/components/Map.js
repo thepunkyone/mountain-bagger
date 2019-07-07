@@ -4,6 +4,7 @@ import SaveForm from './SaveForm';
 import '../style/Map.scss';
 import GpsFixedIcon from '../img/gps_fixed_24px.svg';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import PlaceIcon from '@material-ui/icons/Place';
 
 const MapBox = ReactMapboxG1({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
@@ -18,6 +19,12 @@ const downloadIconStyle = {
   right: '1rem',
   filter: 'drop-shadow(1px 1px 2px #222222)',
 };
+
+const placeIconStyle = {
+  width: '24px',
+  height: '24px',
+  color: '#0F590D',
+}
 
 let center;
 let bounds;
@@ -73,24 +80,23 @@ const Map = (props) => {
           onMoveEnd={(map) => {bounds = map.getBounds(); center = map.getCenter(); onGetCenterCoords(center)}}
           onStyleLoad={(map) => {bounds = map.getBounds(); center = map.getCenter(); onGetCenterCoords(center)}}
         >
-          <Layer
-            type="symbol"
+          <Marker
             id="marker-start"
-            layout={{ 'icon-image': 'mountain-15' }}
+            coordinates={marker}
+            anchor="bottom"
           >
-            <Feature coordinates={marker} />
-          </Layer>
-
+            <PlaceIcon style={ {...placeIconStyle, color: '#20B11D'} } />
+          </Marker>
           {
             { endLongitude } &&
             (
-              <Layer
-                type="symbol"
+              <Marker
                 id="marker-end"
-                layout={{ 'icon-image': 'marker-15' }}
+                coordinates={[endLongitude, endLatitude]}
+                anchor="bottom"
               >
-                <Feature coordinates={[endLongitude, endLatitude]} />
-              </Layer>
+                <PlaceIcon style={placeIconStyle} />
+              </Marker>
             )
           }
           

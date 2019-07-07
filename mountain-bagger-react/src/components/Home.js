@@ -22,8 +22,13 @@ class Home extends Component {
       gpsAltitude: '',
       gpsHeading: '',
       locationWatchId: null,
+      searchLocationCoords: '',
     };
   }
+
+  handleSearchLocation = (locationCoords) => {
+    this.setState({ searchLocationCoords: locationCoords });
+  };
 
   selectTab = (e) => {
     e.preventDefault();
@@ -69,14 +74,14 @@ class Home extends Component {
   };
 
   render() {
-    console.log(this.state.selectedTab);
-
     const {
       selectedTab,
+      gpsLongitude,
+      gpsLatitude,
       locationWatchId,
-
+      searchLocationCoords,
     } = this.state;
-
+    
     return (
       <div className="Home">
         <UserNav />
@@ -90,12 +95,13 @@ class Home extends Component {
           <div>
             <MapContainer
               userId={this.props.id}
-              selectedTab={this.state.selectedTab}
-              gpsLongitude={this.state.gpsLongitude}
-              gpsLatitude={this.state.gpsLatitude}
+              selectedTab={selectedTab}
+              gpsLongitude={gpsLongitude}
+              gpsLatitude={gpsLatitude}
+              searchLocationCoords={searchLocationCoords}
             />
           </div>
-          {selectedTab === 'search' && <SearchBox />}
+          {selectedTab === 'search' && <SearchBox onSearchLocation={this.handleSearchLocation} />}
           {selectedTab === 'weather' && <Weather />}
           {selectedTab === 'metrics' && <Metrics />}
           {selectedTab === 'saved' && <Saved />}
@@ -103,7 +109,7 @@ class Home extends Component {
         </div>
         <ToolsNav
           handleClick={this.selectTab}
-          selectedTab={this.state.selectedTab}
+          selectedTab={selectedTab}
         />
       </div>
     );

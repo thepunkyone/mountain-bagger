@@ -12,7 +12,6 @@ class SearchBox extends Component {
     super(props);
     this.state = {
       placeName: '',
-      locationCoordinates: '',
     };
   }
 
@@ -31,7 +30,9 @@ class SearchBox extends Component {
         return result.json();
       })
       .then((data) => {
-        this.setState({ locationCoordinates: data.candidates[0].geometry.location });
+        const { lng, lat } = data.candidates[0].geometry.location;
+        const locationCoords = [lng, lat];
+        this.props.onSearchLocation(locationCoords);
       })
       .catch(() => {
         console.log('Can\'t get coordinates!');
@@ -39,7 +40,6 @@ class SearchBox extends Component {
   };
 
   render() {
-    console.log(this.state.locationCoordinates);
     return (
       <div className="SearchBox">
         <form onSubmit={this.handlePlaceSearch}>

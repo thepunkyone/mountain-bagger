@@ -37,10 +37,18 @@ class MapContainer extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     this.getCenterCoords();
-    if (this.props.gpsLongitude && this.props.gpsLongitude !== prevProps.gpsLongitude) {
+    const { gpsLongitude, gpsLatitude, searchLocationCoords } = this.props;
+    if (gpsLongitude && gpsLongitude !== prevProps.gpsLongitude) {
       this.setState({
-        longitude: this.props.gpsLongitude,
-        latitude: this.props.gpsLatitude,
+        longitude: gpsLongitude,
+        latitude: gpsLatitude,
+      });
+    }
+    if (searchLocationCoords && searchLocationCoords[0] !== prevProps.searchLocationCoords[0]) {
+      this.updateMarkerPosition(searchLocationCoords);
+      this.setState({
+        longitude: searchLocationCoords[0],
+        latitude: searchLocationCoords[1],
       });
     }
   }
@@ -199,6 +207,10 @@ class MapContainer extends Component {
       width: window.innerWidth,
       height: window.innerHeight - 174,
     });
+  };
+
+  updateMarkerPosition = (searchCoords) => {
+    this.setState({ marker: searchCoords });
   };
 
   render() {
