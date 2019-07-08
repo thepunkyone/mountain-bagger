@@ -103,7 +103,7 @@ const Map = (props) => {
             <PlaceIcon style={ {...placeIconStyle, color: '#20B11D'} } />
           </Marker>
           {
-            endLongitude &&
+            endLongitude && selectedTab === "create-new" &&
             (
               <Marker
                 id="marker-end"
@@ -117,7 +117,7 @@ const Map = (props) => {
           }
           
           {
-            Object.keys(route).length !== 0 && (
+            Object.keys(route).length !== 0 && selectedTab === "create-new" && (
               <Layer
                 type="line"
                 layout={{
@@ -153,7 +153,7 @@ const Map = (props) => {
           onClick={onGenerateStaticMap('Map', bounds)}
         />
       }
-      { route &&
+      { route && selectedTab === "create-new" &&
         <div className="route-options">
           <div className="save-options">
             <div className="modes-of-transport">

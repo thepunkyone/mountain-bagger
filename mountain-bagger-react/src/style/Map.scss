@@ -56,3 +56,10 @@
   }
 
 }
+
+.save-form {
+  input {
+    width: calc(100% - 1rem);
+    margin-top: .3rem;
+  }
+}

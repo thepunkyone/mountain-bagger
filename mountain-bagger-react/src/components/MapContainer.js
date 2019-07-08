@@ -172,14 +172,16 @@ class MapContainer extends Component {
   };
 
   handleMapClick = (map, evt) => {
-    const coordsObj = evt.lngLat;
-    const coordinates = Object.keys(coordsObj).map((key) => {
-      return coordsObj[key];
-    });
-    const endLongitude = coordinates[0];
-    const endLatitude = coordinates[1];
-    const walkingOrCycling = this.state.walkingOrCycling;
-    this.getRoute(endLongitude, endLatitude, walkingOrCycling);
+    if (this.props.selectedTab === "create-new") {
+      const coordsObj = evt.lngLat;
+      const coordinates = Object.keys(coordsObj).map((key) => {
+        return coordsObj[key];
+      });
+      const endLongitude = coordinates[0];
+      const endLatitude = coordinates[1];
+      const walkingOrCycling = this.state.walkingOrCycling;
+      this.getRoute(endLongitude, endLatitude, walkingOrCycling);
+    }
   };
 
   handleModeOfTransport = (event) => {
@@ -227,7 +229,6 @@ class MapContainer extends Component {
 
   render() {
     window.onresize = this.setMapDimensions;
-    console.log(this.state.walkingOrCycling);
 
     const {
       userId,
