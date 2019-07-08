@@ -117,6 +117,7 @@ class Home extends Component {
               gpsLongitude={gpsLongitude}
               gpsLatitude={gpsLatitude}
               searchLocationCoords={searchLocationCoords}
+              onToggleLoading={this.toggleLoading}
             />
           </div>
           {selectedTab === 'search' &&

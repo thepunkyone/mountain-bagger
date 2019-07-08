@@ -138,6 +138,7 @@ class MapContainer extends Component {
     const token = MAPBOX_TOKEN;
     const apiRequest = `${BASE_URL}/${walkingOrCycling}/${marker[0]},${marker[1]};${endLongitude},${endLatitude}${URL_QUERY}${token}`;
     fetch(apiRequest)
+      .then(this.props.onToggleLoading(true))
       .then(response => response.json())
       .then(data => data.routes[0])
       .then(data => {
@@ -153,6 +154,7 @@ class MapContainer extends Component {
           duration,
           distance,
         });
+        this.props.onToggleLoading(false);
       });
   };
 
