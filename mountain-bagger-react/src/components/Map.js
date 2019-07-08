@@ -6,6 +6,8 @@ import GpsFixedIcon from '../img/gps_fixed_24px.svg';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
 import PlaceIcon from '@material-ui/icons/Place';
 
 const MapBox = ReactMapboxG1({
@@ -197,8 +199,18 @@ const Map = (props) => {
             }
             { !saveForm &&
             <div className="save-clear">
-              <button onClick={() => onToggleSaveForm(true)}>Save</button>
-              <button onClick={onClearRoute}>Clear</button>
+              <button onClick={() => onToggleSaveForm(true)}>
+                <CheckCircleIcon />
+                <span>
+                  Save
+                </span>
+              </button>
+              <button onClick={onClearRoute}>
+                <CancelIcon />
+                <span>
+                  Clear
+                </span>
+              </button>
             </div>
             }
             { saveForm &&
@@ -207,6 +219,7 @@ const Map = (props) => {
                 saveRoute={onSaveRoute}
                 saveStaticMap={onGenerateStaticMap}
                 clearRoute={onClearRoute}
+                toggleSaveForm={onToggleSaveForm}
               />
             }
           </div>

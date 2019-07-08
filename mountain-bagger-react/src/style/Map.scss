@@ -30,4 +30,29 @@
     cursor: pointer;
   }
 
+  .save-clear button {
+    color: white;
+    border-radius: $border-radius;
+    width: 43%;
+    font-size: 1.2rem;
+
+    &:first-child {
+      background: $green-accent;
+    }
+
+    &:last-child {
+      background: orange;
+    }
+  
+    .MuiSvgIcon-root, span {
+      display: inline-block;
+      vertical-align: middle;
+      padding: 5px;
+    }
+
+    .MuiSvgIcon-root {
+      padding-right: 0;
+    }
+  }
+
 }
