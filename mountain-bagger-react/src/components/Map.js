@@ -1,8 +1,10 @@
-import React from 'react';
-import ReactMapboxG1, { Layer, Feature, Marker } from 'react-mapbox-gl';
+import React, { Fragment } from 'react';
+import ReactMapboxG1, { Layer, Feature, Marker, Popup } from 'react-mapbox-gl';
 import SaveForm from './SaveForm';
 import '../style/Map.scss';
 import GpsFixedIcon from '../img/gps_fixed_24px.svg';
+import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
+import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import PlaceIcon from '@material-ui/icons/Place';
 
@@ -88,7 +90,7 @@ const Map = (props) => {
             <PlaceIcon style={ {...placeIconStyle, color: '#20B11D'} } />
           </Marker>
           {
-            { endLongitude } &&
+            endLongitude &&
             (
               <Marker
                 id="marker-end"
@@ -97,6 +99,7 @@ const Map = (props) => {
               >
                 <PlaceIcon style={placeIconStyle} />
               </Marker>
+                
             )
           }
           
@@ -135,37 +138,49 @@ const Map = (props) => {
         style={{ ...downloadIconStyle, cursor: 'pointer' }}
         onClick={onGenerateStaticMap('Map', bounds)}
       />
-      <div className="save-options">
-        <div className="modes-of-transport">
-          <button onClick={onHandleModeOfTransport} value="walking">Walking</button>
-          <button onClick={onHandleModeOfTransport} value="cycling">Cycling</button>
+      <div className="route-options">
+        <div className="save-options">
+          <div className="modes-of-transport">
+            <button
+              onClick={onHandleModeOfTransport}
+              value="walking"
+            >
+              <DirectionsWalkIcon />
+            </button>
+            <button
+              onClick={onHandleModeOfTransport}
+              value="cycling"
+            >
+              <DirectionsBikeIcon />
+            </button>
+          </div>
+          <div className="clear-route">
+            <button onClick={onClearRoute}>Clear Route</button>
+          </div>
+          {/* <SaveForm
+            boundingBox={bounds}
+            saveRoute={onSaveRoute}
+            saveStaticMap={onGenerateStaticMap}
+          /> */}
         </div>
-        <div className="clear-route">
-          <button onClick={onClearRoute}>Clear Route</button>
-        </div>
-        <SaveForm
-          boundingBox={bounds}
-          saveRoute={onSaveRoute}
-          saveStaticMap={onGenerateStaticMap}
-        />
-      </div>
-      {
-        duration && (
-          <div className="route-estimates">
-            <div className="routeInfomation">
-              <div className="modeOfTransport">
-                {`${modeOfTravel}:`}
-              </div>
-              <div className="distance">
-                {`Distance: ${distance}km`}
-              </div>
-              <div className="duration">
-                {`Time: ${duration}mins`}
+        {
+          duration && (
+            <div className="route-estimates">
+              <div className="routeInfomation">
+                <div className="modeOfTransport">
+                  {`${modeOfTravel}:`}
+                </div>
+                <div className="distance">
+                  {`Distance: ${distance}km`}
+                </div>
+                <div className="duration">
+                  {`Time: ${duration}mins`}
+                </div>
               </div>
             </div>
-          </div>
-        )
-      }
+          )
+        }
+      </div>
     </div>
   );
 }

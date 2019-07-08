@@ -1,3 +1,5 @@
+@import './variables';
+
 .mapboxgl-map {
   position: relative;
   text-align: left; 
@@ -8,14 +10,15 @@
   cursor: crosshair;
 }
 
-.route-estimates {
+.route-options {
   position: absolute;
-  bottom: 100px;
-  left: 30%;
-}
-
-.save-options {
-  position: absolute;
-  top: 0;
-  left: 0;
+  margin: $box-padding;
+  border-radius: $border-radius;
+  width: 320px;
+  bottom: $box-padding;
+  padding: .5rem;
+  left: calc(50% - 160px);
+  background: rgba($white, .5);
+  color: black;
+  z-index: 100;
 }
