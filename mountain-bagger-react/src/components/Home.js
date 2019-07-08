@@ -26,7 +26,22 @@ class Home extends Component {
       locationWatchId: null,
       searchLocationCoords: '',
     };
+    this.node = React.createRef();
   }
+
+  // componentWillMount() {
+  //   document.addEventListener('mousedown', this.handleClick, false);
+  // }
+
+  // componentWillUnmount() {
+  //   document.removeEventListener('mousedown', this.handleClick, false);
+  // }
+
+  // handleClick = (e) => {
+  //   if (this.state.selectedTab === 'search' && !this.node.contains(e.target)) {
+  //     this.resetSelectedTab();
+  //   }
+  // };
 
   handleSearchLocation = (locationCoords) => {
     this.setState({ searchLocationCoords: locationCoords });
@@ -102,6 +117,7 @@ class Home extends Component {
       <div className="Home">
         <UserNav />
         <LocationNav
+          ref={this.node}
           handleClick={this.selectTab}
           locationWatchId={locationWatchId}
           onWatchUserLocation={this.watchUserLocation}

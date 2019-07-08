@@ -30,6 +30,9 @@ class SaveForm extends Component {
           <button onClick={() => this.props.saveStaticMap(this.state.saveName, this.props.boundingBox)}>
             Save offline map
           </button>
+          <button onClick={() => this.props.clearRoute()}>
+            Clear
+          </button>
         </form>
       </div>
     );

@@ -145,10 +145,12 @@ const Map = (props) => {
           }
         </MapBox>
       </div>
-      <CloudDownloadIcon
-        style={{ ...downloadIconStyle, cursor: 'pointer' }}
-        onClick={onGenerateStaticMap('Map', bounds)}
-      />
+      { selectedTab !== "search" && !saveForm &&
+        <CloudDownloadIcon
+          style={{ ...downloadIconStyle, cursor: 'pointer' }}
+          onClick={onGenerateStaticMap('Map', bounds)}
+        />
+      }
       { route &&
         <div className="route-options">
           <div className="save-options">
@@ -204,6 +206,7 @@ const Map = (props) => {
                 boundingBox={bounds}
                 saveRoute={onSaveRoute}
                 saveStaticMap={onGenerateStaticMap}
+                clearRoute={onClearRoute}
               />
             }
           </div>

@@ -3,7 +3,7 @@
 .SearchBox {
   width: 100%;
   height: 60px;
-  background: $green-accent;
+  background: rgba($white, .5);
   position: absolute;
   top: 0;
   left: 0;
@@ -29,7 +29,7 @@
   button {
     cursor: pointer;
     background: transparent;
-    color: $dark-green-accent;
+    color: $green-accent;
     margin: 0;
     padding: 0;
     border: none;

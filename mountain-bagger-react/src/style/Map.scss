@@ -12,12 +12,11 @@
 
 .route-options {
   position: absolute;
-  margin: $box-padding;
   border-radius: $border-radius;
   width: 320px;
   bottom: $box-padding;
   padding: .5rem;
-  left: calc(50% - 160px);
+  left: calc(50% - (160px + .5rem));
   background: rgba($white, .5);
   color: black;
   z-index: 100;
@@ -26,7 +25,7 @@
     position: relative;
     border: none;
     padding: 0;
-    margin: 4px;
+    margin: 5px 10px 5px 10px;
     background: transparent;
     cursor: pointer;
   }
