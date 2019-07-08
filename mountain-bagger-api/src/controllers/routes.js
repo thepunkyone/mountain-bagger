@@ -41,3 +41,19 @@ exports.listRoutes = (req, res) => {
     }
   })
 };
+
+exports.findRoute = (req, res) => {
+  User.findById(req.params.userId, (err, user) => {
+    if (!user) { 
+      res.status(400).json({ error: 'This user could not be found' });
+    } else {
+      Route.findById(req.params.routeId, (err, route) => {
+        if (!route) { 
+          res.status(400).json({ error: 'Route information could not be found' });
+        } else {
+          res.status(200).json(route);
+        }
+      })
+    }
+  })
+}
