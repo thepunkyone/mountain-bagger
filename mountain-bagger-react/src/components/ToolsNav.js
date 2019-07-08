@@ -40,13 +40,13 @@ const selectedIconLargeStyleLastChild = {
 };
 
 const ToolsNav = (props) => {
-  const { selectedTab } = props;
+  const { selectedTab, handleClick } = props;
 
   return (
     <nav className="ToolsNav nav-main">
       <Link
         to="#"
-        onClick={(e) => props.handleClick(e)}
+        onClick={(e) => handleClick(e)}
       >
         <WbSunnyIcon
           style={selectedTab === 'weather' ? selectedIconLargeStyleFirstChild : menuIconLargeStyleFirstChild}
@@ -55,7 +55,7 @@ const ToolsNav = (props) => {
       </Link>
       <Link
         to="#"
-        onClick={(e) => props.handleClick(e)}
+        onClick={(e) => handleClick(e)}
       >
         <InsertChartIcon
           style={selectedTab === 'metrics' ? selectedIconLargeStyle : menuIconLargeStyle}
@@ -66,7 +66,7 @@ const ToolsNav = (props) => {
         to="/home"
         onClick={(e) => {
           props.history.push('/home');
-          props.handleClick(e);
+          handleClick(e);
         }}
       >
         <HomeIcon
@@ -76,7 +76,7 @@ const ToolsNav = (props) => {
       </Link>
       <Link
         to="#"
-        onClick={(e) => props.handleClick(e)}
+        onClick={(e) => handleClick(e)}
       >
         <MapIcon
           style={selectedTab === 'saved' ? selectedIconLargeStyle : menuIconLargeStyle}
@@ -85,7 +85,7 @@ const ToolsNav = (props) => {
       </Link>
       <Link
         to="#"
-        onClick={(e) => props.handleClick(e)}
+        onClick={(e) => handleClick(e)}
       >
         <AddBoxIcon
           style={selectedTab === 'create-new' ? selectedIconLargeStyleLastChild : menuIconLargeStyleLastChild}

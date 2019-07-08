@@ -28,6 +28,7 @@ class SearchBox extends Component {
     fetch(proxyurl + url)
       .then(
         this.props.onLoading(true),
+        this.props.onSearchLocation(''),
         this.props.onResetSelectedTab()
       )
       .then((result) => {

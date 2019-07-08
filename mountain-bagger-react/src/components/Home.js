@@ -19,6 +19,7 @@ class Home extends Component {
       loading: false,
       gpsLongitude: '',
       gpsLatitude: '',
+      locationFocus: '',
       gpsSpeed: '',
       gpsAltitude: '',
       gpsHeading: '',
@@ -39,6 +40,10 @@ class Home extends Component {
     e.preventDefault();
     const selectedId = e.target.id;
     this.setState({ selectedTab: selectedId });
+  };
+
+  setLocationFocus = (string) => {
+    this.setState({ locationFocus: string });
   };
 
   stopWatchingLocation = () => {
@@ -83,9 +88,9 @@ class Home extends Component {
   };
 
   render() {
-    console.log('Loading', this.state.loading);
     const {
       selectedTab,
+      locationFocus,
       loading,
       gpsLongitude,
       gpsLatitude,
@@ -101,12 +106,14 @@ class Home extends Component {
           locationWatchId={locationWatchId}
           onWatchUserLocation={this.watchUserLocation}
           onStopWatchingLocation={this.stopWatchingLocation}
+          onLocationFocus={this.setLocationFocus}
         />
         <div className="content">
           <div>
             <MapContainer
               userId={this.props.id}
               selectedTab={selectedTab}
+              locationFocus={locationFocus}
               gpsLongitude={gpsLongitude}
               gpsLatitude={gpsLatitude}
               searchLocationCoords={searchLocationCoords}

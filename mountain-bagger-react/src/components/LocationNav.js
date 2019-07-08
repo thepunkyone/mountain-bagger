@@ -21,8 +21,10 @@ const menuIconLightStyle = {
 const LocationNav = (props) => {
 
   const {
+    handleClick,
     onWatchUserLocation,
     onStopWatchingLocation,
+    onLocationFocus,
     locationWatchId,
   } = props;
 
@@ -49,25 +51,45 @@ const LocationNav = (props) => {
       </div>
       {locationWatchId === null ?
         (
-          <GpsNotFixedIcon
-            style={{ ...menuIconStyle, cursor: 'pointer' }}
-            onClick={() => onWatchUserLocation()}
-          />
+          <Link
+            to="#"
+            onClick={(e) => {
+              handleClick(e);
+              onWatchUserLocation();
+              onLocationFocus('gps');
+            }}
+          >
+            <GpsNotFixedIcon
+              style={menuIconStyle}
+            />
+            <div id="home" className="tab-overlay" />
+          </Link>
         )
         :
         (
-          <GpsFixedIcon
-            style={{ ...menuIconStyle, cursor: 'pointer' }}
-            onClick={() => onStopWatchingLocation(locationWatchId)}
-          />
+          <Link
+            to="#"
+            onClick={(e) => {
+              handleClick(e);
+              onStopWatchingLocation(locationWatchId);
+            }}
+          >
+            <GpsFixedIcon
+              style={menuIconStyle}
+            />
+            <div id="home" className="tab-overlay" />
+          </Link>
         )
       }
       <Link
         to="#"
-        onClick={(e) => props.handleClick(e)}
+        onClick={(e) => {
+          handleClick(e);
+          onLocationFocus('marker');
+        }}
       >
         <SearchIcon
-          style={{ ...menuIconStyle, cursor: 'pointer' }}
+          style={menuIconStyle}
         />
         <div id="search" className="tab-overlay" />
       </Link>

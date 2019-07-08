@@ -37,18 +37,23 @@ class MapContainer extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     this.getCenterCoords();
-    const { gpsLongitude, gpsLatitude, searchLocationCoords } = this.props;
-    if (gpsLongitude && gpsLongitude !== prevProps.gpsLongitude) {
+    const { locationFocus, gpsLongitude, gpsLatitude, searchLocationCoords } = this.props;
+
+    if (locationFocus === 'gps' && gpsLongitude && gpsLongitude !== prevProps.gpsLongitude) {
       this.setState({
         longitude: gpsLongitude,
         latitude: gpsLatitude,
       });
     }
-    if (searchLocationCoords && searchLocationCoords[0] !== prevProps.searchLocationCoords[0]) {
+
+    if (locationFocus === 'marker' && searchLocationCoords &&
+        searchLocationCoords[0] !== prevProps.searchLocationCoords[0]) {
       this.updateMarkerPosition(searchLocationCoords);
+      const lng = searchLocationCoords[0];
+      const lat = searchLocationCoords[1];
       this.setState({
-        longitude: searchLocationCoords[0],
-        latitude: searchLocationCoords[1],
+        longitude: lng,
+        latitude: lat,
       });
     }
   }
@@ -214,9 +219,9 @@ class MapContainer extends Component {
   };
 
   render() {
-    console.log(this.state.staticMap);
-
     window.onresize = this.setMapDimensions;
+    console.log('SEARCH LOCATION', this.props.searchLocationCoords);
+    console.log('FOCUS', this.props.locationFocus);
 
     const {
       userId,
@@ -276,16 +281,3 @@ class MapContainer extends Component {
 }
 
 export default MapContainer;
-
-//gets props from Home.js (selectedTab) and App.js (userId)
-
-//passes conditional props onto map component depending on
-//whether (selectedTab is Create New or Not)
-
-//layer display on the Map should be conditional also
-
-//if SaveMap subroute is chosen, then route details
-//won't apper (display a button instead?)
-
-//if Create Route subroute is chosen, then save offline map
-//option will appear.
