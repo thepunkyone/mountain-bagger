@@ -25,3 +25,4 @@ exports.getUser = (req,res) => {
     }
   })
 }
+ 
