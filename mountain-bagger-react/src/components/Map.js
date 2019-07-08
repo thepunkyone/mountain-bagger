@@ -28,6 +28,15 @@ const placeIconStyle = {
   color: '#0F590D',
 }
 
+const directionsIconStyle = {
+  width: '30px',
+  height: '24px',
+  color: 'white',
+  borderRadius: '100px',
+  background: '#20B11D',
+  padding: '8px',
+}
+
 let center;
 let bounds;
 
@@ -45,6 +54,7 @@ const Map = (props) => {
     onHandleModeOfTransport,
     onMapClick,
     onSaveRoute,
+    onToggleSaveForm,
     onZoom,
 
     width,
@@ -59,6 +69,7 @@ const Map = (props) => {
     walkingOrCycling,
     duration,
     distance,
+    saveForm,
   } = props;
 
   const modeOfTravel = walkingOrCycling.charAt(0).toUpperCase() + walkingOrCycling.slice(1);
@@ -138,49 +149,66 @@ const Map = (props) => {
         style={{ ...downloadIconStyle, cursor: 'pointer' }}
         onClick={onGenerateStaticMap('Map', bounds)}
       />
-      <div className="route-options">
-        <div className="save-options">
-          <div className="modes-of-transport">
-            <button
-              onClick={onHandleModeOfTransport}
-              value="walking"
-            >
-              <DirectionsWalkIcon />
-            </button>
-            <button
-              onClick={onHandleModeOfTransport}
-              value="cycling"
-            >
-              <DirectionsBikeIcon />
-            </button>
-          </div>
-          <div className="clear-route">
-            <button onClick={onClearRoute}>Clear Route</button>
-          </div>
-          {/* <SaveForm
-            boundingBox={bounds}
-            saveRoute={onSaveRoute}
-            saveStaticMap={onGenerateStaticMap}
-          /> */}
-        </div>
-        {
-          duration && (
-            <div className="route-estimates">
-              <div className="routeInfomation">
-                <div className="modeOfTransport">
-                  {`${modeOfTravel}:`}
-                </div>
-                <div className="distance">
-                  {`Distance: ${distance}km`}
-                </div>
-                <div className="duration">
-                  {`Time: ${duration}mins`}
-                </div>
-              </div>
+      { route &&
+        <div className="route-options">
+          <div className="save-options">
+            <div className="modes-of-transport">
+              <button
+                onClick={(e) => onHandleModeOfTransport(e)}
+              >
+                <DirectionsWalkIcon 
+                  style={ 
+                    walkingOrCycling === "walking" ?
+                    directionsIconStyle : {...directionsIconStyle, background: '#888888'}
+                  }
+                />
+                <div id="walking" className="tab-overlay" />
+              </button>
+              <button
+                onClick={(e) => onHandleModeOfTransport(e)}
+              >
+                <DirectionsBikeIcon
+                  style={ 
+                    walkingOrCycling === "cycling" ?
+                    directionsIconStyle : {...directionsIconStyle, background: '#888888'}
+                  }
+                />
+                <div id="cycling" className="tab-overlay" />
+              </button>
             </div>
-          )
-        }
-      </div>
+            {
+              duration && (
+                <div className="route-estimates">
+                  <div className="routeInfomation">
+                    {/* <div className="modeOfTransport">
+                      {`${modeOfTravel}:`}
+                    </div> */}
+                    <div className="distance">
+                      {`Distance: ${distance}km`}
+                    </div>
+                    <div className="duration">
+                      {`Time: ${duration}mins`}
+                    </div>
+                  </div>
+                </div>
+              )
+            }
+            { !saveForm &&
+            <div className="save-clear">
+              <button onClick={() => onToggleSaveForm(true)}>Save</button>
+              <button onClick={onClearRoute}>Clear</button>
+            </div>
+            }
+            { saveForm &&
+              <SaveForm
+                boundingBox={bounds}
+                saveRoute={onSaveRoute}
+                saveStaticMap={onGenerateStaticMap}
+              />
+            }
+          </div>
+        </div>
+      }
     </div>
   );
 }

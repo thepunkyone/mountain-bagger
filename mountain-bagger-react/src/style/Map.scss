@@ -21,4 +21,14 @@
   background: rgba($white, .5);
   color: black;
   z-index: 100;
+
+  button {
+    position: relative;
+    border: none;
+    padding: 0;
+    margin: 4px;
+    background: transparent;
+    cursor: pointer;
+  }
+
 }

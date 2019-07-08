@@ -32,6 +32,7 @@ class MapContainer extends Component {
         boundingBox: '',
         staticImageUrl: '',
       },
+      saveForm: false,
     };
   }
 
@@ -78,7 +79,7 @@ class MapContainer extends Component {
             },
           });
         })
-        .catch(() => alert('image can\'t be retrieved'));
+        .catch(() => console.log('image can\'t be retrieved'));
 
     } else if (route && bounds) {
       const geojson = {
@@ -101,7 +102,7 @@ class MapContainer extends Component {
         return `geojson(${encodeURIComponent(JSON.stringify(geojson))})/`;
       };
 
-      fetch(`${STYLES_URL}/static/${encodeGeoJson()}${longitude},${latitude},${zoom},0,0/600x600?access_token=${MAPBOX_TOKEN}`)
+      fetch(`${STYLES_URL}/static/${encodeGeoJson()}${longitude},${latitude},${zoom},0,0/${width}x${height}?access_token=${MAPBOX_TOKEN}`)
         .then((data) => {
           this.setState({
             staticMap: {
@@ -184,7 +185,7 @@ class MapContainer extends Component {
   handleModeOfTransport = (event) => {
     const endLongitude = this.state.endLongitude;
     const endLatitude = this.state.endLatitude;
-    const walkingOrCycling = event.target.value;
+    const walkingOrCycling = event.target.id;
     // endLongitude ? this.setState({...this.state, walkingOrCycling}) : this.getRoute(endLongitude, endLatitude, walkingOrCycling);
     if (endLongitude) {
       this.getRoute(endLongitude, endLatitude, walkingOrCycling);
@@ -195,6 +196,10 @@ class MapContainer extends Component {
       });
     }
   };
+
+  toggleSaveForm = (boolean) => {
+    this.setState({ saveForm: boolean });
+  }
 
   saveRoute = (routeName) => {
     this.setState({
@@ -245,6 +250,7 @@ class MapContainer extends Component {
       duration,
       distance,
       routeName,
+      saveForm,
     } = this.state;
 
     return (
@@ -261,6 +267,7 @@ class MapContainer extends Component {
         onHandleModeOfTransport={this.handleModeOfTransport}
         onMapClick={this.handleMapClick}
         onSaveRoute={this.saveRoute}
+        onToggleSaveForm={this.toggleSaveForm}
         onZoom={this.saveZoomSetting}
 
         width={width}
@@ -276,6 +283,7 @@ class MapContainer extends Component {
         duration={duration}
         distance={distance}
         routeName={routeName}
+        saveForm={saveForm}
       />
     );
   }
