@@ -5,8 +5,8 @@ const routeSchema = new mongoose.Schema({
   duration: Number,
   distance: Number,
   mapImage: String,
-  route: [Number],
-  userID: {
+  route: [[Number, Number]],
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   }

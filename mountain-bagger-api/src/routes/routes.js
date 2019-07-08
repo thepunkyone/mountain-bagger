@@ -6,4 +6,5 @@ const router = express.Router();
 router.post('/:userId/save-route', routeController.saveRoute);
 router.get('/:userId', routeController.listRoutes);
 
+router.get('/', routeController.status);
 module.exports = router;

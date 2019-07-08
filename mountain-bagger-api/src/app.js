@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const { createUser, getUser } = require('../controllers/users');
-const routeRouter = require('../routes/routes');
+const { create, getUser } = require('./controllers/users');
+const routeRouter = require('./routes/routes');
 
 
 const app = express();
@@ -10,7 +10,7 @@ app.use(express.json());
 app.use('/user', routeRouter);
 
 app.post('/login', getUser);
-app.post('/user', createUser);
+app.post('/user', create);
 
 
 app.get('/point', (req, res) => {
