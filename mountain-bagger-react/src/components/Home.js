@@ -107,8 +107,6 @@ class Home extends Component {
   };
 
   render() {
-    console.log(this.state.loading);
-
     const {
       selectedTab,
       locationFocus,
