@@ -30,19 +30,19 @@ class Home extends Component {
     this.node = React.createRef();
   }
 
-  // componentWillMount() {
-  //   document.addEventListener('mousedown', this.handleClick, false);
-  // }
+  componentWillMount() {
+    document.addEventListener('mousedown', this.handleClick, false);
+  }
 
-  // componentWillUnmount() {
-  //   document.removeEventListener('mousedown', this.handleClick, false);
-  // }
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClick, false);
+  }
 
-  // handleClick = (e) => {
-  //   if (this.state.selectedTab === 'search' && !this.node.contains(e.target)) {
-  //     this.resetSelectedTab();
-  //   }
-  // };
+  handleClick = (e) => {
+    if (this.state.selectedTab === 'search' && !this.node.current.contains(e.target)) {
+      this.resetSelectedTab();
+    }
+  };
 
   handleSearchLocation = (locationCoords) => {
     this.setState({ searchLocationCoords: locationCoords });
@@ -121,7 +121,6 @@ class Home extends Component {
       <div className="Home">
         <UserNav />
         <LocationNav
-          ref={this.node}
           handleClick={this.selectTab}
           locationWatchId={locationWatchId}
           onWatchUserLocation={this.watchUserLocation}
@@ -144,6 +143,7 @@ class Home extends Component {
           {selectedTab === 'search' &&
             (
               <SearchBox
+                someRef={this.node}
                 onSearchLocation={this.handleSearchLocation}
                 onLoading={this.toggleLoading}
                 onResetSelectedTab={this.resetSelectedTab}
@@ -154,7 +154,7 @@ class Home extends Component {
           {selectedTab === 'metrics' && <Metrics />}
           {selectedTab === 'saved' && <Saved />}
           {selectedTab === 'create-new' && <CreateNew />}
-          {loading && <div className="loading-gif"><img src={loadingGif}/></div>}
+          {loading && <div className="loading-gif"><img src={loadingGif} /></div>}
         </div>
         <ToolsNav
           handleClick={this.selectTab}

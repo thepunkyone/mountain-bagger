@@ -48,7 +48,7 @@ class SearchBox extends Component {
 
   render() {
     return (
-      <div className="SearchBox">
+      <div className="SearchBox" ref={this.props.someRef}>
         <form onSubmit={this.handlePlaceSearch}>
           <input type="text" placeholder="Enter placename" value={this.state.placeName} onChange={this.handleFieldChange} />
           <button type="submit">
