@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import MapIcon from '@material-ui/icons/Map';
 import InsertChartIcon from '@material-ui/icons/InsertChart';
@@ -40,13 +40,13 @@ const selectedIconLargeStyleLastChild = {
 };
 
 const ToolsNav = (props) => {
-  const { selectedTab } = props;
+  const { selectedTab, handleClick } = props;
 
   return (
     <nav className="ToolsNav nav-main">
       <Link
         to="#"
-        onClick={(e) => props.handleClick(e)}
+        onClick={(e) => handleClick(e)}
       >
         <WbSunnyIcon
           style={selectedTab === 'weather' ? selectedIconLargeStyleFirstChild : menuIconLargeStyleFirstChild}
@@ -55,7 +55,7 @@ const ToolsNav = (props) => {
       </Link>
       <Link
         to="#"
-        onClick={(e) => props.handleClick(e)}
+        onClick={(e) => handleClick(e)}
       >
         <InsertChartIcon
           style={selectedTab === 'metrics' ? selectedIconLargeStyle : menuIconLargeStyle}
@@ -63,8 +63,11 @@ const ToolsNav = (props) => {
         <div id="metrics" className="tab-overlay" />
       </Link>
       <Link
-        to="#"
-        onClick={(e) => props.handleClick(e)}
+        to="/home"
+        onClick={(e) => {
+          props.history.push('/home');
+          handleClick(e);
+        }}
       >
         <HomeIcon
           style={selectedTab === 'home' ? selectedIconLargeStyle : menuIconLargeStyle}
@@ -73,7 +76,7 @@ const ToolsNav = (props) => {
       </Link>
       <Link
         to="#"
-        onClick={(e) => props.handleClick(e)}
+        onClick={(e) => handleClick(e)}
       >
         <MapIcon
           style={selectedTab === 'saved' ? selectedIconLargeStyle : menuIconLargeStyle}
@@ -82,7 +85,7 @@ const ToolsNav = (props) => {
       </Link>
       <Link
         to="#"
-        onClick={(e) => props.handleClick(e)}
+        onClick={(e) => handleClick(e)}
       >
         <AddBoxIcon
           style={selectedTab === 'create-new' ? selectedIconLargeStyleLastChild : menuIconLargeStyleLastChild}
@@ -93,4 +96,4 @@ const ToolsNav = (props) => {
   );
 };
 
-export default ToolsNav;
+export default withRouter(ToolsNav);

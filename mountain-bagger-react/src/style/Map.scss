@@ -1,8 +1,65 @@
+@import './variables';
+
 .mapboxgl-map {
+  position: relative;
   text-align: left; 
   cursor: crosshair;
 }
 
 .mapboxgl-canvas {
   cursor: crosshair;
+}
+
+.route-options {
+  position: absolute;
+  border-radius: $border-radius;
+  width: 320px;
+  bottom: $box-padding;
+  padding: .5rem;
+  left: calc(50% - (160px + .5rem));
+  background: rgba($white, .5);
+  color: black;
+  z-index: 100;
+
+  button {
+    position: relative;
+    border: none;
+    padding: 0;
+    margin: 5px 10px 5px 10px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .save-clear button {
+    color: white;
+    border-radius: $border-radius;
+    width: 43%;
+    font-size: 1.2rem;
+
+    &:first-child {
+      background: $green-accent;
+    }
+
+    &:last-child {
+      background: orange;
+    }
+  
+    .MuiSvgIcon-root, span {
+      display: inline-block;
+      vertical-align: middle;
+      padding: 5px;
+    }
+
+    .MuiSvgIcon-root {
+      padding-right: 0;
+    }
+  }
+
+}
+
+.save-form {
+  input {
+    width: calc(100% - 1rem);
+    margin-top: .3rem;
+  }
 }

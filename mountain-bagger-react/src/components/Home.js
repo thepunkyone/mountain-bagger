@@ -1,49 +1,56 @@
 import React, { Component } from 'react';
 import '../style/Home.scss';
-import Logo from './Logo';
+import loadingGif from '../img/loading.gif';
+
+import LocationNav from './LocationNav';
+import SearchBox from './SearchBox';
+import UserNav from './UserNav';
 import ToolsNav from './ToolsNav';
 import Weather from './Weather';
 import Metrics from './Metrics';
 import Saved from './Saved';
 import CreateNew from './CreateNew';
-
-import MenuIcon from '@material-ui/icons/Menu';
-import SettingsIcon from '@material-ui/icons/Settings';
-import ExploreIcon from '@material-ui/icons/Explore';
-import GpsFixedIcon from '@material-ui/icons/GpsFixed';
-import SearchIcon from '@material-ui/icons/Search';
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-
-const logoIconStyle = {
-  width: '40px',
-  height: '40px',
-  marginBottom: '-10px',
-};
-
-const menuIconStyle = {
-  width: '42px',
-  height: '42px',
-  padding: '5px',
-};
-
-const downloadIconStyle = {
-  ...menuIconStyle,
-  filter: 'drop-shadow(1px 1px 2px #222222)',
-};
-
-const menuIconLightStyle = {
-  width: '42px',
-  height: '42px',
-  color: '#888888',
-};
+import MapContainer from './MapContainer';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedTab: 'home',
+      loading: false,
+      gpsLongitude: '',
+      gpsLatitude: '',
+      locationFocus: '',
+      gpsSpeed: '',
+      gpsAltitude: '',
+      gpsHeading: '',
+      locationWatchId: null,
+      searchLocationCoords: '',
     };
+    this.node = React.createRef();
   }
+
+  // componentWillMount() {
+  //   document.addEventListener('mousedown', this.handleClick, false);
+  // }
+
+  // componentWillUnmount() {
+  //   document.removeEventListener('mousedown', this.handleClick, false);
+  // }
+
+  // handleClick = (e) => {
+  //   if (this.state.selectedTab === 'search' && !this.node.contains(e.target)) {
+  //     this.resetSelectedTab();
+  //   }
+  // };
+
+  handleSearchLocation = (locationCoords) => {
+    this.setState({ searchLocationCoords: locationCoords });
+  };
+
+  resetSelectedTab = () => {
+    this.setState({ selectedTab: 'home' });
+  };
 
   selectTab = (e) => {
     e.preventDefault();
@@ -51,56 +58,107 @@ class Home extends Component {
     this.setState({ selectedTab: selectedId });
   };
 
+  setLocationFocus = (string) => {
+    this.setState({ locationFocus: string });
+  };
+
+  stopWatchingLocation = () => {
+    navigator.geolocation.clearWatch(this.state.locationWatchId);
+    this.setState({ gpsLongitude: '', gpsLatitude: '', locationWatchId: null });
+  };
+
+  toggleLoading = (boolean) => {
+    this.setState({ loading: boolean });
+  };
+
+  watchUserLocation = () => {
+    const success = (position) => {
+      const { latitude, longitude, speed, altitude, heading } = position.coords;
+      this.setState({
+        gpsLongitude: longitude,
+        gpsLatitude: latitude,
+        gpsSpeed: speed,
+        gpsAltitude: altitude,
+        gpsHeading: heading,
+      });
+      this.toggleLoading(false);
+    };
+
+    const error = () => {
+      this.toggleLoading(false);
+      console.log('Unable to retrieve your location');
+    };
+
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 60000,
+      maximumAge: 60000,
+    };
+
+    if (!navigator.geolocation) {
+      this.toggleLoading(false);
+      console.log('Geolocation is not supported by your browser');
+    } else {
+      console.log('Locating…');
+      this.setState({
+        locationWatchId: navigator.geolocation.watchPosition(success, error, options),
+      });
+    }
+  };
+
   render() {
-    const { selectedTab } = this.state;
+    const {
+      selectedTab,
+      locationFocus,
+      loading,
+      gpsLongitude,
+      gpsLatitude,
+      locationWatchId,
+      searchLocationCoords,
+    } = this.state;
+
     return (
       <div className="Home">
-        <nav className="UserNav nav-main">
-          <MenuIcon style={menuIconStyle} />
-          <h2>
-            <Logo iconStyle={logoIconStyle} />
-          </h2>
-          <SettingsIcon style={menuIconStyle} />
-        </nav>
-        <nav className="LocationNav nav-main">
-          <div className="nav-metrics">
-            <p className="menu-icon-light">
-              <span>
-                Altitude
-              </span>
-              <span>
-                156m
-              </span>
-            </p>
-            <p className="menu-icon-light">
-              <span>
-                Speed
-              </span>
-              <span>
-                2km/h
-              </span>
-            </p>
-            <ExploreIcon style={menuIconLightStyle} />
-          </div>
-          <GpsFixedIcon style={menuIconStyle} />
-          <SearchIcon style={menuIconStyle} />
-        </nav>
+        <UserNav />
+        <LocationNav
+          ref={this.node}
+          handleClick={this.selectTab}
+          locationWatchId={locationWatchId}
+          onWatchUserLocation={this.watchUserLocation}
+          onStopWatchingLocation={this.stopWatchingLocation}
+          onLocationFocus={this.setLocationFocus}
+          onToggleLoading={this.toggleLoading}
+        />
         <div className="content">
-          {selectedTab === 'home' &&
+          <div>
+            <MapContainer
+              userId={this.props.id}
+              selectedTab={selectedTab}
+              locationFocus={locationFocus}
+              gpsLongitude={gpsLongitude}
+              gpsLatitude={gpsLatitude}
+              searchLocationCoords={searchLocationCoords}
+              onToggleLoading={this.toggleLoading}
+            />
+          </div>
+          {selectedTab === 'search' &&
             (
-              <span>
-                <CloudDownloadIcon style={downloadIconStyle} />
-              </span>
+              <SearchBox
+                onSearchLocation={this.handleSearchLocation}
+                onLoading={this.toggleLoading}
+                onResetSelectedTab={this.resetSelectedTab}
+              />
             )
           }
           {selectedTab === 'weather' && <Weather />}
           {selectedTab === 'metrics' && <Metrics />}
           {selectedTab === 'saved' && <Saved />}
           {selectedTab === 'create-new' && <CreateNew />}
+          {loading && <div className="loading-gif"><img src={loadingGif}/></div>}
         </div>
         <ToolsNav
           handleClick={this.selectTab}
-          selectedTab={this.state.selectedTab}
+          selectedTab={selectedTab}
         />
       </div>
     );

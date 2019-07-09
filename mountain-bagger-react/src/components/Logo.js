@@ -1,14 +1,12 @@
 import React, { Fragment } from 'react';
-import TerrainIcon from '@material-ui/icons/Terrain';
-
 
 const Logo = (props) => {
-  const { iconStyle } = props;
+  const { iconStyle, iconImage } = props;
 
   return (
     <Fragment>
       MountainBagger
-      <TerrainIcon style={iconStyle} />
+      <img src={iconImage} style={iconStyle} />
     </Fragment>
   );
 };
