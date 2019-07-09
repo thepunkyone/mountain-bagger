@@ -100,7 +100,7 @@ const Map = (props) => {
             coordinates={marker}
             anchor="bottom"
           >
-            <PlaceIcon style={ {...placeIconStyle, color: '#20B11D'} } />
+            <PlaceIcon style={{...placeIconStyle, color: '#20B11D'}} />
           </Marker>
           {
             endLongitude && selectedTab === 'create-new' &&
@@ -112,12 +112,12 @@ const Map = (props) => {
               >
                 <PlaceIcon style={placeIconStyle} />
               </Marker>
-                
             )
           }
           
           {
-            Object.keys(route).length !== 0 && selectedTab === "create-new" && (
+            Object.keys(route).length !== 0 && selectedTab === 'create-new' &&
+            (
               <Layer
                 type="line"
                 layout={{
@@ -143,7 +143,7 @@ const Map = (props) => {
              >
                <img src={GpsFixedIcon} />
              </Marker>
-           ) 
+           )
           }
         </MapBox>
       </div>
@@ -155,17 +155,18 @@ const Map = (props) => {
         />
         )
       }
-      { route && selectedTab === "create-new" &&
-        (<div className="route-options">
+      { route && selectedTab === 'create-new' &&
+        (
+        <div className="route-options">
           <div className="save-options">
             <div className="modes-of-transport">
               <button
                 onClick={(e) => onHandleModeOfTransport(e)}
               >
                 <DirectionsWalkIcon
-                  style={ 
+                  style={
                     walkingOrCycling === 'walking' ?
-                    directionsIconStyle : {...directionsIconStyle, background: '#888888'}
+                      directionsIconStyle : {...directionsIconStyle, background: '#888888'}
                   }
                 />
                 <div id="walking" className="tab-overlay" />
@@ -175,16 +176,16 @@ const Map = (props) => {
               >
                 <DirectionsBikeIcon
                   style={ 
-                    walkingOrCycling === "cycling" ?
-                    directionsIconStyle : {...directionsIconStyle, background: '#888888'}
+                    walkingOrCycling === 'cycling' ?
+                      directionsIconStyle : {...directionsIconStyle, background: '#888888'}
                   }
                 />
                 <div id="cycling" className="tab-overlay" />
               </button>
-            </div>)
+            </div>
             {
-              duration && 
-              (
+              duration &&
+                (
                 <div className="route-estimates">
                   <div className="routeInfomation">
                     {/* <div className="modeOfTransport">
@@ -198,25 +199,25 @@ const Map = (props) => {
                     </div>
                   </div>
                 </div>
-              )
+                )
             }
             { !saveForm &&
-            (
-            <div className="save-clear">
-              <button onClick={() => onToggleSaveForm(true)}>
-                <CheckCircleIcon />
-                <span>
-                  Save
-                </span>
-              </button>
-              <button onClick={onClearRoute}>
-                <CancelIcon />
-                <span>
-                  Clear
-                </span>
-              </button>
-            </div>
-            )
+              (
+              <div className="save-clear">
+                <button onClick={() => onToggleSaveForm(true)}>
+                  <CheckCircleIcon />
+                  <span>
+                    Save
+                  </span>
+                </button>
+                <button onClick={onClearRoute}>
+                  <CancelIcon />
+                  <span>
+                    Clear
+                  </span>
+                </button>
+              </div>
+              )
             }
             { saveForm &&
               (
@@ -235,6 +236,6 @@ const Map = (props) => {
       }
     </div>
   );
-}
+};
 
 export default Map;
