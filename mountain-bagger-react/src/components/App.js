@@ -7,7 +7,6 @@ import Login from './Login';
 import Register from './Register';
 import Home from './Home';
 import Profile from './Profile';
-import CreateRoute from './CreateRoute';
 
 class App extends Component {
   constructor(props) {
@@ -64,18 +63,12 @@ class App extends Component {
         <Route
           exact
           path="/home"
-          render={Home}
+          render={(props) => <Home {...props} name={this.state.name} id={this.state.id} />}
         />
         <Route
           exact
           path="/profile"
-          // component={Profile}
-          render={(props) => <Profile {...props} name={this.state.firstName} id={this.state.id} />}
-        />
-        <Route
-          exact
-          path="/create-route"
-          component={(props) => <CreateRoute {...props} saveRoute />}
+          render={(props) => <Profile {...props} name={this.state.name} id={this.state.id} />}
         />
       </Switch>
     );

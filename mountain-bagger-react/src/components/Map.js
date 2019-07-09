@@ -1,281 +1,241 @@
-import React, { Component } from 'react';
-import ReactMapboxG1, { Layer, Feature } from 'react-mapbox-gl';
-import '../style/Map.scss';
-import axios from 'axios';
-import Geocoder from 'react-mapbox-gl-geocoder';
+import React from 'react';
+import ReactMapboxG1, { Layer, Feature, Marker } from 'react-mapbox-gl';
 import SaveForm from './SaveForm';
-import Search from './Search';
+import '../style/Map.scss';
+import GpsFixedIcon from '../img/gps_fixed_24px.svg';
+import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
+import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
+import PlaceIcon from '@material-ui/icons/Place';
 
 const MapBox = ReactMapboxG1({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
 });
 
-const BASE_URL = 'https://api.mapbox.com/directions/v5/mapbox';
-const URL_QUERY = '?steps=true&geometries=geojson&access_token=';
-const MONGODB_URL = 'http://localhost:3030';
+const downloadIconStyle = {
+  width: '42px',
+  height: '42px',
+  padding: '5px',
+  position: 'absolute',
+  top: '1rem',
+  right: '1rem',
+  filter: 'drop-shadow(1px 1px 2px #222222)',
+};
 
-class Map extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      viewport: {},
-      longitude: -3.2116,
-      latitude: 54.4542,
-      zoom: [13],
-      endLongitude: null,
-      endLatitude: null,
-      route: {},
-      walkingOrCycling: 'walking',
-      duration: null,
-      distance: null,
-      routeName: '',
-      successMessage: '',
-      errorMessage: '',
-      // imageUrl: '',
-    };
-  }
+const placeIconStyle = {
+  width: '24px',
+  height: '24px',
+  color: '#0F590D',
+}
 
-  // generateStaticMap = (route) => {
-  //   const mapUrl = 'https://api.mapbox.com/styles/v1/thepunkyone/cjx34gegp2owc1cqym1n43a11';
+const directionsIconStyle = {
+  width: '30px',
+  height: '24px',
+  color: 'white',
+  borderRadius: '100px',
+  background: '#20B11D',
+  padding: '8px',
+}
 
-  //   if (!route.data) {
-  //     fetch(`${mapUrl}/static/${this.state.lng},${this.state.lat},${this.state.zoom},0,0/600x600?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`)
-  //       .then((data) => {
-  //         this.setState({ imageUrl: data.url });
-  //       })
-  //       .catch(() => alert('image can\'t be retrieved'));
-  //   } else {
-  //     const geojson = {
-  //       "type": "FeatureCollection",
-  //       "features": [{
-  //         "type": "Feature",
-  //         "geometry": {
-  //           "type": "LineString",
-  //           "coordinates": route.data.geometry.coordinates,
-  //         },
-  //         "properties": {
-  //           "stroke": "#3887b4",
-  //           "stroke-opacity": 0.75,
-  //           "stroke-width": 5,
-  //         }
-  //       }]
-  //     };
-  //     const encodeGeoJson = () => {
-  //       return `geojson(${encodeURIComponent(JSON.stringify(geojson))})/`;
-  //     };
+let center;
+let bounds;
 
-  //     fetch(`${mapUrl}/static/${encodeGeoJson()}${this.state.lng},${this.state.lat},${this.state.zoom},0,0/600x600?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`)
-  //       .then((data) => {
-  //         this.setState({ imageUrl: data.url });
-  //       })
-  //       .catch(() => alert('image can\'t be retrieved'));
-  //   }
-  // };
+const Map = (props) => {
 
-  handleClearRoute = () => {
-    this.setState({
-      ...this.state,
-      endLongitude: null,
-      endLatitude: null,
-      route: {},
-      walkingOrCycling: 'walking',
-      duration: null,
-      distance: null,
-    });
-  };
+  const {
+    userId,
+    selectedTab,
+    gpsLongitude,
+    gpsLatitude,
 
-  onSelected = (viewport, item) => {
-    this.setState({
-      viewport,
-      longitude: item.center[0],
-      latitude: item.center[1],
-    });
-  };
+    onClearRoute,
+    onGenerateStaticMap,
+    onGetCenterCoords,
+    onHandleModeOfTransport,
+    onMapClick,
+    onSaveRoute,
+    onToggleSaveForm,
+    onZoom,
 
-  onMapClick = (map, evt) => {
-    const coordsObj = evt.lngLat;
-    const coordinates = Object.keys(coordsObj).map((key) => {
-      return coordsObj[key];
-    });
-    const endLongitude = coordinates[0];
-    const endLatitude = coordinates[1];
-    const walkingOrCycling = this.state.walkingOrCycling;
-    this.getRoute(endLongitude, endLatitude, walkingOrCycling);
-  };
+    width,
+    height,
+    longitude,
+    latitude,
+    zoom,
+    marker,
+    endLongitude,
+    endLatitude,
+    route,
+    walkingOrCycling,
+    duration,
+    distance,
+    saveForm,
+  } = props;
 
-  // onZoom = (map, event) => {
-  //   this.setState({ zoom: [...[map.getZoom()]] });
-  // };
+  // const modeOfTravel = walkingOrCycling.charAt(0).toUpperCase() + walkingOrCycling.slice(1);
 
-  onSaveRoute = (routeName) => {
-    this.setState({
-      routeName,
-    }, () => {
-      const { duration, distance, walkingOrCycling, route } = this.state;
-
-      axios
-        .post(`${MONGODB_URL}/user/${this.props.location.createRouteProps.id}/save-route`, {
-          name: this.state.routeName,
-          duration,
-          distance,
-          walkingOrCycling,
-          route,
-          userId: this.props.location.createRouteProps.id,
-        })
-        .then(() => {
-          this.setState({
-            successMessage: 'Your route has been saved',
-          }, () => {
-            console.log(this.state.successMessage);
-          });
-        })
-        .catch(err => {
-          this.setState({
-            errorMessage: 'Error! Please try again',
-          }, () => {
-            console.log(this.state.errorMessage);
-          });
-        });
-    });
-  };
-
-
-  handleModeOfTransport = (event) => {
-    const endLongitude = this.state.endLongitude;
-    const endLatitude = this.state.endLatitude;
-    const walkingOrCycling = event.target.value;
-    // endLongitude ? this.setState({...this.state, walkingOrCycling}) : this.getRoute(endLongitude, endLatitude, walkingOrCycling);
-    if (endLongitude) {
-      this.getRoute(endLongitude, endLatitude, walkingOrCycling);
-    } else {
-      this.setState({
-        ...this.state,
-        walkingOrCycling,
-      });
-    }
-  };
-
-  getRoute = (endLongitude, endLatitude, walkingOrCycling) => {
-    const { longitude, latitude } = this.state;
-    const token = process.env.REACT_APP_MAPBOX_TOKEN;
-    const apiRequest = `${BASE_URL}/${walkingOrCycling}/${longitude},${latitude};${endLongitude},${endLatitude}${URL_QUERY}${token}`;
-    fetch(apiRequest)
-      .then(response => response.json())
-      .then(data => data.routes[0])
-      .then(data => {
-        const distance = (data.distance / 1000).toFixed(3);
-        const duration = Math.round(data.duration / 60);
-        const route = data.geometry.coordinates;
-        this.setState({
-          ...this.state,
-          endLongitude,
-          endLatitude,
-          route,
-          walkingOrCycling,
-          duration,
-          distance,
-        });
-      });
-  };
-
-  render() {
-    const { endLongitude, endLatitude, longitude, latitude, viewport, route, duration, walkingOrCycling, distance} = this.state;
-    const modeOfTravel = walkingOrCycling.charAt(0).toUpperCase() + walkingOrCycling.slice(1);
-    return (
-      <div>
-        {
-          duration && (
-            <div>
-              <div className="routeInfomation">
-                <div className="modeOfTransport">
-                  {`${modeOfTravel}:`}
-                </div>
-                <div className="distance">
-                  {`Distance: ${distance}km`}
-                </div>
-                <div className="duration">
-                  {`Time: ${duration}mins`}
-                </div>
-              </div>
-              <button onClick={() => this.generateStaticMap(this.state.route)}>
-                Create static map
+  return (
+    <div>
+      <div className="map_div">
+        <MapBox
+          style="mapbox://styles/thepunkyone/cjx34gegp2owc1cqym1n43a11"
+          center={[longitude, latitude]}
+          containerStyle={{
+            width: width,
+            height: height,
+          }}
+          movingMethod="jumpTo"
+          onClick={onMapClick}
+          zoom={zoom}
+          onZoom={onZoom}
+          
+          onZoomEnd={(map) => {bounds = map.getBounds(); center = map.getCenter(); onGetCenterCoords(center)}}
+          onMoveEnd={(map) => {bounds = map.getBounds(); center = map.getCenter(); onGetCenterCoords(center)}}
+          onStyleLoad={(map) => {bounds = map.getBounds(); center = map.getCenter(); onGetCenterCoords(center)}}
+        >
+          <Marker
+            id="marker-start"
+            coordinates={marker}
+            anchor="bottom"
+          >
+            <PlaceIcon style={{...placeIconStyle, color: '#20B11D'}} />
+          </Marker>
+          {
+            endLongitude && selectedTab === 'create-new' &&
+            (
+              <Marker
+                id="marker-end"
+                coordinates={[endLongitude, endLatitude]}
+                anchor="bottom"
+              >
+                <PlaceIcon style={placeIconStyle} />
+              </Marker>
+            )
+          }
+          
+          {
+            Object.keys(route).length !== 0 && selectedTab === 'create-new' &&
+            (
+              <Layer
+                type="line"
+                layout={{
+                  'line-join': 'round',
+                  'line-cap': 'round',
+                }}
+                paint={{
+                  'line-color': '#3887b4',
+                  'line-width': 5,
+                  'line-opacity': 0.75,
+                }}
+              >
+                <Feature coordinates={route} />
+              </Layer>
+            )
+          }
+          {
+           gpsLongitude && gpsLatitude &&
+           (
+             <Marker
+               coordinates={[gpsLongitude, gpsLatitude]}
+               anchor="center"
+             >
+               <img src={GpsFixedIcon} />
+             </Marker>
+           )
+          }
+        </MapBox>
+      </div>
+      { selectedTab !== 'search' && !saveForm &&
+        (
+        <CloudDownloadIcon
+          style={{ ...downloadIconStyle, cursor: 'pointer' }}
+          onClick={onGenerateStaticMap('Map', bounds)}
+        />
+        )
+      }
+      { route && selectedTab === 'create-new' &&
+        (
+        <div className="route-options">
+          <div className="save-options">
+            <div className="modes-of-transport">
+              <button
+                onClick={(e) => onHandleModeOfTransport(e)}
+              >
+                <DirectionsWalkIcon
+                  style={
+                    walkingOrCycling === 'walking' ?
+                      directionsIconStyle : {...directionsIconStyle, background: '#888888'}
+                  }
+                />
+                <div id="walking" className="tab-overlay" />
+              </button>
+              <button
+                onClick={(e) => onHandleModeOfTransport(e)}
+              >
+                <DirectionsBikeIcon
+                  style={ 
+                    walkingOrCycling === 'cycling' ?
+                      directionsIconStyle : {...directionsIconStyle, background: '#888888'}
+                  }
+                />
+                <div id="cycling" className="tab-overlay" />
               </button>
             </div>
-          )
-        }
-        <div className="map_div">
-          <MapBox
-            style="mapbox://styles/thepunkyone/cjx34gegp2owc1cqym1n43a11"
-            center={[longitude, latitude]}
-            containerStyle={{
-              height: '600px',
-              width: '600px',
-            }}
-            onClick={this.onMapClick}
-            // zoom={zoom}
-            // onZoom={this.onZoom}
-          >
-            <Layer
-              type="symbol"
-              id="marker-start"
-              layout={{ 'icon-image': 'marker-15' }}
-            >
-              <Feature coordinates={[longitude, latitude]} />
-            </Layer>
-
             {
-              { endLongitude } &&
+              duration &&
+                (
+                <div className="route-estimates">
+                  <div className="routeInfomation">
+                    {/* <div className="modeOfTransport">
+                      {`${modeOfTravel}:`}
+                    </div> */}
+                    <div className="distance">
+                      {`Distance: ${distance}km`}
+                    </div>
+                    <div className="duration">
+                      {`Time: ${duration}mins`}
+                    </div>
+                  </div>
+                </div>
+                )
+            }
+            { !saveForm &&
               (
-                <Layer
-                  type="symbol"
-                  id="marker-end"
-                  layout={{ 'icon-image': 'marker-15' }}
-                >
-                  <Feature coordinates={[endLongitude, endLatitude]} />
-                </Layer>
+              <div className="save-clear">
+                <button onClick={() => onToggleSaveForm(true)}>
+                  <CheckCircleIcon />
+                  <span>
+                    Save
+                  </span>
+                </button>
+                <button onClick={onClearRoute}>
+                  <CancelIcon />
+                  <span>
+                    Clear
+                  </span>
+                </button>
+              </div>
               )
             }
-            
-            {
-              Object.keys(route).length !== 0 && (
-                <Layer
-                  type="line"
-                  layout={{
-                    'line-join': 'round',
-                    'line-cap': 'round',
-                  }}
-                  paint={{
-                    'line-color': '#3887b4',
-                    'line-width': 5,
-                    'line-opacity': 0.75,
-                  }}
-                >
-                  <Feature coordinates={route} />
-                </Layer>
+            { saveForm &&
+              (
+              <SaveForm
+                boundingBox={bounds}
+                saveRoute={onSaveRoute}
+                saveStaticMap={onGenerateStaticMap}
+                clearRoute={onClearRoute}
+                toggleSaveForm={onToggleSaveForm}
+              />
               )
             }
-          </MapBox>
+          </div>
         </div>
-        <div>
-          <button onClick={this.handleModeOfTransport} value="walking">Walking</button>
-          <button onClick={this.handleModeOfTransport} value="cycling">Cycling</button>
-        </div>
-        <Geocoder
-          viewport={viewport}
-          onSelected={this.onSelected}
-          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-        />
-        {/* <Search /> */}
-        <div>
-          <button onClick={this.handleClearRoute}>Clear Route</button>
-        </div>
-        <SaveForm saveRoute={this.onSaveRoute} />
-        <div className="static-map">
-          { this.state.imageUrl && <img src={this.state.imageUrl} /> }
-        </div>
-      </div>
-    );
-  }
-}
+        )
+      }
+    </div>
+  );
+};
 
 export default Map;
