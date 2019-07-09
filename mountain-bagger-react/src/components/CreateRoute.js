@@ -7,10 +7,11 @@ import Map from './Map';
 // import MapTest from './map-test';
 
 const CreateRoute = (props) => {
+  console.log(props.location.createRouteProps);
   return (
     <div>
       <Link to="/">Profile Page</Link>
-      <Map />
+      <Map {...props} />
     </div>
   );
 };

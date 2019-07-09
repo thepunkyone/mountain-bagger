@@ -4,7 +4,7 @@ const routeSchema = new mongoose.Schema({
   name: String,
   duration: Number,
   distance: Number,
-  mapImage: String,
+  walkingOrCyling: String,
   route: [[Number, Number]],
   userId: {
     type: mongoose.Schema.Types.ObjectId,

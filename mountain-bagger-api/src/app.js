@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { create, getUser } = require('./controllers/users');
+const { create, getUser, getUserById, listUsers } = require('./controllers/users');
 const routeRouter = require('./routes/routes');
 
 
@@ -11,6 +11,7 @@ app.use('/user', routeRouter);
 
 app.post('/login', getUser);
 app.post('/user', create);
+app.get('/users', listUsers);
 
 
 app.get('/point', (req, res) => {

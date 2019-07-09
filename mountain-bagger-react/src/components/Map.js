@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactMapboxG1, { Layer, Feature } from 'react-mapbox-gl';
 import '../style/Map.scss';
+import axios from 'axios';
 import Geocoder from 'react-mapbox-gl-geocoder';
 import SaveForm from './SaveForm';
 import Search from './Search';
@@ -11,6 +12,7 @@ const MapBox = ReactMapboxG1({
 
 const BASE_URL = 'https://api.mapbox.com/directions/v5/mapbox';
 const URL_QUERY = '?steps=true&geometries=geojson&access_token=';
+const MONGODB_URL = 'http://localhost:3030';
 
 class Map extends Component {
   constructor(props) {
@@ -27,6 +29,8 @@ class Map extends Component {
       duration: null,
       distance: null,
       routeName: '',
+      successMessage: '',
+      errorMessage: '',
       // imageUrl: '',
     };
   }
@@ -107,10 +111,34 @@ class Map extends Component {
     this.setState({
       routeName,
     }, () => {
-      console.log(this.state.routeName);
+      const { duration, distance, walkingOrCycling, route } = this.state;
+
+      axios
+        .post(`${MONGODB_URL}/user/${this.props.location.createRouteProps.id}/save-route`, {
+          name: this.state.routeName,
+          duration,
+          distance,
+          walkingOrCycling,
+          route,
+          userId: this.props.location.createRouteProps.id,
+        })
+        .then(() => {
+          this.setState({
+            successMessage: 'Your route has been saved',
+          }, () => {
+            console.log(this.state.successMessage);
+          });
+        })
+        .catch(err => {
+          this.setState({
+            errorMessage: 'Error! Please try again',
+          }, () => {
+            console.log(this.state.errorMessage);
+          });
+        });
     });
-    console.log(this.state.route);
   };
+
 
   handleModeOfTransport = (event) => {
     const endLongitude = this.state.endLongitude;

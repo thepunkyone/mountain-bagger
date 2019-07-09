@@ -31,7 +31,7 @@ exports.listRoutes = (req, res) => {
     if (!user) {
       res.status(400).json({ error: 'This user could not be found'})
     } else {
-      Route.find({}, (err, route) => {
+      Route.find({ userId: req.params.userId }, (err, route) => {
         if (!route) {
           res.status(400).json({ error: 'There is an error' });
         } else {
