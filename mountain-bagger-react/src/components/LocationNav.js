@@ -26,6 +26,7 @@ const LocationNav = (props) => {
     onStopWatchingLocation,
     onLocationFocus,
     locationWatchId,
+    onToggleLoading,
   } = props;
 
   return (
@@ -55,6 +56,7 @@ const LocationNav = (props) => {
             to="#"
             onClick={(e) => {
               handleClick(e);
+              onToggleLoading(true);
               onWatchUserLocation();
               onLocationFocus('gps');
             }}

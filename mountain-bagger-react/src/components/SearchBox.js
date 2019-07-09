@@ -41,6 +41,7 @@ class SearchBox extends Component {
         this.props.onLoading(false);
       })
       .catch(() => {
+        this.props.onLoading(false);
         console.log('Can\'t get coordinates!');
       });
   };

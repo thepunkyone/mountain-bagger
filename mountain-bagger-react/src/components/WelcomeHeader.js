@@ -1,11 +1,14 @@
 import React, { Fragment } from 'react';
 import '../style/WelcomeHeader.scss';
 import Logo from './Logo';
+import logoDark from '../img/logo-dark.svg';
+
 
 const iconStyle = {
-  width: '50px',
-  height: '50px',
+  width: '60px',
+  height: '60px',
   marginBottom: '-12px',
+  marginLeft: '-2px',
 };
 
 const WelcomeHeader = () => {
@@ -15,7 +18,7 @@ const WelcomeHeader = () => {
         Welcome to
       </h2>
       <h1>
-        <Logo iconStyle={iconStyle} />
+        <Logo iconStyle={iconStyle} iconImage={logoDark} />
       </h1>
     </Fragment>
   );

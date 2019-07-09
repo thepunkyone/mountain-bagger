@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../style/Home.scss';
+import loadingGif from '../img/loading.gif';
 
 import LocationNav from './LocationNav';
 import SearchBox from './SearchBox';
@@ -80,9 +81,11 @@ class Home extends Component {
         gpsAltitude: altitude,
         gpsHeading: heading,
       });
+      this.toggleLoading(false);
     };
 
     const error = () => {
+      this.toggleLoading(false);
       console.log('Unable to retrieve your location');
     };
 
@@ -93,6 +96,7 @@ class Home extends Component {
     };
 
     if (!navigator.geolocation) {
+      this.toggleLoading(false);
       console.log('Geolocation is not supported by your browser');
     } else {
       console.log('Locating…');
@@ -103,6 +107,8 @@ class Home extends Component {
   };
 
   render() {
+    console.log(this.state.loading);
+
     const {
       selectedTab,
       locationFocus,
@@ -123,6 +129,7 @@ class Home extends Component {
           onWatchUserLocation={this.watchUserLocation}
           onStopWatchingLocation={this.stopWatchingLocation}
           onLocationFocus={this.setLocationFocus}
+          onToggleLoading={this.toggleLoading}
         />
         <div className="content">
           <div>
@@ -149,7 +156,7 @@ class Home extends Component {
           {selectedTab === 'metrics' && <Metrics />}
           {selectedTab === 'saved' && <Saved />}
           {selectedTab === 'create-new' && <CreateNew />}
-          {loading && <div className="loading-animation"><div className="lds-ripple"><div /><div /></div></div>}
+          {loading && <div className="loading-gif"><img src={loadingGif}/></div>}
         </div>
         <ToolsNav
           handleClick={this.selectTab}
