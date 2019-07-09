@@ -25,12 +25,12 @@ class MapContainer extends Component {
       routeName: '',
       staticMap: {
         name: '',
+        img: '',
         dimensions: {
           width: '',
           height: '',
         },
         boundingBox: '',
-        staticImageUrl: '',
       },
       saveForm: false,
     };
@@ -75,7 +75,7 @@ class MapContainer extends Component {
                 height: height,
               },
               boundingBox: bounds,
-              staticImageUrl: data.url,
+              img: data.url,
             },
           });
         })
@@ -112,7 +112,7 @@ class MapContainer extends Component {
                 height: height,
               },
               boundingBox: bounds,
-              staticImageUrl: data.url,
+              img: data.url,
             },
           });
         })
