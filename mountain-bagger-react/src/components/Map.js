@@ -147,7 +147,7 @@ const Map = (props) => {
           }
         </MapBox>
       </div>
-      { selectedTab !== 'search' && !saveForm &&
+      { selectedTab !== 'search' && !(saveForm && selectedTab === 'create-new') &&
         (
         <CloudDownloadIcon
           style={{ ...downloadIconStyle, cursor: 'pointer' }}
