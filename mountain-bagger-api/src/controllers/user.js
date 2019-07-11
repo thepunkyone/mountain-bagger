@@ -24,4 +24,4 @@ exports.getUser = (req,res) => {
       res.status(404).json({ error: 'password or email not matched'})
     }
   })
-}
+};

@@ -17,6 +17,4 @@ var MapSchema = new Schema({
   {timestamps: true}
 );
 
-MapSchema.set('timestamps', true);
-
 module.exports = mongoose.model('Map', MapSchema);
