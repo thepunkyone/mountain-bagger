@@ -25,6 +25,23 @@ class Saved extends Component {
     this.getSavedRoute();
   }
 
+  handleOnClick = (routeId) => {
+    this.deleteSavedRoute(routeId);
+  };
+
+  deleteSavedRoute = (routeId) => {
+    console.log('here 1');
+    axios
+      .delete(`${BASE_URL}/user/${this.props.id}/${routeId}`)
+      .then(() => {
+        console.log('here 2');
+        this.getSavedRoute();
+      })
+      .catch(error => {
+        console.log(error, 'error');
+      });
+  };
+
   getSavedRoute = () => {
     axios
       .get(`${BASE_URL}/user/${this.props.id}`)
@@ -41,11 +58,11 @@ class Saved extends Component {
   render() {
     const { routes } = this.state;
     console.log(this.props);
-    // if (!this.props.name) {
-    //   return (
-    //     <div>You are not logged in!</div>
-    //   )
-    // }
+    if (!this.props.name) {
+      return (
+        <div>You are not logged in!</div>
+      )
+    }
     return (
       <div style={style}>
         <h1>{this.props.name}'s saved routes</h1>
@@ -58,6 +75,7 @@ class Saved extends Component {
                   <div>Distance is {route.distance}</div>
                   <div>Duration is {route.duration}</div>
                   <div>Route starts at lng: {route.route[0][0]}, lat: {route.route[0][1]} and ends at lng: {route.route[1][0]}, lat: {route.route[1][1]}</div>
+                  <button onClick={() => this.handleOnClick(route._id)}>Delete</button>
                 </div>
               );
             })

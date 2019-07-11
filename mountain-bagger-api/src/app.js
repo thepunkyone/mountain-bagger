@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const { createUser, getUser } = require('./controllers/user');
+const { createUser, getUser, getUserById, listUsers } = require('./controllers/users');
+const routeRouter = require('./routes/routes');
 const mapRouter = require('./routes/map');
 
 const app = express();
