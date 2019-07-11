@@ -77,7 +77,10 @@ class MapContainer extends Component {
               boundingBox: bounds,
               img: data.url,
             },
-          }, () => this.postStaticMap());
+          }, () => {
+            this.postStaticMap();
+            this.props.onGetMaps();
+          });
         })
         .catch(() => console.log('image can\'t be retrieved'));
 
@@ -114,7 +117,10 @@ class MapContainer extends Component {
               boundingBox: bounds,
               img: data.url,
             },
-          }, () => this.postStaticMap());
+          }, () => {
+            this.postStaticMap();
+            this.props.onGetMaps();
+          });
         })
         .catch(() => console.log('image can\'t be retrieved'));
     } else {
