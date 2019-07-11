@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Map from './Map';
 
 const BASE_URL = 'https://api.mapbox.com/directions/v5/mapbox';
@@ -25,12 +26,12 @@ class MapContainer extends Component {
       routeName: '',
       staticMap: {
         name: '',
+        img: '',
         dimensions: {
           width: '',
           height: '',
         },
         boundingBox: '',
-        staticImageUrl: '',
       },
       saveForm: false,
     };
@@ -60,7 +61,6 @@ class MapContainer extends Component {
   }
 
   generateStaticMap = (name, bounds) => {
-
     const { longitude, latitude, width, height } = this.state;
     const { route, zoom } = this.state;
 
@@ -75,9 +75,9 @@ class MapContainer extends Component {
                 height: height,
               },
               boundingBox: bounds,
-              staticImageUrl: data.url,
+              img: data.url,
             },
-          });
+          }, () => this.postStaticMap());
         })
         .catch(() => console.log('image can\'t be retrieved'));
 
@@ -112,9 +112,9 @@ class MapContainer extends Component {
                 height: height,
               },
               boundingBox: bounds,
-              staticImageUrl: data.url,
+              img: data.url,
             },
-          });
+          }, () => this.postStaticMap());
         })
         .catch(() => console.log('image can\'t be retrieved'));
     } else {
@@ -201,7 +201,26 @@ class MapContainer extends Component {
 
   toggleSaveForm = (boolean) => {
     this.setState({ saveForm: boolean });
-  }
+  };
+
+  postStaticMap = () => {
+    const userId = '5d2726fec69da05f6d156078';
+    const { staticMap } = this.state;
+
+    const postedMap = {
+      name: staticMap.name,
+      img: staticMap.img,
+      dimensions: [staticMap.dimensions.width, staticMap.dimensions.height],
+      boundingBox: [
+        [staticMap.boundingBox._ne.lng, staticMap.boundingBox._ne.lat],
+        [staticMap.boundingBox._sw.lng, staticMap.boundingBox._sw.lat],
+      ],
+    };
+
+    axios.post(`http://localhost:3030/${userId}/maps`, postedMap)
+      .then(response => console.log('AXIOS RESPONSE!', response.data))
+      .catch((error) => console.log('AXIOS ERROR!', error));
+  };
 
   saveRoute = (routeName) => {
     this.setState({
@@ -229,6 +248,7 @@ class MapContainer extends Component {
 
   render() {
     window.onresize = this.setMapDimensions;
+    console.log(this.state.staticMap);
 
     const {
       userId,

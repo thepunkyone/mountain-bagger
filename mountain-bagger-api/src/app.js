@@ -1,17 +1,24 @@
 const express = require('express');
 const cors = require('cors');
-const { create, getUser, getUserById, listUsers } = require('./controllers/users');
+const { createUser, getUser, getUserById, listUsers } = require('./controllers/users');
 const routeRouter = require('./routes/routes');
-
+const mapRouter = require('../routes/map');
+const routeDataRouter = require('../routes/route-data');
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 app.use('/user', routeRouter);
 
 app.post('/login', getUser);
-app.post('/user', create);
 app.get('/users', listUsers);
+
+app.post('/user', createUser);
+
+app.use('/:userId/maps', mapRouter);
+
+app.use('/:userId/route-data', routeDataRouter);
 
 
 app.get('/point', (req, res) => {
