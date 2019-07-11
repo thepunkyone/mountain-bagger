@@ -26,6 +26,4 @@ app.post('/point', (req, res) => {
   res.status(200).json({ message: 'Point post status 200' });
 });
 
-// app.listen(3030, () => console.log(`Example app listening on port ${3030}!`))
-
 module.exports = app;

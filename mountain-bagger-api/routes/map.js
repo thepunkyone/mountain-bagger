@@ -1,10 +1,10 @@
 const express = require("express");
-const mapRouter = express.Router();
+const mapRouter = express.Router({mergeParams: true});
 
-const { postMap, getMap } = require('../controllers/map');
+const { postMap, getMaps } = require('../controllers/map');
 
 mapRouter.post('/', postMap);
-mapRouter.get('/', getMap);
+mapRouter.get('/', getMaps);
 
 
 module.exports = mapRouter;

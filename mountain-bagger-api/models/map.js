@@ -9,14 +9,8 @@ var MapSchema = new Schema({
       height: Number,
     },
     boundingBox: {
-      _ne: {
-        lat: Number,
-        lng: Number,
-      },
-      _sw: {
-        lat: Number,
-        lng: Number,
-      },
+      ne: [Number, Number],
+      sw: [Number, Number],
     },
     userId: { type: Schema.Types.ObjectId, ref: 'User' },
   },

@@ -8,18 +8,12 @@ exports.postMap = (req, res) => {
       name: name,
       img: img,
       dimensions: {
-        width: dimensions.width,
-        height: dimensions.height,
+        width: dimensions[0],
+        height: dimensions[1],
       },
       boundingBox: {
-        _ne: {
-          lat: boundingBox._ne.lat,
-          lng: boundingBox._ne.lng,
-        },
-        _sw: {
-          lat: boundingBox._sw.lat,
-          lng: boundingBox._sw.lng,
-        },
+        ne: boundingBox[0],
+        sw: boundingBox[1],
       },
       userId: { 
         _id: userId,
@@ -35,12 +29,16 @@ exports.postMap = (req, res) => {
     });
 };
 
-exports.getMap = (req, res) => {
-  Map.findOne({}, 'map createdAt', (err, map) => {
-    if (map) {
-      res.status(200).json(map);
+exports.getMaps = (req, res) => {
+  const { userId } = req.params;
+
+  Map.find({ userId : userId })
+  .sort({ createdAt: 'desc' })
+  .then((maps) => {
+    if (maps) {
+      res.status(200).json(maps);
     } else {
       res.status(400).json({ error: 'The map could not be retrieved.' });
     }
-  }).sort({ createdAt: 'desc' });
+  });
 };
