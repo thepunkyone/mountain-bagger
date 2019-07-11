@@ -52,7 +52,7 @@ class App extends Component {
         <Route
           exact
           path="/login"
-          render={(props) => (this.state.id ? <Redirect to="/profile" /> : <Login {...props} handleInputChange={this.handleInputChange} handleLogin={this.handleLogin} />)}
+          render={(props) => (this.state.id ? <Redirect to="/home" /> : <Login {...props} handleInputChange={this.handleInputChange} handleLogin={this.handleLogin} />)}
         />
         />
         <Route
@@ -63,7 +63,7 @@ class App extends Component {
         <Route
           exact
           path="/home"
-          render={(props) => <Home {...props} name={this.state.name} id={this.state.id} />}
+          render={(props) => <Home {...props} name={this.state.firstName} id={this.state.id} />}
         />
         <Route
           exact
