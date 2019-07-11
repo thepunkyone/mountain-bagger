@@ -14,6 +14,4 @@ app.post('/user', createUser);
 
 app.use('/:userId/maps', mapRouter);
 
-app.use('/:userId/route-data', routeDataRouter);
-
 module.exports = app;
