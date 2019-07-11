@@ -6,11 +6,12 @@ exports.status = (req, res) => {
 }
 
 exports.saveRoute = (req, res) => {
+  console.log(req.body);
   const route = new Route({
     name: req.body.name,
     duration: req.body.duration,
     distance: req.body.distance,
-    mapImage: req.body.mapImage,
+    walkingOrCycling: req.body.walkingOrCycling,
     route: req.body.route, 
     userId: req.params.userId
   });
@@ -57,3 +58,20 @@ exports.findRoute = (req, res) => {
     }
   })
 }
+
+exports.deleteRoute = (req, res) => {
+  User.findById(req.params.userId, (err, user) => {
+    if (!user) { 
+      res.status(400).json({ error: 'This user could not be found' });
+    } else {
+      Route.findByIdAndDelete(req.params.routeId, (err) => {
+        if (err) { 
+          res.status(400).json({ error: 'Route could not be found' });
+        } else {
+          res.status(200).send();
+        }
+      })
+    }
+  })
+}
+

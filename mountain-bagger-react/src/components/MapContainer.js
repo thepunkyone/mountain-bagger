@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Map from './Map';
 
+const MDB_URL = 'http://localhost:3030/user/';
 const BASE_URL = 'https://api.mapbox.com/directions/v5/mapbox';
 const URL_QUERY = '?steps=true&geometries=geojson&access_token=';
 const STYLES_URL = 'https://api.mapbox.com/styles/v1/thepunkyone/cjx34gegp2owc1cqym1n43a11';
@@ -226,10 +227,24 @@ class MapContainer extends Component {
     this.setState({
       routeName,
     }, () => {
-      console.log(this.state.routeName);
+      this.apiSaveRoute();
     });
-    console.log(this.state.route);
   };
+
+  apiSaveRoute = () => {
+    axios
+      .post(`${MDB_URL}${this.props.userId}/save-route`, {
+        name: this.state.routeName,
+        duration: this.state.duration,
+        distance: this.state.distance,
+        walkingOrCycling: this.state.walkingOrCycling,
+        route: this.state.route,
+        userId: this.props.userId,
+      })
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err));
+  }
+
 
   saveZoomSetting = (map) => {
     this.setState({ zoom: [...[map.getZoom()]] });

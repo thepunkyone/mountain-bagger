@@ -2,8 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const { createUser, getUser, getUserById, listUsers } = require('./controllers/users');
 const routeRouter = require('./routes/routes');
-const mapRouter = require('../routes/map');
-const routeDataRouter = require('../routes/route-data');
+const mapRouter = require('./routes/map');
 
 const app = express();
 
@@ -18,7 +17,6 @@ app.post('/user', createUser);
 
 app.use('/:userId/maps', mapRouter);
 
-app.use('/:userId/route-data', routeDataRouter);
 
 
 app.get('/point', (req, res) => {
