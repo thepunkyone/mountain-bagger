@@ -1,6 +1,8 @@
 const Map = require('../models/map');
 
 exports.postMap = (req, res) => {
+  console.log(req.body);
+
   const { userId } = req.params;
   const { name, img, dimensions, boundingBox } = req.body;
 
@@ -20,12 +22,8 @@ exports.postMap = (req, res) => {
       },
     });
 
-    map.save().then((err, map) => {
-      if (map) {
-        res.status(201).json(map);
-      } else {
-        res.status(400).send({ error: 'The map could not be saved.' });
-      }
+    map.save().then(() => {
+      res.status(201).json(map);
     });
 };
 
