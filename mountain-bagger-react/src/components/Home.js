@@ -120,6 +120,8 @@ class Home extends Component {
   };
 
   render() {
+    console.log(this.state.maps);
+
     const {
       selectedTab,
       locationFocus,
@@ -151,6 +153,7 @@ class Home extends Component {
               gpsLatitude={gpsLatitude}
               searchLocationCoords={searchLocationCoords}
               onToggleLoading={this.toggleLoading}
+              onGetMaps={this.getMaps}
             />
           </div>
           {selectedTab === 'search' &&
