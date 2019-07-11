@@ -26,14 +26,13 @@ class App extends Component {
 
   handleLogin = (e) => {
     e.preventDefault();
-    const config = {
+
+    axios.post('http://localhost:3030/login', {
       email: this.state.email,
       password: this.state.password,
-    };
-
-    console.log(config);
-    axios.post('http://localhost:3030/login', config)
+    })
       .then((response) => {
+        console.log(response)
         this.setState({ id: response.data.userId, firstName: response.data.firstName });
         // this.props.history.push('/profile');
       })
@@ -53,7 +52,7 @@ class App extends Component {
         <Route
           exact
           path="/login"
-          render={(props) => (this.state.id ? <Redirect to="/profile" /> : <Login {...props} handleInputChange={this.handleInputChange} handleLogin={this.handleLogin} />)}
+          render={(props) => (this.state.id ? <Redirect to="/home" /> : <Login {...props} handleInputChange={this.handleInputChange} handleLogin={this.handleLogin} />)}
         />
         />
         <Route
@@ -64,7 +63,7 @@ class App extends Component {
         <Route
           exact
           path="/home"
-          render={(props) => <Home {...props} name={this.state.name} id={this.state.id} />}
+          render={(props) => <Home {...props} name={this.state.firstName} id={this.state.id} />}
         />
         <Route
           exact

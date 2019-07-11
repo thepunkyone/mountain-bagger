@@ -4,7 +4,8 @@
   "description": "Mountain Bagger App",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -r dotenv/config index.js"
+    "start": "nodemon -r dotenv/config index.js",
+    "test": "mocha tests/**/*.test.js --opts .mocha.opts"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,10 @@
     "mongoose": "^5.6.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "faker": "^4.1.0",
+    "mocha": "^6.1.4",
     "nodemon": "^1.19.1"
   }
 }
