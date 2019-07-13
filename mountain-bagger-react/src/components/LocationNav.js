@@ -36,7 +36,7 @@ const LocationNav = (props) => {
             Altitude
           </span>
           <span>
-            156m
+            {props.gpsAltitude ? props.gpsAltitude : '...'}
           </span>
         </p>
         <p className="menu-icon-light">
@@ -44,10 +44,12 @@ const LocationNav = (props) => {
             Speed
           </span>
           <span>
-            2km/h
+            {props.gpsSpeed ? props.gpsSpeed : '...'}
           </span>
         </p>
-        <ExploreIcon style={menuIconLightStyle} />
+        {
+          !props.gpsHeading && <ExploreIcon style={menuIconLightStyle} />
+        }
       </div>
       {locationWatchId === null ?
         (

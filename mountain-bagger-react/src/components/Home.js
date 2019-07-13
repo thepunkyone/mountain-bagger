@@ -125,6 +125,9 @@ class Home extends Component {
       loading,
       gpsLongitude,
       gpsLatitude,
+      gpsAltitude,
+      gpsSpeed,
+      gpsHeading,
       locationWatchId,
       searchLocationCoords,
       offlineMap,
@@ -136,6 +139,9 @@ class Home extends Component {
         <LocationNav
           handleClick={this.selectTab}
           locationWatchId={locationWatchId}
+          gpsAltitude={gpsAltitude}
+          gpsSpeed={gpsSpeed}
+          gpsHeading={gpsHeading}
           onWatchUserLocation={this.watchUserLocation}
           onStopWatchingLocation={this.stopWatchingLocation}
           onLocationFocus={this.setLocationFocus}
