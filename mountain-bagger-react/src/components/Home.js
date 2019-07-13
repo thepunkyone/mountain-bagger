@@ -27,7 +27,7 @@ class Home extends Component {
       gpsHeading: '',
       locationWatchId: null,
       searchLocationCoords: '',
-      offlineMap: true,
+      offlineMap: '',
     };
     this.node = React.createRef();
   }
@@ -70,6 +70,7 @@ class Home extends Component {
 
   openOfflineMap = (map) => {
     this.setState({ offlineMap: map });
+    this.resetSelectedTab();
   };
 
   stopWatchingLocation = () => {

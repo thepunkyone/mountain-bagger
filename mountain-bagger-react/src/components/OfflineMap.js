@@ -13,7 +13,7 @@ class OfflineMap extends Component {
       <div className="offline-map">
         <div className="offline-map__options">
           <h2>{this.props.map.name}</h2>
-          <button onClick={() => this.props.handleCloseOfflineMap}>Close</button>
+          <button onClick={() => this.props.handleCloseOfflineMap()}>Close</button>
         </div>
         <img src={this.props.map.img} />
       </div>
