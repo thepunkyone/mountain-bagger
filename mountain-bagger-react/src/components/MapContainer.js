@@ -222,7 +222,7 @@ class MapContainer extends Component {
       ],
     };
 
-    axios.post(`${MDB_URL}/${userId}/maps`, postedMap)
+    axios.post(`http://localhost:3030/${userId}/maps`, postedMap)
       .then(response => console.log('AXIOS RESPONSE!', response.data))
       .catch((error) => console.log('AXIOS ERROR!', error));
   };

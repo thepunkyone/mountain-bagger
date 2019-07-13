@@ -24,17 +24,22 @@
     top: 0;
     left: 0;
     z-index: 90;
+    overflow: scroll;
 
     img {
       position: relative;
     }
 
     &__options {
-      position: absolute;
-      top: 0;
+      position: fixed;
+      top: 100px;
       left: 50%;
       z-index: 91;
       transform: translateX(-50%);
+    }
+
+    .gps-icon {
+      position: absolute;
     }
   }
 

@@ -140,6 +140,7 @@ const Map = (props) => {
              <Marker
                coordinates={[gpsLongitude, gpsLatitude]}
                anchor="center"
+               style={{ width: '24px', height: '24px' }}
              >
                <img src={GpsFixedIcon} />
              </Marker>
