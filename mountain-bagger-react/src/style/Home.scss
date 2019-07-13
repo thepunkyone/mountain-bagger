@@ -17,20 +17,22 @@
   }
 
   .offline-map {
-    width: 100%;
+    width: 100vw;
     height: 100%;
     position: absolute;
     background: $green-accent;
     top: 0;
     left: 0;
     z-index: 90;
-    overflow: scroll;
+    font-size: 0;
+    overflow: auto;
 
     img {
       position: relative;
     }
 
     &__options {
+      font-size: 1rem;
       position: fixed;
       top: 100px;
       left: 50%;
@@ -38,8 +40,9 @@
       transform: translateX(-50%);
     }
 
-    .gps-icon {
-      position: absolute;
+    &__image-container {
+      position: relative;
+      margin: 0 auto;
     }
   }
 

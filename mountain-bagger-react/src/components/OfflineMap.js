@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import SimpleBar from 'simplebar-react';
+import 'simplebar/dist/simplebar.min.css';
 import GpsFixedIcon from '../img/gps_fixed_24px.svg';
 
 class OfflineMap extends Component {
@@ -49,19 +51,27 @@ class OfflineMap extends Component {
   render() {
     const { map, handleCloseOfflineMap } = this.props;
 
+    const imageContainerStyle = {
+      width: `${map.dimensions.width}px`,
+      height: `${map.dimensions.height}px`,
+    };
+
     const gpsIconStyle = {
+      position: 'absolute',
       top: this.state.pxY - 12,
       left: this.state.pxX - 12,
     };
 
     return (
-      <div className="offline-map">
+      <div className="offline-map" data-simplebar>
         <div className="offline-map__options">
           <h2>{map.name}</h2>
           <button onClick={() => handleCloseOfflineMap()}>Close</button>
         </div>
-        <img src={this.props.map.img} />
-        {this.state.pxY && <img src={GpsFixedIcon} style={gpsIconStyle} className="gps-icon" />}
+        <div className="offline-map__image-container" style={imageContainerStyle}>
+          <img src={this.props.map.img} />
+          {this.state.pxY && <img src={GpsFixedIcon} style={gpsIconStyle} className="gps-icon" />}
+        </div>
       </div>
     );
   }
