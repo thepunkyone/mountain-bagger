@@ -168,7 +168,7 @@ class Home extends Component {
           }
           {selectedTab === 'weather' && <Weather />}
           {selectedTab === 'metrics' && <Metrics />}
-          {selectedTab === 'saved' && <Saved {...this.props}/>}
+          {selectedTab === 'saved' && <Saved {...this.props} maps={this.state.maps} />}
           {selectedTab === 'create-new' && <CreateNew />}
           {loading && <div className="loading-gif"><img src={loadingGif} /></div>}
         </div>

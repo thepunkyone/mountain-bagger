@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 
 const style = {
   width: '100%',
-  height: '100%',
+  height: 'calc(100% + 52px)',
+  overflowY: 'scroll',
+  marginTop: '-52px',
   background: '#20B11D',
   position: 'absolute',
   top: '0',
@@ -30,11 +33,9 @@ class Saved extends Component {
   };
 
   deleteSavedRoute = (routeId) => {
-    console.log('here 1');
     axios
       .delete(`${BASE_URL}/user/${this.props.id}/${routeId}`)
       .then(() => {
-        console.log('here 2');
         this.getSavedRoute();
       })
       .catch(error => {
@@ -76,6 +77,23 @@ class Saved extends Component {
                   <div>Duration is {route.duration}</div>
                   <div>Route starts at lng: {route.route[0][0]}, lat: {route.route[0][1]} and ends at lng: {route.route[1][0]}, lat: {route.route[1][1]}</div>
                   <button onClick={() => this.handleOnClick(route._id)}>Delete</button>
+                </div>
+              );
+            })
+          )
+        }
+        <h1>{this.props.name}'s saved maps</h1>
+        {
+          this.props.maps.length !== 0 && (
+            this.props.maps.map(map => {
+              return (
+                <div key={map._id} style={{ border: '1px solid black', margin: '5px', padding: '5px' }}>
+                  <h1>{map.name}</h1>
+                  <p>{moment(map.createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a')}</p>
+                  <div>
+                    <img src={map.img} />
+                  </div>
+                  <button onClick={() => this.handleOnClick(map._id)}>Delete</button>
                 </div>
               );
             })

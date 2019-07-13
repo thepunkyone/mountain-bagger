@@ -179,7 +179,7 @@ class MapContainer extends Component {
   };
 
   handleMapClick = (map, evt) => {
-    if (this.props.selectedTab === "create-new") {
+    if (this.props.selectedTab === 'create-new') {
       const coordsObj = evt.lngLat;
       const coordinates = Object.keys(coordsObj).map((key) => {
         return coordsObj[key];
@@ -211,7 +211,7 @@ class MapContainer extends Component {
   };
 
   postStaticMap = () => {
-    const userId = '5d2726fec69da05f6d156078';
+    const userId = this.props.userId;
     const { staticMap } = this.state;
 
     const postedMap = {
