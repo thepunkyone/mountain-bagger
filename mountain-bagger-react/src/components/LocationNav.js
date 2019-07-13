@@ -5,6 +5,7 @@ import ExploreIcon from '@material-ui/icons/Explore';
 import GpsFixedIcon from '@material-ui/icons/GpsFixed';
 import GpsNotFixedIcon from '@material-ui/icons/GpsNotFixed';
 import SearchIcon from '@material-ui/icons/Search';
+import Compass from '../img/compass.png';
 
 const menuIconStyle = {
   width: '42px',
@@ -30,8 +31,8 @@ const LocationNav = (props) => {
 
   return (
     <nav className="LocationNav nav-main">
-      <div className="nav-metrics">
-        <p className="menu-icon-light">
+      <div className="nav-metrics" style={props.gpsSpeed ? { color: '#222222' } : { color: '#888888' }}>
+        <p>
           <span>
             Altitude
           </span>
@@ -39,7 +40,7 @@ const LocationNav = (props) => {
             {props.gpsAltitude ? props.gpsAltitude : '...'}
           </span>
         </p>
-        <p className="menu-icon-light">
+        <p>
           <span>
             Speed
           </span>
@@ -48,7 +49,9 @@ const LocationNav = (props) => {
           </span>
         </p>
         {
-          !props.gpsHeading && <ExploreIcon style={menuIconLightStyle} />
+          props.gpsHeading ?
+            <img src={Compass} style={{ transform: `rotate(${props.gpsHeading}deg)` }} />
+            : <ExploreIcon style={menuIconLightStyle} />
         }
       </div>
       {locationWatchId === null ?

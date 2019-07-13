@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import SimpleBar from 'simplebar-react';
-import 'simplebar/dist/simplebar.min.css';
 import GpsFixedIcon from '../img/gps_fixed_24px.svg';
 
 class OfflineMap extends Component {
