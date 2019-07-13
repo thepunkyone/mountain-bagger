@@ -80,7 +80,6 @@ class MapContainer extends Component {
             },
           }, () => {
             this.postStaticMap();
-            this.props.onGetMaps();
           });
         })
         .catch(() => console.log('image can\'t be retrieved'));
@@ -120,7 +119,6 @@ class MapContainer extends Component {
             },
           }, () => {
             this.postStaticMap();
-            this.props.onGetMaps();
           });
         })
         .catch(() => console.log('image can\'t be retrieved'));

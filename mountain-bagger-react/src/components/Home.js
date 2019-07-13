@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import '../style/Home.scss';
 import loadingGif from '../img/loading.gif';
 
@@ -27,13 +26,8 @@ class Home extends Component {
       gpsHeading: '',
       locationWatchId: null,
       searchLocationCoords: '',
-      maps: [],
     };
     this.node = React.createRef();
-  }
-
-  componentDidMount() {
-    this.getMaps();
   }
 
   componentWillMount() {
@@ -43,13 +37,6 @@ class Home extends Component {
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClick, false);
   }
-
-  getMaps = () => {
-    const userId = '5d2726fec69da05f6d156078';
-    axios.get(`http://localhost:3030/${userId}/maps`)
-      .then(response => this.setState({ maps: response.data }))
-      .catch((error) => console.log('AXIOS ERROR!', error));
-  };
 
   handleClick = (e) => {
     if (this.state.selectedTab === 'search' && !this.node.current.contains(e.target)) {
@@ -120,8 +107,6 @@ class Home extends Component {
   };
 
   render() {
-    console.log(this.state.maps);
-
     const {
       selectedTab,
       locationFocus,
@@ -153,7 +138,6 @@ class Home extends Component {
               gpsLatitude={gpsLatitude}
               searchLocationCoords={searchLocationCoords}
               onToggleLoading={this.toggleLoading}
-              onGetMaps={this.getMaps}
             />
           </div>
           {selectedTab === 'search' &&
@@ -168,7 +152,7 @@ class Home extends Component {
           }
           {selectedTab === 'weather' && <Weather />}
           {selectedTab === 'metrics' && <Metrics />}
-          {selectedTab === 'saved' && <Saved {...this.props} maps={this.state.maps} />}
+          {selectedTab === 'saved' && <Saved {...this.props} />}
           {selectedTab === 'create-new' && <CreateNew />}
           {loading && <div className="loading-gif"><img src={loadingGif} /></div>}
         </div>

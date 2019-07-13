@@ -1,18 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-
-const style = {
-  width: '100%',
-  height: 'calc(100% + 52px)',
-  overflowY: 'scroll',
-  marginTop: '-52px',
-  background: '#20B11D',
-  position: 'absolute',
-  top: '0',
-  left: '0',
-  zIndex: '100',
-};
+import '../style/Saved.scss';
 
 const BASE_URL = 'http://localhost:3030';
 
@@ -21,15 +10,34 @@ class Saved extends Component {
     super(props);
     this.state = ({
       routes: {},
+      maps: [],
     });
   }
 
   componentDidMount() {
     this.getSavedRoute();
+    this.getMaps();
   }
 
   handleOnClick = (routeId) => {
     this.deleteSavedRoute(routeId);
+  };
+
+  getMaps = () => {
+    const userId = this.props.id;
+    axios.get(`${BASE_URL}/${userId}/maps`)
+      .then(response => this.setState({ maps: response.data }))
+      .catch((error) => console.log('AXIOS ERROR!', error));
+  };
+
+  deleteSavedMap = (mapId) => {
+    axios.delete(`${BASE_URL}/${this.props.id}/maps/${mapId}`)
+      .then(() => {
+        this.getMaps();
+      })
+      .catch((error) => {
+        console.log('Map delete error', error);
+      });
   };
 
   deleteSavedRoute = (routeId) => {
@@ -65,7 +73,7 @@ class Saved extends Component {
       )
     }
     return (
-      <div style={style}>
+      <div className="menu-overlay">
         <h1>{this.props.name}'s saved routes</h1>
         {
           Object.keys(routes).length !== 0 && (
@@ -73,8 +81,8 @@ class Saved extends Component {
               return (
                 <div key={route._id} style={{ border: '1px solid black', margin: '5px', padding: '5px' }}>
                   <h1>{route.name}</h1>
-                  <div>Distance is {route.distance}</div>
-                  <div>Duration is {route.duration}</div>
+                  <div>Distance is {route.distance}km</div>
+                  <div>Duration is {route.duration}min</div>
                   <div>Route starts at lng: {route.route[0][0]}, lat: {route.route[0][1]} and ends at lng: {route.route[1][0]}, lat: {route.route[1][1]}</div>
                   <button onClick={() => this.handleOnClick(route._id)}>Delete</button>
                 </div>
@@ -84,16 +92,16 @@ class Saved extends Component {
         }
         <h1>{this.props.name}'s saved maps</h1>
         {
-          this.props.maps.length !== 0 && (
-            this.props.maps.map(map => {
+          this.state.maps.length !== 0 && (
+            this.state.maps.map(map => {
               return (
-                <div key={map._id} style={{ border: '1px solid black', margin: '5px', padding: '5px' }}>
+                <div className="saved-map" key={map._id} style={{ border: '1px solid black', margin: '5px', padding: '5px' }}>
                   <h1>{map.name}</h1>
                   <p>{moment(map.createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a')}</p>
-                  <div>
+                  <div className="image-container">
                     <img src={map.img} />
                   </div>
-                  <button onClick={() => this.handleOnClick(map._id)}>Delete</button>
+                  <button onClick={() => this.deleteSavedMap(map._id)}>Delete</button>
                 </div>
               );
             })
