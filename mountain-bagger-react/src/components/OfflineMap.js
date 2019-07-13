@@ -20,8 +20,14 @@ class OfflineMap extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.gpsLongitude !== prevProps.gpsLongitude) {
-      this.convertLocationToPx(this.props.gpsLongitude, this.props.gpsLatitude);
+    const { map, gpsLongitude, gpsLatitude } = this.props;
+    console.log(map._id);
+
+    if (prevProps.map && (map._id !== prevProps.map._id)) {
+      this.convertLocationToPx(gpsLongitude, gpsLatitude);
+    }
+    if (gpsLongitude !== prevProps.gpsLongitude || gpsLatitude !== prevProps.gpsLatitude) {
+      this.convertLocationToPx(gpsLongitude, gpsLatitude);
     }
   }
 
@@ -78,12 +84,12 @@ class OfflineMap extends Component {
           {this.state.pxY && !this.state.outOfBounds && <img src={GpsFixedIcon} style={gpsIconStyle} className="gps-icon" />}
         </div>
         {
-          (this.props.locationWatchId !== null && this.state.outOfBounds) &&
-          (
-            <div className="offline-map__bounds-error">
-              Your GPS location is outside map boundaries!
-            </div>
-          )
+          (this.props.locationWatchId !== null && this.props.gpsLongitude && this.state.outOfBounds) &&
+            (
+              <div className="offline-map__bounds-error">
+                Your GPS location is outside map boundaries!
+              </div>
+            )
         }
       </div>
     );
