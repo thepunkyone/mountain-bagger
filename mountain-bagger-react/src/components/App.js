@@ -53,7 +53,7 @@ class App extends Component {
         <Route
           exact
           path="/login"
-          render={(props) => (this.state.id ? <Redirect to="/profile" /> : <Login {...props} handleInputChange={this.handleInputChange} handleLogin={this.handleLogin} />)}
+          render={(props) => (this.state.id ? <Redirect to="/home" /> : <Login {...props} handleInputChange={this.handleInputChange} handleLogin={this.handleLogin} />)}
         />
         />
         <Route
