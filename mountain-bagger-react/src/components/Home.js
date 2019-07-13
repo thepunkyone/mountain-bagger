@@ -161,6 +161,7 @@ class Home extends Component {
                 onSearchLocation={this.handleSearchLocation}
                 onLoading={this.toggleLoading}
                 onResetSelectedTab={this.resetSelectedTab}
+                handleCloseOfflineMap={this.closeOfflineMap}
               />
             )
           }

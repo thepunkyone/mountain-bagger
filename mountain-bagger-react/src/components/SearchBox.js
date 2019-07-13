@@ -25,6 +25,7 @@ class SearchBox extends Component {
 
   handlePlaceSearch = (event) => {
     event.preventDefault();
+    
     const placeName = encodeURI(this.state.placeName);
     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
     const apiKey = process.env.REACT_APP_API_KEY;
@@ -33,7 +34,8 @@ class SearchBox extends Component {
       .then(
         this.props.onLoading(true),
         this.props.onSearchLocation(''),
-        this.props.onResetSelectedTab()
+        this.props.onResetSelectedTab(),
+        this.props.handleCloseOfflineMap()
       )
       .then((result) => {
         return result.json();
