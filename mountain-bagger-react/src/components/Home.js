@@ -164,9 +164,26 @@ class Home extends Component {
           }
           {selectedTab === 'weather' && <Weather />}
           {selectedTab === 'metrics' && <Metrics />}
-          {selectedTab === 'saved' && <Saved {...this.props} onToggleLoading={this.toggleLoading} handleOpenOfflineMap={this.openOfflineMap} />}
+          {selectedTab === 'saved' &&
+            (
+              <Saved
+                {...this.props}
+                onToggleLoading={this.toggleLoading}
+                handleOpenOfflineMap={this.openOfflineMap}
+              />
+            )
+          }
           {selectedTab === 'create-new' && <CreateNew />}
-          {offlineMap && <OfflineMap map={offlineMap} handleCloseOfflineMap={this.closeOfflineMap} />}
+          {offlineMap &&
+            (
+              <OfflineMap
+                map={offlineMap}
+                handleCloseOfflineMap={this.closeOfflineMap}
+                gpsLongitude={gpsLongitude}
+                gpsLatitude={gpsLatitude}
+              />
+            )
+          }
           {loading && <div className="loading-gif"><img src={loadingGif} /></div>}
         </div>
         <ToolsNav
