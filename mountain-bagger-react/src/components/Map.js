@@ -45,7 +45,6 @@ let bounds;
 const Map = (props) => {
 
   const {
-    userId,
     selectedTab,
     gpsLongitude,
     gpsLatitude,

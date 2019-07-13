@@ -267,10 +267,8 @@ class MapContainer extends Component {
 
   render() {
     window.onresize = this.setMapDimensions;
-    console.log(this.state.staticMap);
 
     const {
-      userId,
       selectedTab,
       gpsLongitude,
       gpsLatitude,
@@ -295,7 +293,6 @@ class MapContainer extends Component {
 
     return (
       <Map
-        userId={userId}
         selectedTab={selectedTab}
         gpsLongitude={gpsLongitude}
         gpsLatitude={gpsLatitude}
