@@ -9,6 +9,7 @@ class OfflineMap extends Component {
     this.state = {
       pxX: '',
       pxY: '',
+      outOfBounds: false,
     };
   }
 
@@ -42,10 +43,14 @@ class OfflineMap extends Component {
     const pixelsPerLat = imageLatPixels / (imageNorthLat - imageSouthLat);
     const pixelsPerLng = imageLngPixels / (imageEastLng - imageWestLng);
 
-    const x = (lng - imageWestLng) * pixelsPerLng;
-    const y = Math.abs(lat - imageNorthLat) * pixelsPerLat;
+    if (lng < imageWestLng || lng > imageEastLng || lat > imageNorthLat || lat < imageSouthLat) {
+      this.setState({ outOfBounds: true });
+    } else {
+      const x = (lng - imageWestLng) * pixelsPerLng;
+      const y = Math.abs(lat - imageNorthLat) * pixelsPerLat;
 
-    this.setState({ pxX: x, pxY: y });
+      this.setState({ pxX: x, pxY: y, outOfBounds: false });
+    }
   };
 
   render() {
@@ -70,8 +75,16 @@ class OfflineMap extends Component {
         </div>
         <div className="offline-map__image-container" style={imageContainerStyle}>
           <img src={this.props.map.img} />
-          {this.state.pxY && <img src={GpsFixedIcon} style={gpsIconStyle} className="gps-icon" />}
+          {this.state.pxY && !this.state.outOfBounds && <img src={GpsFixedIcon} style={gpsIconStyle} className="gps-icon" />}
         </div>
+        {
+          (this.props.locationWatchId !== null && this.state.outOfBounds) &&
+          (
+            <div className="offline-map__bounds-error">
+              Your GPS location is outside map boundaries!
+            </div>
+          )
+        }
       </div>
     );
   }

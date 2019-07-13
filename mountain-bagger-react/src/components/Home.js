@@ -183,6 +183,7 @@ class Home extends Component {
                 handleCloseOfflineMap={this.closeOfflineMap}
                 gpsLongitude={gpsLongitude}
                 gpsLatitude={gpsLatitude}
+                locationWatchId={locationWatchId}
               />
             )
           }
