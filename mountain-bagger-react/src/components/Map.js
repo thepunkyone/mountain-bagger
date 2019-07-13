@@ -28,7 +28,7 @@ const placeIconStyle = {
   width: '24px',
   height: '24px',
   color: '#0F590D',
-}
+};
 
 const directionsIconStyle = {
   width: '30px',

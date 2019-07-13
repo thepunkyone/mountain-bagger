@@ -15,6 +15,10 @@ class SearchBox extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.inputRef.current.focus();
+  }
+
   handleFieldChange = (event) => {
     this.setState({ placeName: event.target.value });
   };
@@ -48,9 +52,9 @@ class SearchBox extends Component {
 
   render() {
     return (
-      <div className="SearchBox" ref={this.props.someRef}>
+      <div className="SearchBox" ref={this.props.searchRef}>
         <form onSubmit={this.handlePlaceSearch}>
-          <input type="text" placeholder="Enter placename" value={this.state.placeName} onChange={this.handleFieldChange} />
+          <input type="text" placeholder="Enter placename" ref={this.props.inputRef} value={this.state.placeName} onChange={this.handleFieldChange} />
           <button type="submit">
             <CheckCircleIcon style={checkCircleStyle} />
           </button>

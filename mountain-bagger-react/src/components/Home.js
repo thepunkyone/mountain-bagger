@@ -29,7 +29,8 @@ class Home extends Component {
       searchLocationCoords: '',
       offlineMap: '',
     };
-    this.node = React.createRef();
+    this.searchNode = React.createRef();
+    this.searchInput = React.createRef();
   }
 
   componentWillMount() {
@@ -45,7 +46,7 @@ class Home extends Component {
   };
 
   handleClick = (e) => {
-    if (this.state.selectedTab === 'search' && !this.node.current.contains(e.target)) {
+    if (this.state.selectedTab === 'search' && !this.searchNode.current.contains(e.target)) {
       this.resetSelectedTab();
     }
   };
@@ -155,7 +156,8 @@ class Home extends Component {
           {selectedTab === 'search' &&
             (
               <SearchBox
-                someRef={this.node}
+                inputRef={this.searchInput}
+                searchRef={this.searchNode}
                 onSearchLocation={this.handleSearchLocation}
                 onLoading={this.toggleLoading}
                 onResetSelectedTab={this.resetSelectedTab}

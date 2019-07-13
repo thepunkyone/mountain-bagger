@@ -19,7 +19,6 @@ const menuIconLightStyle = {
 };
 
 const LocationNav = (props) => {
-
   const {
     handleClick,
     onWatchUserLocation,
