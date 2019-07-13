@@ -40,6 +40,10 @@ class Home extends Component {
     document.removeEventListener('mousedown', this.handleClick, false);
   }
 
+  closeOfflineMap = () => {
+    this.setState({ offlineMap: '' });
+  };
+
   handleClick = (e) => {
     if (this.state.selectedTab === 'search' && !this.node.current.contains(e.target)) {
       this.resetSelectedTab();
@@ -62,6 +66,10 @@ class Home extends Component {
 
   setLocationFocus = (string) => {
     this.setState({ locationFocus: string });
+  };
+
+  openOfflineMap = (map) => {
+    this.setState({ offlineMap: map });
   };
 
   stopWatchingLocation = () => {
@@ -117,7 +125,7 @@ class Home extends Component {
       gpsLatitude,
       locationWatchId,
       searchLocationCoords,
-      offlineMap
+      offlineMap,
     } = this.state;
 
     return (
@@ -155,9 +163,9 @@ class Home extends Component {
           }
           {selectedTab === 'weather' && <Weather />}
           {selectedTab === 'metrics' && <Metrics />}
-          {selectedTab === 'saved' && <Saved {...this.props} onToggleLoading={this.toggleLoading} />}
+          {selectedTab === 'saved' && <Saved {...this.props} onToggleLoading={this.toggleLoading} handleOpenOfflineMap={this.openOfflineMap} />}
           {selectedTab === 'create-new' && <CreateNew />}
-          {offlineMap && <OfflineMap />}
+          {offlineMap && <OfflineMap map={offlineMap} handleCloseOfflineMap={this.closeOfflineMap} />}
           {loading && <div className="loading-gif"><img src={loadingGif} /></div>}
         </div>
         <ToolsNav

@@ -104,7 +104,7 @@ class Saved extends Component {
                   <div className="image-container">
                     <img src={map.img} />
                   </div>
-                  <button>Use offline map</button>
+                  <button onClick={() => this.props.handleOpenOfflineMap(map)}>Use offline map</button>
                   <button onClick={() => this.deleteSavedMap(map._id)}>Delete</button>
                 </div>
               );
