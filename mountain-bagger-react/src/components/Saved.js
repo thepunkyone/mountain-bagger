@@ -54,13 +54,16 @@ class Saved extends Component {
   getSavedRoute = () => {
     axios
       .get(`${BASE_URL}/user/${this.props.id}`)
+      .then(this.props.onToggleLoading(true))
       .then(response => {
         this.setState({
           routes: response.data,
         });
+        this.props.onToggleLoading(false);
       })
       .catch(error => {
         console.log(error, 'error');
+        this.props.onToggleLoading(false);
       });
   };
 
@@ -101,6 +104,7 @@ class Saved extends Component {
                   <div className="image-container">
                     <img src={map.img} />
                   </div>
+                  <button>Use offline map</button>
                   <button onClick={() => this.deleteSavedMap(map._id)}>Delete</button>
                 </div>
               );

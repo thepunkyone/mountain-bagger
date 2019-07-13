@@ -11,6 +11,7 @@ import Metrics from './Metrics';
 import Saved from './Saved';
 import CreateNew from './CreateNew';
 import MapContainer from './MapContainer';
+import OfflineMap from './OfflineMap';
 
 class Home extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class Home extends Component {
       gpsHeading: '',
       locationWatchId: null,
       searchLocationCoords: '',
+      offlineMap: true,
     };
     this.node = React.createRef();
   }
@@ -115,6 +117,7 @@ class Home extends Component {
       gpsLatitude,
       locationWatchId,
       searchLocationCoords,
+      offlineMap
     } = this.state;
 
     return (
@@ -152,8 +155,9 @@ class Home extends Component {
           }
           {selectedTab === 'weather' && <Weather />}
           {selectedTab === 'metrics' && <Metrics />}
-          {selectedTab === 'saved' && <Saved {...this.props} />}
+          {selectedTab === 'saved' && <Saved {...this.props} onToggleLoading={this.toggleLoading} />}
           {selectedTab === 'create-new' && <CreateNew />}
+          {offlineMap && <OfflineMap />}
           {loading && <div className="loading-gif"><img src={loadingGif} /></div>}
         </div>
         <ToolsNav

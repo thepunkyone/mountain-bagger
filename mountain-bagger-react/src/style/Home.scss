@@ -16,6 +16,16 @@
     z-index: 100;
   }
 
+  .offline-map {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: $green-accent;
+    top: 0;
+    left: 0;
+    z-index: 90;
+  }
+
   .UserNav {
     background: $green-main;
     color: $dark-green-accent;
