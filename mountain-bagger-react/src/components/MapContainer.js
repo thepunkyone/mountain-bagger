@@ -8,6 +8,7 @@ const URL_QUERY = '?steps=true&geometries=geojson&access_token=';
 const STYLES_URL = 'https://api.mapbox.com/styles/v1/thepunkyone/cjx34gegp2owc1cqym1n43a11';
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN;
 
+
 class MapContainer extends Component {
   constructor(props) {
     super(props);

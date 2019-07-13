@@ -2,12 +2,13 @@
 
 .mapboxgl-map {
   position: relative;
-  text-align: left; 
-  cursor: crosshair;
+  text-align: left;
 }
 
-.mapboxgl-canvas {
-  cursor: crosshair;
+.crosshair {
+  .mapboxgl-map, .mapboxgl-canvas {
+    cursor: crosshair;
+  }
 }
 
 .route-options {
