@@ -1,8 +1,6 @@
 const Map = require('../models/map');
 
 exports.postMap = (req, res) => {
-  console.log(req.body);
-
   const { userId } = req.params;
   const { name, img, dimensions, boundingBox } = req.body;
 
@@ -25,6 +23,18 @@ exports.postMap = (req, res) => {
     map.save().then(() => {
       res.status(201).json(map);
     });
+};
+
+exports.deleteMap = (req, res) => {
+  const { mapId } = req.params;
+  
+  Map.findByIdAndDelete(mapId, (err, map) => {
+    if (!map) {
+      res.status(404).json({ error: 'The map could not be found.'});
+    } else {
+      res.sendStatus(204);
+    }
+  });   
 };
 
 exports.getMaps = (req, res) => {
