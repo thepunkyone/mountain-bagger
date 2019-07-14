@@ -12,6 +12,7 @@ import Saved from './Saved';
 import CreateNew from './CreateNew';
 import MapContainer from './MapContainer';
 import OfflineMap from './OfflineMap';
+import LocationSearchInput from './LocationSearchInput';
 
 class Home extends Component {
   constructor(props) {
@@ -45,11 +46,11 @@ class Home extends Component {
     this.setState({ offlineMap: '' });
   };
 
-  handleClick = (e) => {
-    if (this.state.selectedTab === 'search' && !this.searchNode.current.contains(e.target)) {
-      this.resetSelectedTab();
-    }
-  };
+  // handleClick = (e) => {
+  //   if (this.state.selectedTab === 'search' && !this.searchNode.current.contains(e.target)) {
+  //     this.resetSelectedTab();
+  //   }
+  // };
 
   handleSearchLocation = (locationCoords) => {
     this.setState({ searchLocationCoords: locationCoords });
@@ -161,14 +162,15 @@ class Home extends Component {
           </div>
           {selectedTab === 'search' &&
             (
-              <SearchBox
-                inputRef={this.searchInput}
-                searchRef={this.searchNode}
-                onSearchLocation={this.handleSearchLocation}
-                onLoading={this.toggleLoading}
-                onResetSelectedTab={this.resetSelectedTab}
-                handleCloseOfflineMap={this.closeOfflineMap}
-              />
+              // <SearchBox
+              //   inputRef={this.searchInput}
+              //   searchRef={this.searchNode}
+              //   onSearchLocation={this.handleSearchLocation}
+              //   onLoading={this.toggleLoading}
+              //   onResetSelectedTab={this.resetSelectedTab}
+              //   handleCloseOfflineMap={this.closeOfflineMap}
+              // />
+              <LocationSearchInput />
             )
           }
           {selectedTab === 'weather' && <Weather />}
