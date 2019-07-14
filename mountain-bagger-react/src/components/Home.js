@@ -3,7 +3,6 @@ import '../style/Home.scss';
 import loadingGif from '../img/loading.gif';
 
 import LocationNav from './LocationNav';
-import SearchBox from './SearchBox';
 import UserNav from './UserNav';
 import ToolsNav from './ToolsNav';
 import Weather from './Weather';
@@ -46,11 +45,11 @@ class Home extends Component {
     this.setState({ offlineMap: '' });
   };
 
-  // handleClick = (e) => {
-  //   if (this.state.selectedTab === 'search' && !this.searchNode.current.contains(e.target)) {
-  //     this.resetSelectedTab();
-  //   }
-  // };
+  handleClick = (e) => {
+    if (this.state.selectedTab === 'search' && !this.searchNode.current.contains(e.target)) {
+      this.resetSelectedTab();
+    }
+  };
 
   handleSearchLocation = (locationCoords) => {
     this.setState({ searchLocationCoords: locationCoords });
@@ -162,15 +161,14 @@ class Home extends Component {
           </div>
           {selectedTab === 'search' &&
             (
-              // <SearchBox
-              //   inputRef={this.searchInput}
-              //   searchRef={this.searchNode}
-              //   onSearchLocation={this.handleSearchLocation}
-              //   onLoading={this.toggleLoading}
-              //   onResetSelectedTab={this.resetSelectedTab}
-              //   handleCloseOfflineMap={this.closeOfflineMap}
-              // />
-              <LocationSearchInput />
+              <LocationSearchInput
+                inputRef={this.searchInput}
+                searchRef={this.searchNode}
+                onSearchLocation={this.handleSearchLocation}
+                onLoading={this.toggleLoading}
+                onResetSelectedTab={this.resetSelectedTab}
+                handleCloseOfflineMap={this.closeOfflineMap}
+              />
             )
           }
           {selectedTab === 'weather' && <Weather />}

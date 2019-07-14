@@ -3,6 +3,7 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
+import '../style/LocationSearchInput.scss';
 
 const searchOptions = {
   locationBias: { radius: 30000, center: { lat: 54, lng: -3 } },
@@ -11,25 +12,44 @@ const searchOptions = {
 class LocationSearchInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { address: '', input: '' };
+    this.state = {
+      address: '',
+      input: '',
+    };
+  }
+
+  componentDidMount() {
+    this.props.inputRef.current.focus();
   }
 
   handleFieldChange = (e) => {
     e.preventDefault();
     this.setState({ input: e.target.value });
   };
- 
+
   handleChange = address => {
     this.setState({ address });
   };
- 
+
   handleSelect = address => {
     geocodeByAddress(address)
+      .then(
+        this.props.onLoading(true),
+        this.props.onSearchLocation(''),
+        this.props.onResetSelectedTab(),
+        this.props.handleCloseOfflineMap()
+      )
       .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
-      .catch(error => console.error('Error', error));
+      .then(latLng => {
+        this.props.onSearchLocation([latLng.lng, latLng.lat]);
+        this.props.onLoading(false);
+      })
+      .catch(error => {
+        console.error('Error', error);
+        this.props.onLoading(false);
+      });
   };
- 
+
   render() {
     return (
       <PlacesAutocomplete
@@ -39,8 +59,10 @@ class LocationSearchInput extends React.Component {
         searchOptions={searchOptions}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div>
+          <div className="SearchBox" ref={this.props.searchRef}>
             <input
+              ref={this.props.inputRef}
+              type="text"
               value={this.state.input}
               onChange={(e) => this.handleFieldChange(e)}
               {...getInputProps({
