@@ -2,11 +2,10 @@ import React from 'react';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
-  google,
 } from 'react-places-autocomplete';
 
 const searchOptions = {
-  locationBias: { radius: 2000, center: { lat: 54, lng: -3 } },
+  locationBias: { radius: 30000, center: { lat: 54, lng: -3 } },
 };
 
 class LocationSearchInput extends React.Component {
