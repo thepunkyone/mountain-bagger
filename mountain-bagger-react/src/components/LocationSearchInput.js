@@ -4,6 +4,7 @@ import PlacesAutocomplete, {
   getLatLng,
 } from 'react-places-autocomplete';
 import '../style/LocationSearchInput.scss';
+import ClearIcon from '@material-ui/icons/Clear';
 
 const searchOptions = {
   locationBias: { radius: 30000, center: { lat: 54, lng: -3 } },
@@ -16,11 +17,19 @@ class LocationSearchInput extends React.Component {
       address: '',
       input: '',
     };
+    this.input = React.createRef();
   }
 
   componentDidMount() {
     this.props.inputRef.current.focus();
   }
+
+  clearInput = (e) => {
+    e.preventDefault();
+    this.setState({ input: '' }, () => {
+      this.props.inputRef.current.value = '';
+    });
+  };
 
   handleFieldChange = (e) => {
     e.preventDefault();
@@ -70,13 +79,16 @@ class LocationSearchInput extends React.Component {
                 className: 'location-search-input',
               })}
             />
-            <div className="autocomplete-dropdown-container" style={{ color: 'black' }}>
-              {loading && <div>Loading...</div>}
+            <div className="clear-search">
+              <ClearIcon onClick={(e) => this.clearInput(e)} />
+            </div>
+            <div className="autocomplete-dropdown-container">
+              {/* {loading && <div className="search-loading">Loading...</div>} */}
               {suggestions.map(suggestion => {
                 const className = suggestion.active
                   ? 'suggestion-item--active'
                   : 'suggestion-item';
-                // inline style for demonstration purpose
+                
                 const style = suggestion.active
                   ? { backgroundColor: '#fafafa', cursor: 'pointer' }
                   : { backgroundColor: '#ffffff', cursor: 'pointer' };
