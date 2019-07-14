@@ -69,18 +69,20 @@ class LocationSearchInput extends React.Component {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div className="SearchBox" ref={this.props.searchRef}>
-            <input
-              ref={this.props.inputRef}
-              type="text"
-              value={this.state.input}
-              onChange={(e) => this.handleFieldChange(e)}
-              {...getInputProps({
-                placeholder: 'Search Places ...',
-                className: 'location-search-input',
-              })}
-            />
-            <div className="clear-search">
-              <ClearIcon onClick={(e) => this.clearInput(e)} />
+            <div className="SearchBox__search-input">
+              <input
+                ref={this.props.inputRef}
+                type="text"
+                value={this.state.input}
+                onChange={(e) => this.handleFieldChange(e)}
+                {...getInputProps({
+                  placeholder: 'Search Places ...',
+                  className: 'location-search-input',
+                })}
+              />
+              <div className="clear-search">
+                <ClearIcon onClick={(e) => this.clearInput(e)} />
+              </div>
             </div>
             <div className="autocomplete-dropdown-container">
               {/* {loading && <div className="search-loading">Loading...</div>} */}

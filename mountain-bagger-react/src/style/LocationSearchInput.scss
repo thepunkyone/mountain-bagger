@@ -9,14 +9,29 @@
   left: 0;
   z-index: 100;
 
+  &__search-input {
+    width: calc(100% - 18px);
+    max-width: 500px;
+    position: relative;
+    margin: .8rem auto;
+  }
+
   input {
     border-radius: $border-radius;
     height: 1.8rem;
-    margin: .8rem 9px .8rem 9px;
+    width: calc(100% - 2px);
     border: 0;
-    width: calc(100% - 20px);
-    max-width: 500px;
     text-align: center;
+  }
+
+  .clear-search {
+    color: #b9b9b9;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    line-height: 0;
+    cursor: pointer;
   }
 
   .autocomplete-dropdown-container {
