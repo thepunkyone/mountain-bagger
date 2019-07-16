@@ -4,6 +4,57 @@
   @include photo-background;
   padding: 0;
 
+  .menu-overlay {
+    width: 100%;
+    height: calc(100% + 52px);
+    overflow-y: scroll;
+    margin-top: -52px;
+    background: $green-accent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+  }
+
+  .offline-map {
+    width: 100vw;
+    height: 100%;
+    position: absolute;
+    background: $green-accent;
+    top: 0;
+    left: 0;
+    z-index: 90;
+    font-size: 0;
+    overflow: auto;
+
+    img {
+      position: relative;
+    }
+
+    &__options {
+      font-size: 1rem;
+      position: fixed;
+      top: 100px;
+      left: 50%;
+      z-index: 91;
+      transform: translateX(-50%);
+    }
+
+    &__image-container {
+      position: relative;
+      margin: 0 auto;
+    }
+
+    &__bounds-error {
+      font-size: 1rem;
+      position: fixed;
+      top: 200px;
+      left: 50%;
+      z-index: 91;
+      transform: translateX(-50%);
+    }
+  }
+
   .UserNav {
     background: $green-main;
     color: $dark-green-accent;
@@ -25,9 +76,6 @@
     }
     span {
       display: block;
-    }
-    .menu-icon-light {
-      color: $grey-light;
     }
   }
 
@@ -70,43 +118,4 @@
     }
   }
 
-  // .loading-animation {
-  //   position: absolute;
-  //   top: calc(50% - 40px);
-  //   left: calc(50% - 40px);
-  // }
-
-  // .lds-ripple {
-  //   display: inline-block;
-  //   position: relative;
-  //   width: 80px;
-  //   height: 80px;
-  //   z-index: 100;
-  // }
-  // .lds-ripple div {
-  //   position: absolute;
-  //   border: 4px solid $white;
-  //   opacity: 1;
-  //   border-radius: 50%;
-  //   animation: lds-ripple 1.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-  // }
-  // .lds-ripple div:nth-child(2) {
-  //   animation-delay: -0.7s;
-  // }
-  // @keyframes lds-ripple {
-  //   0% {
-  //     top: 36px;
-  //     left: 36px;
-  //     width: 0;
-  //     height: 0;
-  //     opacity: 1;
-  //   }
-  //   100% {
-  //     top: -1px;
-  //     left: -1px;
-  //     width: 74px;
-  //     height: 74px;
-  //     opacity: 0;
-  //   }
-  // }
 }

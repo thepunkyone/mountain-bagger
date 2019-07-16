@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import '../style/Home.scss';
 import loadingGif from '../img/loading.gif';
 
 import LocationNav from './LocationNav';
-import SearchBox from './SearchBox';
 import UserNav from './UserNav';
 import ToolsNav from './ToolsNav';
 import Weather from './Weather';
@@ -12,6 +10,8 @@ import Metrics from './Metrics';
 import Saved from './Saved';
 import CreateNew from './CreateNew';
 import MapContainer from './MapContainer';
+import OfflineMap from './OfflineMap';
+import LocationSearchInput from './LocationSearchInput';
 
 class Home extends Component {
   constructor(props) {
@@ -27,17 +27,10 @@ class Home extends Component {
       gpsHeading: '',
       locationWatchId: null,
       searchLocationCoords: '',
-      maps: [],
-      // user: '',
+      offlineMap: '',
     };
-    this.node = React.createRef();
-  }
-
-  componentDidMount() {
-    this.getMaps();
-    // this.setState({
-    //   user: TokenManager.getTokenPayload(),
-    // });
+    this.searchNode = React.createRef();
+    this.searchInput = React.createRef();
   }
 
   componentWillMount() {
@@ -48,15 +41,12 @@ class Home extends Component {
     document.removeEventListener('mousedown', this.handleClick, false);
   }
 
-  getMaps = () => {
-    const userId = '5d2726fec69da05f6d156078';
-    axios.get(`http://localhost:3030/${userId}/maps`)
-      .then(response => this.setState({ maps: response.data }))
-      .catch((error) => console.log('AXIOS ERROR!', error));
+  closeOfflineMap = () => {
+    this.setState({ offlineMap: '' });
   };
 
   handleClick = (e) => {
-    if (this.state.selectedTab === 'search' && !this.node.current.contains(e.target)) {
+    if (this.state.selectedTab === 'search' && !this.searchNode.current.contains(e.target)) {
       this.resetSelectedTab();
     }
   };
@@ -77,6 +67,11 @@ class Home extends Component {
 
   setLocationFocus = (string) => {
     this.setState({ locationFocus: string });
+  };
+
+  openOfflineMap = (map) => {
+    this.setState({ offlineMap: map });
+    this.resetSelectedTab();
   };
 
   stopWatchingLocation = () => {
@@ -128,16 +123,18 @@ class Home extends Component {
   };
 
   render() {
-    console.log(this.state.maps);
-
     const {
       selectedTab,
       locationFocus,
       loading,
       gpsLongitude,
       gpsLatitude,
+      gpsAltitude,
+      gpsSpeed,
+      gpsHeading,
       locationWatchId,
       searchLocationCoords,
+      offlineMap,
     } = this.state;
     return (
       <div className="Home">
@@ -145,6 +142,9 @@ class Home extends Component {
         <LocationNav
           handleClick={this.selectTab}
           locationWatchId={locationWatchId}
+          gpsAltitude={gpsAltitude}
+          gpsSpeed={gpsSpeed}
+          gpsHeading={gpsHeading}
           onWatchUserLocation={this.watchUserLocation}
           onStopWatchingLocation={this.stopWatchingLocation}
           onLocationFocus={this.setLocationFocus}
@@ -160,23 +160,47 @@ class Home extends Component {
               gpsLatitude={gpsLatitude}
               searchLocationCoords={searchLocationCoords}
               onToggleLoading={this.toggleLoading}
-              onGetMaps={this.getMaps}
             />
           </div>
           {selectedTab === 'search' &&
             (
-              <SearchBox
-                someRef={this.node}
+              <LocationSearchInput
+                inputRef={this.searchInput}
+                searchRef={this.searchNode}
                 onSearchLocation={this.handleSearchLocation}
                 onLoading={this.toggleLoading}
                 onResetSelectedTab={this.resetSelectedTab}
+                handleCloseOfflineMap={this.closeOfflineMap}
               />
             )
           }
           {selectedTab === 'weather' && <Weather />}
           {selectedTab === 'metrics' && <Metrics />}
+<<<<<<< HEAD
           {selectedTab === 'saved' && <Saved {...this.props} id={this.props.user.id} name={this.props.user.firstName} />}
+=======
+          {selectedTab === 'saved' &&
+            (
+              <Saved
+                {...this.props}
+                onToggleLoading={this.toggleLoading}
+                handleOpenOfflineMap={this.openOfflineMap}
+              />
+            )
+          }
+>>>>>>> 3d32ee250abd8759ef6edb5e578a5e7a75ec729a
           {selectedTab === 'create-new' && <CreateNew />}
+          {offlineMap &&
+            (
+              <OfflineMap
+                map={offlineMap}
+                handleCloseOfflineMap={this.closeOfflineMap}
+                gpsLongitude={gpsLongitude}
+                gpsLatitude={gpsLatitude}
+                locationWatchId={locationWatchId}
+              />
+            )
+          }
           {loading && <div className="loading-gif"><img src={loadingGif} /></div>}
         </div>
         <ToolsNav

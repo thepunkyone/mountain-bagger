@@ -9,6 +9,7 @@ const URL_QUERY = '?steps=true&geometries=geojson&access_token=';
 const STYLES_URL = 'https://api.mapbox.com/styles/v1/thepunkyone/cjx34gegp2owc1cqym1n43a11';
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN;
 
+
 class MapContainer extends Component {
   constructor(props) {
     super(props);
@@ -81,7 +82,6 @@ class MapContainer extends Component {
             },
           }, () => {
             this.postStaticMap();
-            this.props.onGetMaps();
           });
         })
         .catch(() => console.log('image can\'t be retrieved'));
@@ -121,7 +121,6 @@ class MapContainer extends Component {
             },
           }, () => {
             this.postStaticMap();
-            this.props.onGetMaps();
           });
         })
         .catch(() => console.log('image can\'t be retrieved'));
@@ -180,7 +179,7 @@ class MapContainer extends Component {
   };
 
   handleMapClick = (map, evt) => {
-    if (this.props.selectedTab === "create-new") {
+    if (this.props.selectedTab === 'create-new') {
       const coordsObj = evt.lngLat;
       const coordinates = Object.keys(coordsObj).map((key) => {
         return coordsObj[key];
@@ -212,7 +211,7 @@ class MapContainer extends Component {
   };
 
   postStaticMap = () => {
-    const userId = '5d2726fec69da05f6d156078';
+    const userId = this.props.userId;
     const { staticMap } = this.state;
 
     const postedMap = {
@@ -274,7 +273,6 @@ class MapContainer extends Component {
     window.onresize = this.setMapDimensions;
 
     const {
-      userId,
       selectedTab,
       gpsLongitude,
       gpsLatitude,
@@ -299,7 +297,6 @@ class MapContainer extends Component {
 
     return (
       <Map
-        userId={userId}
         selectedTab={selectedTab}
         gpsLongitude={gpsLongitude}
         gpsLatitude={gpsLatitude}
