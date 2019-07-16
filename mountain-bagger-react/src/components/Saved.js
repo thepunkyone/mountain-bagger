@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import '../style/Saved.scss';
@@ -91,12 +91,14 @@ class Saved extends Component {
                   {
                     route.mapId &&
                     (
-                      <div className="map-thumbnail">
-                        <img src={route.mapId.img} />
-                      </div>
+                      <Fragment>
+                        <div className="map-thumbnail">
+                          <img src={route.mapId.img} />
+                        </div>
+                        <button onClick={() => this.props.handleOpenOfflineMap(route.mapId)}>Use offline map</button>
+                      </Fragment>
                     )
                   }
-                  <button onClick={() => this.props.handleOpenOfflineMap(route.mapId)}>Use offline map</button>
                   <button onClick={() => this.handleOnClick(route._id)}>Delete</button>
                 </div>
               );
