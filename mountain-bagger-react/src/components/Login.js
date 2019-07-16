@@ -5,6 +5,12 @@ import WelcomeHeader from './WelcomeHeader';
 import TokenManager from '../utils/token-manager';
 import axios from 'axios';
 
+const style = {
+  color: 'red',
+  paddingTop: '15px',
+  fontWeight: 'bold',
+};
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -22,20 +28,17 @@ class Login extends Component {
 
   handleLogin = (e) => {
     e.preventDefault();
-    console.log(this.props);
     axios.post('http://localhost:3030/login', {
       email: this.state.email,
       password: this.state.password,
     })
       .then((response) => {
-        console.log(response.data, 'here1');
         TokenManager.setToken(response.data.token);
         this.props.onLogin();
         this.props.history.push('/home');
       })
       .catch((error) => {
-        console.log('here');
-        // this.setState({ errorMessage: error.response.data.message });
+        this.setState({ errorMessage: error.response.data.message });
       });
   };
 
@@ -63,7 +66,7 @@ class Login extends Component {
           </button>
           {
             errorMessage &&
-            <div><span>{errorMessage}</span></div>
+            <div className="error" style={style}><span>{errorMessage}</span></div>
           }
           <p>
             Don't have an account?&nbsp;
@@ -75,7 +78,7 @@ class Login extends Component {
       </div>
     );
   }
-};
+}
 
 
 export default Login;

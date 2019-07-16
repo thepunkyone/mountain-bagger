@@ -5,9 +5,9 @@ const AuthRoute = ({
   exact, path, authenticate, component, ...props
 }) => {
   const Component = component;
-  console.log(props);
   return (
     <Route
+      {...props}
       exact={exact}
       path={path}
       render={routeProps => (authenticate() ?

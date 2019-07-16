@@ -19,14 +19,19 @@ const menuIconStyle = {
 };
 
 const UserNav = (props) => {
-
   return (
     <nav className="UserNav nav-main">
       <MenuIcon style={{ ...menuIconStyle, cursor: 'pointer' }} />
       <h2>
         <Logo iconStyle={logoIconStyle} iconImage={logoGreen} />
       </h2>
-      <ExitToAppIcon style={{ ...menuIconStyle, cursor: 'pointer' }} />
+      <a
+        href="#"
+        onClick={() => props.handleLogout()}
+        className="logout"
+      >
+        <ExitToAppIcon style={{ ...menuIconStyle, cursor: 'pointer' }} />
+      </a>
     </nav>
   );
 };

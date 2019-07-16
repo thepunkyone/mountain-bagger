@@ -266,7 +266,6 @@ class MapContainer extends Component {
 
   render() {
     window.onresize = this.setMapDimensions;
-    console.log(this.state.staticMap);
 
     const {
       userId,

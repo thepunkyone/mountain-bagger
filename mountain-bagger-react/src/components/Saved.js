@@ -60,7 +60,6 @@ class Saved extends Component {
 
   render() {
     const { routes } = this.state;
-    console.log(this.props);
     if (!this.props.name) {
       return (
         <div>You are not logged in!</div>

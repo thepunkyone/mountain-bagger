@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import axios from 'axios';
 import '../style/App.css';
 import Splash from './Splash';
 import Login from './Login';
@@ -22,7 +21,6 @@ class App extends Component {
     this.setState({
       user: TokenManager.getTokenPayload(),
     });
-    console.log(this.state.user);
   };
 
   handleLogout = () => {
@@ -59,7 +57,8 @@ class App extends Component {
           <AuthRoute
             exact
             path="/home"
-            // render={(props) => <Home {...props} user={this.state.user} />}
+            handleLogout={this.handleLogout}
+            user={this.state.user}
             component={Home}
             authenticate={this.isLoggedIn}
           />
