@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import '../style/App.css';
@@ -7,70 +7,71 @@ import Login from './Login';
 import Register from './Register';
 import Home from './Home';
 import Profile from './Profile';
+import AuthRoute from './AuthRoute';
+import TokenManager from '../utils/token-manager';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = ({
-      email: '',
-      password: '',
-      id: '',
-      firstName: '',
+      user: TokenManager.isTokenValid() ? TokenManager.getTokenPayload() : null,
     });
   }
 
-  handleInputChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
+  onLogin = () => {
+    this.setState({
+      user: TokenManager.getTokenPayload(),
+    });
+    console.log(this.state.user);
   };
 
-  handleLogin = (e) => {
-    e.preventDefault();
+  handleLogout = () => {
+    TokenManager.removeToken();
+    this.setState({
+      user: null,
+    });
+  };
 
-    axios.post('http://localhost:3030/login', {
-      email: this.state.email,
-      password: this.state.password,
-    })
-      .then((response) => {
-        console.log(response)
-        this.setState({ id: response.data.userId, firstName: response.data.firstName });
-        // this.props.history.push('/profile');
-      })
-      .catch((error) => {
-        console.log(error, 'error catch');
-      });
+  isLoggedIn = () => {
+    return Boolean(this.state.user) && TokenManager.isTokenValid();
   };
 
   render() {
     return (
-      <Switch>
-        <Route
-          exact
-          path="/"
-          render={Splash}
-        />
-        <Route
-          exact
-          path="/login"
-          render={(props) => (this.state.id ? <Redirect to="/home" /> : <Login {...props} handleInputChange={this.handleInputChange} handleLogin={this.handleLogin} />)}
-        />
-        />
-        <Route
-          exact
-          path="/register"
-          component={Register}
-        />
-        <Route
-          exact
-          path="/home"
-          render={(props) => <Home {...props} name={this.state.firstName} id={this.state.id} />}
-        />
-        <Route
-          exact
-          path="/profile"
-          render={(props) => <Profile {...props} name={this.state.name} id={this.state.id} />}
-        />
-      </Switch>
+      <Fragment>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={Splash}
+          />
+          <Route
+            exact
+            path="/login"
+            render={(props) => (this.state.user ? <Redirect to="/home" /> : <Login {...props} handleInputChange={this.handleInputChange} onLogin={this.onLogin} />)}
+          />
+          />
+          <Route
+            exact
+            path="/register"
+            component={Register}
+          />
+          <AuthRoute
+            exact
+            path="/home"
+            // render={(props) => <Home {...props} user={this.state.user} />}
+            component={Home}
+            authenticate={this.isLoggedIn}
+          />
+          <AuthRoute
+            exact
+            path="/profile"
+            component={Profile}
+            authenticate={this.isLoggedIn}
+            // render={(props) => <Profile {...props} name={this.state.name} id={this.state.id} />}
+          />
+        </Switch>
+      </Fragment>
     );
   }
 }

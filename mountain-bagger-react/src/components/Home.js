@@ -12,6 +12,7 @@ import Metrics from './Metrics';
 import Saved from './Saved';
 import CreateNew from './CreateNew';
 import MapContainer from './MapContainer';
+import TokenManager from '../utils/token-manager';
 
 class Home extends Component {
   constructor(props) {
@@ -28,12 +29,16 @@ class Home extends Component {
       locationWatchId: null,
       searchLocationCoords: '',
       maps: [],
+      user: '',
     };
     this.node = React.createRef();
   }
 
   componentDidMount() {
     this.getMaps();
+    this.setState({
+      user: TokenManager.getTokenPayload(),
+    });
   }
 
   componentWillMount() {
@@ -129,7 +134,7 @@ class Home extends Component {
       locationWatchId,
       searchLocationCoords,
     } = this.state;
-
+    console.log(this.state.user);
     return (
       <div className="Home">
         <UserNav />
@@ -144,7 +149,7 @@ class Home extends Component {
         <div className="content">
           <div>
             <MapContainer
-              userId={this.props.id}
+              userId={this.state.user.id}
               selectedTab={selectedTab}
               locationFocus={locationFocus}
               gpsLongitude={gpsLongitude}
@@ -165,7 +170,7 @@ class Home extends Component {
           }
           {selectedTab === 'weather' && <Weather />}
           {selectedTab === 'metrics' && <Metrics />}
-          {selectedTab === 'saved' && <Saved {...this.props}/>}
+          {selectedTab === 'saved' && <Saved {...this.props} id={this.state.user.id} name={this.state.user.firstName} />}
           {selectedTab === 'create-new' && <CreateNew />}
           {loading && <div className="loading-gif"><img src={loadingGif} /></div>}
         </div>

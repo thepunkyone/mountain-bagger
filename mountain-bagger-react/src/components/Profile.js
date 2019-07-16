@@ -20,7 +20,7 @@ class Profile extends Component {
 
   getSavedRoutes = () => {
     axios
-      .get(`${BASE_URL}/user/${this.props.id}`)
+      .get(`${BASE_URL}/routes/${this.props.id}`)
       .then(response => {
         this.setState({
           routes: response.data,

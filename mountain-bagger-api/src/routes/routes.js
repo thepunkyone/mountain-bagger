@@ -9,4 +9,5 @@ router.get('/:userId', routeController.listRoutes);
 router.get('/:userId/:routeId', routeController.findRoute);
 router.delete('/:userId/:routeId', routeController.deleteRoute);
 router.get('/', routeController.status);
+
 module.exports = router;
