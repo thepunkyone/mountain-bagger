@@ -1,8 +1,14 @@
 @import './variables';
 
+.map_div {
+  background-color: $green-accent;
+}
+
 .mapboxgl-map {
   position: relative;
   text-align: left;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .crosshair {
