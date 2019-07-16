@@ -12,10 +12,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = ({
-      email: 'thepunkyone@gmail.com',
-      password: 'password',
-      id: '5d2726fec69da05f6d156078',
-      firstName: 'Vitnija',
+      email: '',
+      password: '',
+      id: '',
+      firstName: '',
     });
   }
 
