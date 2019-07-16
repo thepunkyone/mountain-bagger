@@ -37,6 +37,7 @@ class MapContainer extends Component {
       },
       saveForm: false,
     };
+    this.mapRef = React.createRef();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -257,7 +258,7 @@ class MapContainer extends Component {
 
   setMapDimensions = () => {
     this.setState({
-      width: window.innerWidth,
+      width: this.mapRef.current.offsetWidth,
       height: window.innerHeight - 174,
     });
   };
@@ -268,6 +269,7 @@ class MapContainer extends Component {
 
   render() {
     window.onresize = this.setMapDimensions;
+    console.log(this.state.width);
 
     const {
       selectedTab,
@@ -294,6 +296,7 @@ class MapContainer extends Component {
 
     return (
       <Map
+        mapRef={this.mapRef}
         selectedTab={selectedTab}
         gpsLongitude={gpsLongitude}
         gpsLatitude={gpsLatitude}
