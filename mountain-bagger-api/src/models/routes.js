@@ -9,6 +9,10 @@ const routeSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
+  },
+  mapId: {
+    type:mongoose.Schema.Types.ObjectId,
+    ref: 'Map',
   }
 }, {timestamps: true})
 
