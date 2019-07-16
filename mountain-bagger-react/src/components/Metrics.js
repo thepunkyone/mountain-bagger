@@ -39,17 +39,6 @@ const data = [
   },
 ];
 
-const style = {
-  width: '100%',
-  height: '100%',
-  background: '#20B11D',
-  position: 'absolute',
-  top: '0',
-  left: '0',
-  zIndex: '100',
-};
-
-
 class Metrics extends React.Component {
   constructor(props) {
     super(props);
@@ -112,7 +101,7 @@ class Metrics extends React.Component {
     // console.log(altitudeArray);
     // console.log(this.calcCrow(-3.211555, 54.454235, -3.209266, 54.455776));
     return (
-      <div style={style}>
+      <div className="menu-overlay">
         <LineChart
           width={500}
           height={300}

@@ -12,6 +12,7 @@
     "mapbox-elevation": "^1.0.0",
     "mapbox-gl": "^1.0.0",
     "material-icons-react": "^1.0.4",
+    "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-awesome-slider": "0.6.1",
     "react-canvas-js": "^1.0.1",
@@ -20,9 +21,11 @@
     "react-map-gl-geocoder": "^2.0.5",
     "react-mapbox-gl": "^4.4.0",
     "react-mapbox-gl-geocoder": "^1.0.3",
+    "react-places-autocomplete": "^7.2.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
-    "recharts": "^1.6.2"
+    "recharts": "^1.6.2",
+    "simplebar-react": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

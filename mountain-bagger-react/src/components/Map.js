@@ -28,7 +28,7 @@ const placeIconStyle = {
   width: '24px',
   height: '24px',
   color: '#0F590D',
-}
+};
 
 const directionsIconStyle = {
   width: '30px',
@@ -37,7 +37,7 @@ const directionsIconStyle = {
   borderRadius: '100px',
   background: '#20B11D',
   padding: '8px',
-}
+};
 
 let center;
 let bounds;
@@ -45,7 +45,6 @@ let bounds;
 const Map = (props) => {
 
   const {
-    userId,
     selectedTab,
     gpsLongitude,
     gpsLatitude,
@@ -78,7 +77,7 @@ const Map = (props) => {
 
   return (
     <div>
-      <div className="map_div">
+      <div className={selectedTab === 'create-new' ? 'map_div crosshair' : 'map_div'}>
         <MapBox
           style="mapbox://styles/thepunkyone/cjx34gegp2owc1cqym1n43a11"
           center={[longitude, latitude]}
@@ -140,6 +139,7 @@ const Map = (props) => {
              <Marker
                coordinates={[gpsLongitude, gpsLatitude]}
                anchor="center"
+               style={{ width: '24px', height: '24px' }}
              >
                <img src={GpsFixedIcon} />
              </Marker>
