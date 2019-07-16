@@ -176,9 +176,6 @@ class Home extends Component {
           }
           {selectedTab === 'weather' && <Weather />}
           {selectedTab === 'metrics' && <Metrics />}
-<<<<<<< HEAD
-          {selectedTab === 'saved' && <Saved {...this.props} id={this.props.user.id} name={this.props.user.firstName} />}
-=======
           {selectedTab === 'saved' &&
             (
               <Saved
@@ -188,7 +185,6 @@ class Home extends Component {
               />
             )
           }
->>>>>>> 3d32ee250abd8759ef6edb5e578a5e7a75ec729a
           {selectedTab === 'create-new' && <CreateNew />}
           {offlineMap &&
             (
