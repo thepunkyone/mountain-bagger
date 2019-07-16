@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Map from './Map';
+import TokenManager from '../utils/token-manager';
 
-const MDB_URL = 'http://localhost:3030/user/';
+const MDB_URL = 'http://localhost:3030/routes/';
 const BASE_URL = 'https://api.mapbox.com/directions/v5/mapbox';
 const URL_QUERY = '?steps=true&geometries=geojson&access_token=';
 const STYLES_URL = 'https://api.mapbox.com/styles/v1/thepunkyone/cjx34gegp2owc1cqym1n43a11';
@@ -246,6 +247,8 @@ class MapContainer extends Component {
         walkingOrCycling: this.state.walkingOrCycling,
         route: this.state.route,
         userId: this.props.userId,
+      }, {
+        headers: { Authorization: TokenManager.getToken() },
       })
       .then(res => console.log(res.data))
       .catch(err => console.log(err));
@@ -269,7 +272,6 @@ class MapContainer extends Component {
 
   render() {
     window.onresize = this.setMapDimensions;
-    console.log(this.state.staticMap);
 
     const {
       userId,

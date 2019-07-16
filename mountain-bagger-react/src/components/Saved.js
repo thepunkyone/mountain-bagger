@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import TokenManager from '../utils/token-manager';
 
 const style = {
   width: '100%',
@@ -22,7 +23,7 @@ class Saved extends Component {
   }
 
   componentDidMount() {
-    this.getSavedRoute();
+    this.getSavedRoutes();
   }
 
   handleOnClick = (routeId) => {
@@ -30,21 +31,23 @@ class Saved extends Component {
   };
 
   deleteSavedRoute = (routeId) => {
-    console.log('here 1');
     axios
-      .delete(`${BASE_URL}/user/${this.props.id}/${routeId}`)
+      .delete(`${BASE_URL}/routes/${this.props.id}/${routeId}`, {
+        headers: { Authorization: TokenManager.getToken() },
+      })
       .then(() => {
-        console.log('here 2');
-        this.getSavedRoute();
+        this.getSavedRoutes();
       })
       .catch(error => {
         console.log(error, 'error');
       });
   };
 
-  getSavedRoute = () => {
+  getSavedRoutes = () => {
     axios
-      .get(`${BASE_URL}/user/${this.props.id}`)
+      .get(`${BASE_URL}/routes/${this.props.id}`, {
+        headers: { Authorization: TokenManager.getToken() },
+      })
       .then(response => {
         this.setState({
           routes: response.data,
@@ -57,7 +60,6 @@ class Saved extends Component {
 
   render() {
     const { routes } = this.state;
-    console.log(this.props);
     if (!this.props.name) {
       return (
         <div>You are not logged in!</div>
