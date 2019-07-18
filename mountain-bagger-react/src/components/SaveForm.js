@@ -24,18 +24,15 @@ class SaveForm extends Component {
   render() {
     return (
       <div className="save-form">
-        <form>
+        <div>
           <input type="text" name="save" onChange={this.onChange} value={this.state.saveName} placeholder="Name of route" />
           <button onClick={() => {this.props.saveStaticMap(this.state.saveName, this.props.boundingBox); this.props.toggleSaveForm(false)}}>
             Save route
           </button>
-          <button onClick={() => {this.props.saveStaticMap(this.state.saveName, this.props.boundingBox); this.props.toggleSaveForm(false)}}>
-            Save map
-          </button>
           <button onClick={() => {this.props.clearRoute(); this.props.toggleSaveForm(false)}}>
             Clear
           </button>
-        </form>
+        </div>
       </div>
     );
   };
