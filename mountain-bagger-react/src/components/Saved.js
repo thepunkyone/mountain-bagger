@@ -27,13 +27,17 @@ class Saved extends Component {
 
   getMaps = () => {
     const userId = this.props.user.id;
-    axios.get(`${BASE_URL}/${userId}/maps`)
-      .then(response => this.setState({ maps: response.data }), console.log('got maps'))
+    axios.get(`${BASE_URL}/${userId}/maps`, {
+      headers: { Authorization: TokenManager.getToken() },
+    })
+      .then(response => this.setState({ maps: response.data }))
       .catch((error) => console.log('AXIOS ERROR!', error));
   };
 
   deleteSavedMap = (mapId) => {
-    axios.delete(`${BASE_URL}/${this.props.user.id}/maps/${mapId}`)
+    axios.delete(`${BASE_URL}/${this.props.user.id}/maps/${mapId}`, {
+      headers: { Authorization: TokenManager.getToken() },
+    })
       .then(() => {
         this.getMaps();
       })
