@@ -28,7 +28,7 @@ class Saved extends Component {
   getMaps = () => {
     const userId = this.props.user.id;
     axios.get(`${BASE_URL}/${userId}/maps`)
-      .then(response => this.setState({ maps: response.data }))
+      .then(response => this.setState({ maps: response.data }), console.log('got maps'))
       .catch((error) => console.log('AXIOS ERROR!', error));
   };
 
