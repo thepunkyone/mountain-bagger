@@ -4,7 +4,6 @@ import TokenManager from '../utils/token-manager';
 import moment from 'moment';
 import '../style/Saved.scss';
 
-
 const BASE_URL = 'http://localhost:3030';
 
 class Saved extends Component {
