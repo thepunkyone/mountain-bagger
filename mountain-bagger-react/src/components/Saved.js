@@ -4,15 +4,6 @@ import TokenManager from '../utils/token-manager';
 import moment from 'moment';
 import '../style/Saved.scss';
 
-const style = {
-  width: '100%',
-  height: '100%',
-  background: '#20B11D',
-  position: 'absolute',
-  top: '0',
-  left: '0',
-  zIndex: '100',
-};
 
 const BASE_URL = 'http://localhost:3030';
 
@@ -26,7 +17,7 @@ class Saved extends Component {
   }
 
   componentDidMount() {
-    this.getSavedRoute();
+    this.getSavedRoutes();
     this.getMaps();
   }
 
@@ -83,14 +74,14 @@ class Saved extends Component {
 
   render() {
     const { routes } = this.state;
-    if (!this.props.name) {
+    if (!this.props.user.firstName) {
       return (
         <div>You are not logged in!</div>
       )
     }
     return (
       <div className="menu-overlay">
-        <h1>{this.props.name}'s saved routes</h1>
+        <h1>{this.props.user.firstName}'s saved routes</h1>
         {
           Object.keys(routes).length !== 0 && (
             routes.map(route => {
@@ -118,7 +109,7 @@ class Saved extends Component {
             })
           )
         }
-        <h1>{this.props.name}'s saved maps</h1>
+        <h1>{this.props.user.firstName}'s saved maps</h1>
         {
           this.state.maps.length !== 0 && (
             this.state.maps.map(map => {

@@ -225,7 +225,9 @@ class MapContainer extends Component {
       ],
     };
 
-    axios.post(`http://localhost:3030/${userId}/maps`, postedMap)
+    axios.post(`http://localhost:3030/${userId}/maps`, postedMap, {
+      headers: { Authorization: TokenManager.getToken() },
+    })
       .then(response => console.log('AXIOS RESPONSE!', response.data))
       .catch((error) => console.log('AXIOS ERROR!', error));
   };
