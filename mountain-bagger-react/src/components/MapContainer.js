@@ -41,6 +41,10 @@ class MapContainer extends Component {
     this.mapRef = React.createRef();
   }
 
+  componentDidMount() {
+    this.setMapDimensions();
+  }
+
   componentDidUpdate(prevProps, prevState) {
     this.getCenterCoords();
     const { locationFocus, gpsLongitude, gpsLatitude, searchLocationCoords } = this.props;

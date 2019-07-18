@@ -74,7 +74,7 @@ const Map = (props) => {
   } = props;
 
   // const modeOfTravel = walkingOrCycling.charAt(0).toUpperCase() + walkingOrCycling.slice(1);
-
+  console.log('WIDTH', width, 'HEIGHT', height);
   return (
     <div className="map_container">
       <div ref={props.mapRef} className={selectedTab === 'create-new' ? 'map_div crosshair' : 'map_div'}>
