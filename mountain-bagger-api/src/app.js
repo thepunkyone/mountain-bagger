@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/routes', authenticate, routeRouter);
 app.use('/login', authRouter);
-app.use('/:userId/maps', mapRouter);
+app.use('/:userId/maps', authenticate, mapRouter);
 app.use('/', userRouter);
 
 module.exports = app;

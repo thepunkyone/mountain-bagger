@@ -242,6 +242,7 @@ class MapContainer extends Component {
 
   apiSaveRoute = (routeName) => {
     const { staticMap } = this.state;
+    const userId = this.props.userId;
 
     const postedMap = {
       name: staticMap.name,
@@ -254,13 +255,13 @@ class MapContainer extends Component {
     };
 
     axios
-      .post(`${MDB_URL}${this.props.userId}/save-route`, {
+      .post(`${MDB_URL}${userId}/save-route`, {
         name: routeName,
         duration: this.state.duration,
         distance: this.state.distance,
         walkingOrCycling: this.state.walkingOrCycling,
         route: this.state.route,
-        userId: this.props.userId,
+        userId: userId,
         map: postedMap,
       }, {
         headers: { Authorization: TokenManager.getToken() },
@@ -286,8 +287,8 @@ class MapContainer extends Component {
   };
 
   render() {
+    console.log(this.props);
     window.onresize = this.setMapDimensions;
-    console.log('STATIC MAP', this.state.staticMap);
 
     const {
       selectedTab,

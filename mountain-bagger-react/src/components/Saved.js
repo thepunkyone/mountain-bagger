@@ -26,14 +26,14 @@ class Saved extends Component {
   };
 
   getMaps = () => {
-    const userId = this.props.id;
+    const userId = this.props.user.id;
     axios.get(`${BASE_URL}/${userId}/maps`)
       .then(response => this.setState({ maps: response.data }))
       .catch((error) => console.log('AXIOS ERROR!', error));
   };
 
   deleteSavedMap = (mapId) => {
-    axios.delete(`${BASE_URL}/${this.props.id}/maps/${mapId}`)
+    axios.delete(`${BASE_URL}/${this.props.user.id}/maps/${mapId}`)
       .then(() => {
         this.getMaps();
       })
@@ -44,7 +44,7 @@ class Saved extends Component {
 
   deleteSavedRoute = (routeId) => {
     axios
-      .delete(`${BASE_URL}/routes/${this.props.id}/${routeId}`, {
+      .delete(`${BASE_URL}/routes/${this.props.user.id}/${routeId}`, {
         headers: { Authorization: TokenManager.getToken() },
       })
       .then(() => {
@@ -57,7 +57,7 @@ class Saved extends Component {
 
   getSavedRoutes = () => {
     axios
-      .get(`${BASE_URL}/routes/${this.props.id}`, {
+      .get(`${BASE_URL}/routes/${this.props.user.id}`, {
         headers: { Authorization: TokenManager.getToken() },
       })
       .then(response => {
