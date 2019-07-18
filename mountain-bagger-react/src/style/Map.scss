@@ -1,5 +1,14 @@
 @import './variables';
 
+.map_container {
+  background-color: $green-accent;
+}
+
+.map_div {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
 .mapboxgl-map {
   position: relative;
   text-align: left;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import TokenManager from '../utils/token-manager';
 import moment from 'moment';
@@ -97,9 +97,21 @@ class Saved extends Component {
               return (
                 <div key={route._id} style={{ border: '1px solid black', margin: '5px', padding: '5px' }}>
                   <h1>{route.name}</h1>
+                  <p>{moment(route.createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a')}</p>
                   <div>Distance is {route.distance}km</div>
                   <div>Duration is {route.duration}min</div>
                   <div>Route starts at lng: {route.route[0][0]}, lat: {route.route[0][1]} and ends at lng: {route.route[1][0]}, lat: {route.route[1][1]}</div>
+                  {
+                    route.mapId &&
+                    (
+                      <Fragment>
+                        <div className="map-thumbnail">
+                          <img src={route.mapId.img} />
+                        </div>
+                        <button onClick={() => this.props.handleOpenOfflineMap(route.mapId)}>Use offline map</button>
+                      </Fragment>
+                    )
+                  }
                   <button onClick={() => this.handleOnClick(route._id)}>Delete</button>
                 </div>
               );

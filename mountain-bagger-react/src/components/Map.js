@@ -76,8 +76,8 @@ const Map = (props) => {
   // const modeOfTravel = walkingOrCycling.charAt(0).toUpperCase() + walkingOrCycling.slice(1);
 
   return (
-    <div>
-      <div className={selectedTab === 'create-new' ? 'map_div crosshair' : 'map_div'}>
+    <div className="map_container">
+      <div ref={props.mapRef} className={selectedTab === 'create-new' ? 'map_div crosshair' : 'map_div'}>
         <MapBox
           style="mapbox://styles/thepunkyone/cjx34gegp2owc1cqym1n43a11"
           center={[longitude, latitude]}

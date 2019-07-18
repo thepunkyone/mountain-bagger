@@ -38,6 +38,7 @@ class MapContainer extends Component {
       },
       saveForm: false,
     };
+    this.mapRef = React.createRef();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -120,7 +121,7 @@ class MapContainer extends Component {
               img: data.url,
             },
           }, () => {
-            this.postStaticMap();
+            this.apiSaveRoute(name);
           });
         })
         .catch(() => console.log('image can\'t be retrieved'));
@@ -229,29 +230,42 @@ class MapContainer extends Component {
       .catch((error) => console.log('AXIOS ERROR!', error));
   };
 
-  saveRoute = (routeName) => {
-    this.setState({
-      routeName,
-    }, () => {
-      this.apiSaveRoute();
-    });
-  };
+  // saveRoute = (routeName) => {
+  //   this.setState({
+  //     routeName,
+  //   }, () => {
+  //     this.apiSaveRoute();
+  //   });
+  // };
 
-  apiSaveRoute = () => {
+  apiSaveRoute = (routeName) => {
+    const { staticMap } = this.state;
+
+    const postedMap = {
+      name: staticMap.name,
+      img: staticMap.img,
+      dimensions: [staticMap.dimensions.width, staticMap.dimensions.height],
+      boundingBox: [
+        [staticMap.boundingBox._ne.lng, staticMap.boundingBox._ne.lat],
+        [staticMap.boundingBox._sw.lng, staticMap.boundingBox._sw.lat],
+      ],
+    };
+
     axios
       .post(`${MDB_URL}${this.props.userId}/save-route`, {
-        name: this.state.routeName,
+        name: routeName,
         duration: this.state.duration,
         distance: this.state.distance,
         walkingOrCycling: this.state.walkingOrCycling,
         route: this.state.route,
         userId: this.props.userId,
+        map: postedMap,
       }, {
         headers: { Authorization: TokenManager.getToken() },
       })
       .then(res => console.log(res.data))
       .catch(err => console.log(err));
-  }
+  };
 
 
   saveZoomSetting = (map) => {
@@ -260,7 +274,7 @@ class MapContainer extends Component {
 
   setMapDimensions = () => {
     this.setState({
-      width: window.innerWidth,
+      width: this.mapRef.current.offsetWidth,
       height: window.innerHeight - 174,
     });
   };
@@ -271,6 +285,7 @@ class MapContainer extends Component {
 
   render() {
     window.onresize = this.setMapDimensions;
+    console.log('STATIC MAP', this.state.staticMap);
 
     const {
       selectedTab,
@@ -297,6 +312,7 @@ class MapContainer extends Component {
 
     return (
       <Map
+        mapRef={this.mapRef}
         selectedTab={selectedTab}
         gpsLongitude={gpsLongitude}
         gpsLatitude={gpsLatitude}
