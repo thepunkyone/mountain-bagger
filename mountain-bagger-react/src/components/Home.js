@@ -12,6 +12,7 @@ import CreateNew from './CreateNew';
 import MapContainer from './MapContainer';
 import OfflineMap from './OfflineMap';
 import LocationSearchInput from './LocationSearchInput';
+import Profile from './Profile';
 
 class Home extends Component {
   constructor(props) {
@@ -136,9 +137,16 @@ class Home extends Component {
       searchLocationCoords,
       offlineMap,
     } = this.state;
+
+    console.log(this.state.selectedTab);
+
     return (
       <div className="Home">
-        <UserNav handleLogout={this.handleLogout} />
+        <UserNav
+          handleLogout={this.handleLogout}
+          handleClick={this.selectTab}
+          selectedTab={selectedTab}
+        />
         <LocationNav
           handleClick={this.selectTab}
           locationWatchId={locationWatchId}
@@ -162,6 +170,13 @@ class Home extends Component {
               onToggleLoading={this.toggleLoading}
             />
           </div>
+          {selectedTab === 'profile' &&
+            (
+              <Profile
+                user={this.props.user}
+              />
+            )
+          }
           {selectedTab === 'search' &&
             (
               <LocationSearchInput
