@@ -17,7 +17,6 @@ const menuIconStyle = {
   height: '42px',
   padding: '5px',
   cursor: 'pointer',
-  color: '#0F590D',
 };
 
 const menuIconSelectedStyle = {

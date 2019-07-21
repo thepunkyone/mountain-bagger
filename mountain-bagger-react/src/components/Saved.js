@@ -16,6 +16,7 @@ class Saved extends Component {
 
   componentDidMount() {
     this.getMaps();
+    this.props.getSavedRoutes();
   }
 
   handleOnClick = (routeId) => {

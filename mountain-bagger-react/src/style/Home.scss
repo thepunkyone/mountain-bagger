@@ -70,6 +70,7 @@
 
     a {
       font-size: 0;
+      color: $dark-green-accent;
     }
   }
 
@@ -99,12 +100,26 @@
     height: 70px;
     background: $green-main;
     justify-content: space-between;
-    font-size: 0; 
+    font-size: 0;
   }
 
-  a, a:link, a:hover {
+  .MuiSvgIcon-root {
+    transition: all .3s;
+  }
+
+  a:hover .MuiSvgIcon-root {
+    filter: drop-shadow(0 0 .3rem rgba($white, .8));
+    color: $green-accent;
+  }
+
+  a, a:link {
     color: $grey-dark;
     position: relative;
+    transition: all .3s;
+
+    &:hover {
+      color: $green-accent;
+    }
   }
 
   .tab-overlay {
