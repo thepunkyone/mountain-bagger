@@ -16,7 +16,7 @@
     z-index: 100;
 
     h1 {
-      margin-top: 3rem;
+      margin-top: 2rem;
     }
   }
 
@@ -131,6 +131,11 @@
 }
 
 .recharts-default-tooltip {
-  color: black;
+  color: #0F590D;
   background-color: orange;
+}
+
+.recharts-wrapper {
+  margin: 0 auto;
+  transform: translateX(-5%);
 }

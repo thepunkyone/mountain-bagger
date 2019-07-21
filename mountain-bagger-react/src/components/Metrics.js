@@ -210,15 +210,16 @@ class Metrics extends React.Component {
                   top: 5, right: 30, left: 20, bottom: 5,
                 }}
               >
-                <CartesianGrid strokeDasharray="6 6" />
+                <CartesianGrid strokeDasharray="6 6" stroke="#FFFFFF" />
                 <XAxis
                   dataKey="distance"
                   unit="km"
+                  stroke="#FFFFFF"
                 />
-                <YAxis dataKey="elevation" domain={['dataMin - 50', 'dataMax + 30']} unit="m" />
+                <YAxis dataKey="elevation" stroke="#FFFFFF" domain={['dataMin - 50', 'dataMax + 30']} unit="m" />
                 <Tooltip />
                 <Legend />
-                <Area type="natural" dataKey="elevation" unit="m" stroke="#8884d8" fill="#8884d8" activeDot={{ r: 8 }} />
+                <Area type="natural" dataKey="elevation" unit="m" stroke="#0F590D" fill="#0F590D" activeDot={{ r: 8 }} />
               </AreaChart>
             </div>
           )
