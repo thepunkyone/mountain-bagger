@@ -36,6 +36,7 @@ const directionsIconStyle = {
   borderRadius: '100px',
   background: '#20B11D',
   padding: '8px',
+  transition: 'all .3s',
 };
 
 let center;
