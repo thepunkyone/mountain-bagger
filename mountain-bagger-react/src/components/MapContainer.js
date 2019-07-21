@@ -37,6 +37,7 @@ class MapContainer extends Component {
         boundingBox: '',
       },
       saveForm: false,
+      saveMapForm: false,
     };
     this.mapRef = React.createRef();
   }
@@ -194,6 +195,7 @@ class MapContainer extends Component {
       const walkingOrCycling = this.state.walkingOrCycling;
       this.getRoute(endLongitude, endLatitude, walkingOrCycling);
     }
+    this.toggleMapSaveForm(false);
   };
 
   handleModeOfTransport = (event) => {
@@ -213,6 +215,10 @@ class MapContainer extends Component {
 
   toggleSaveForm = (boolean) => {
     this.setState({ saveForm: boolean });
+  };
+
+  toggleMapSaveForm = (boolean) => {
+    this.setState({ saveMapForm: boolean });
   };
 
   postStaticMap = () => {
@@ -315,6 +321,7 @@ class MapContainer extends Component {
       distance,
       routeName,
       saveForm,
+      saveMapForm,
     } = this.state;
 
     return (
@@ -332,6 +339,7 @@ class MapContainer extends Component {
         onMapClick={this.handleMapClick}
         onSaveRoute={this.saveRoute}
         onToggleSaveForm={this.toggleSaveForm}
+        onToggleMapSaveForm={this.toggleMapSaveForm}
         onZoom={this.saveZoomSetting}
 
         width={width}
@@ -348,6 +356,7 @@ class MapContainer extends Component {
         distance={distance}
         routeName={routeName}
         saveForm={saveForm}
+        saveMapForm={saveMapForm}
       />
     );
   }

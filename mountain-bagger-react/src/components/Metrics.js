@@ -1,7 +1,7 @@
 import React from 'react';
 import MapboxElevation from 'mapbox-elevation';
 import {
-  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
 import moment from 'moment';
 
@@ -207,18 +207,18 @@ class Metrics extends React.Component {
               <p>{moment(this.props.routes[0].createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a')}</p>
               <AreaChart
                 width={500}
-                height={300}
+                height={200}
                 data={[...this.state.graphData]}
                 margin={{
                   top: 5, right: 30, left: 20, bottom: 5,
                 }}
-              >
+                >
                 <CartesianGrid strokeDasharray="6 6" stroke="#FFFFFF" />
                 <XAxis
-                  dataKey="distance"
-                  unit="km"
-                  stroke="#FFFFFF"
-                />
+                    dataKey="distance"
+                    unit="km"
+                    stroke="#FFFFFF"
+                  />
                 <YAxis dataKey="elevation" stroke="#FFFFFF" domain={['dataMin - 50', 'dataMax + 30']} unit="m" />
                 <Tooltip />
                 <Legend />
