@@ -4,6 +4,10 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
 
+const wayPoints = [
+  [-3.211556,54.454235],[-3.21208,54.45465],[-3.213161,54.454742],[-3.2145,54.455131],[-3.215379,54.455181],[-3.2166,54.455593],[-3.217155,54.455558],[-3.218654,54.456306],[-3.218401,54.456729],[-3.217723,54.457077],[-3.218925,54.458412],[-3.219466,54.458705],[-3.220969,54.458599],[-3.222998,54.457878],[-3.223542,54.457847],[-3.223563,54.457603],[-3.224181,54.457626],[-3.22417,54.457057],[-3.224722,54.456928],[-3.224634,54.456542],[-3.225014,54.456485],[-3.225019,54.456287],[-3.22612,54.455764],[-3.228139,54.455432],[-3.229483,54.454872],[-3.233145,54.45412],[-3.233984,54.45412],[-3.235611,54.454448],[-3.237644,54.455184],[-3.238345,54.455036],[-3.238508,54.455173],[-3.240834,54.455493],[-3.242049,54.455482],[-3.243083,54.455905],[-3.244618,54.455837],[-3.246058,54.455493],[-3.246815,54.455101]
+];
+
 const getElevation = MapboxElevation(process.env.REACT_APP_MAPBOX_TOKEN);
 
 const getElev2 = (point) => new Promise((resolve, reject) => {
@@ -44,7 +48,6 @@ const getElev2 = (point) => new Promise((resolve, reject) => {
 //   },
 // ];
 
-const graphData = [];
 let missingPointsArray = [];
 const additionalPoints = [];
 let decimalPointsArray = [];
@@ -55,47 +58,49 @@ class Metrics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      wayPoints: [[-3.211555, 54.454235], [-3.2105, 54.454357], [-3.209996, 54.454647], [-3.209816, 54.45494], [-3.20963, 54.455429], [-3.209266, 54.455776]],
+      wayPoints: wayPoints,
       graphData: [],
     };
   }
 
   componentDidMount() {
-    console.log(this.props.routes);
-    this.getGraphData();
+    const route = this.props.routes[0];
+    if (route) {
+      this.getGraphData(route.route);
+    }
   }
 
-  getWayPoints = () => {
-    if (this.state.graphData.length === this.state.wayPoints.length) {
-      const xAxisUnit = 0.01;
+  plotWayPoints = (values) => {
+    const xAxisUnit = 0.01;
 
-      this.state.graphData.forEach((arrayPoint, index) => {
-        const previousPoint = this.state.graphData[index - 1];
+    values.forEach((arrayPoint, index) => {
+      const previousPoint = values[index - 1];
 
-        if (index > 0) {
-          const distanceDiff = arrayPoint.distance - previousPoint.distance;
-          const elevationDiff = arrayPoint.elevation - previousPoint.elevation;
+      if (index > 0) {
+        const distanceDiff = arrayPoint.distance - previousPoint.distance;
+        const elevationDiff = arrayPoint.elevation - previousPoint.elevation;
 
-          const missingNumberOfPoints = Math.round(distanceDiff / xAxisUnit);
+        const missingNumberOfPoints = Math.round(distanceDiff / xAxisUnit);
 
-          const elevationPerXAxisPoint = elevationDiff / missingNumberOfPoints;
+        const elevationPerXAxisPoint = elevationDiff / missingNumberOfPoints;
 
-          newElevation = previousPoint.elevation;
-          newDistance = previousPoint.distance;
+        newElevation = previousPoint.elevation;
+        newDistance = previousPoint.distance;
 
-          for (let i = 0; i < (missingNumberOfPoints - 1); i++) {
-            additionalPoints.push({
-              elevation: Number((newElevation = newElevation + elevationPerXAxisPoint).toFixed(1)),
-              distance: Number((newDistance = newDistance + xAxisUnit).toFixed(2)),
-            });
-          }
-
-          missingPointsArray = additionalPoints;
+        for (let i = 0; i < (missingNumberOfPoints - 1); i++) {
+          additionalPoints.push({
+            elevation: Number((newElevation = newElevation + elevationPerXAxisPoint).toFixed(1)),
+            distance: Number((newDistance = newDistance + xAxisUnit).toFixed(2)),
+          });
         }
 
-        decimalPointsArray = [...this.state.graphData, ...missingPointsArray].sort((a, b) => a.distance - b.distance);
-      });
-    }
+        missingPointsArray = additionalPoints;
+      }
+
+      decimalPointsArray = [...values, ...missingPointsArray].sort((a, b) => a.distance - b.distance);
+    });
+
+    return decimalPointsArray;
   };
 
   // used by calcRow function
@@ -140,35 +145,42 @@ class Metrics extends React.Component {
   //   // console.log(data);
   // };
 
-  getGraphData = () => {
-    const correctedTravelDirectionWayPoints = this.state.wayPoints.sort((a, b) => b - a);
-    correctedTravelDirectionWayPoints.forEach((point, pointIndex) => {
+  getGraphData = (array) => {
+    const goingUphill = array.sort((a, b) => b - a);
+
+    let totalDistance = 0;
+
+    const goingUphillDistances = goingUphill.map((point, pointIndex) => {
+      const previousPoint = goingUphill[pointIndex - 1];
+      if (pointIndex > 0) {
+        totalDistance = totalDistance + this.calcCrow(previousPoint[1], previousPoint[0], point[1], point[0]);
+        return Number(totalDistance.toFixed(2));
+      }
+      return 0;
+    });
+
+    const promiseArray = goingUphill.map((point, pointIndex) => {
       return getElev2(point)
         .then((result) => {
-          if (pointIndex > 0) {
-            return {
-              index: pointIndex,
-              elevation: Number(result.toFixed(2)),
-              distance: this.calcCrow(correctedTravelDirectionWayPoints[0][1], correctedTravelDirectionWayPoints[0][0], point[1], point[0]),
-            };
-          }
           return {
-            index: 0,
+            index: pointIndex,
             elevation: Number(result.toFixed(2)),
-            distance: 0,
+            distance: goingUphillDistances[pointIndex],
           };
-        })
-        .then((result) => {
-          graphData.push(result);
-          return graphData.sort((a, b) => a.index - b.index);
-        })
-        .then((result) => {
-          this.setState({ graphData: result });
         })
         .catch((err) => {
           console.log('ERROR', err);
         });
     });
+
+    Promise.all(promiseArray)
+      .then((values) => {
+        const plotted = this.plotWayPoints(values);
+        this.setState({ graphData: plotted });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // ****NOT WORKING**** was going to merge altitude and distance in array alternately to use in graphData function so it would match each part of the data to the correct keys
@@ -179,29 +191,35 @@ class Metrics extends React.Component {
   // };
 
   render() {
-    this.getWayPoints();
-    
     return (
       <div className="menu-overlay">
         <h1>Metrics</h1>
-        <AreaChart
-          width={500}
-          height={300}
-          data={[...decimalPointsArray]}
-          margin={{
-            top: 5, right: 30, left: 20, bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="6 6" />
-          <XAxis
-            dataKey="distance"
-            unit="km"
-          />
-          <YAxis dataKey="elevation" domain={['dataMin - 50', 'dataMax + 30']} unit="m" />
-          <Tooltip />
-          <Legend />
-          <Area type="natural" dataKey="elevation" unit="m" stroke="#8884d8" fill="#8884d8" activeDot={{ r: 8 }} />
-        </AreaChart>
+        { this.props.routes[0] &&
+          (
+            <div className="chart">
+              <h2>{this.props.routes[0].name}</h2>
+              <p>{this.props.routes[0].createdAt}</p>
+              <AreaChart
+                width={500}
+                height={300}
+                data={[...this.state.graphData]}
+                margin={{
+                  top: 5, right: 30, left: 20, bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="6 6" />
+                <XAxis
+                  dataKey="distance"
+                  unit="km"
+                />
+                <YAxis dataKey="elevation" domain={['dataMin - 50', 'dataMax + 30']} unit="m" />
+                <Tooltip />
+                <Legend />
+                <Area type="natural" dataKey="elevation" unit="m" stroke="#8884d8" fill="#8884d8" activeDot={{ r: 8 }} />
+              </AreaChart>
+            </div>
+          )
+        }
       </div>
     );
   }
