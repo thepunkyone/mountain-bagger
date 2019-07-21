@@ -68,11 +68,11 @@ class MapContainer extends Component {
     }
   }
 
-  generateStaticMap = (name, bounds) => {
+  generateStaticMap = (name, bounds, mapOnly) => {
     const { longitude, latitude, width, height } = this.state;
     const { route, zoom } = this.state;
 
-    if (!route && bounds) {
+    if (!route && bounds || route && bounds && mapOnly) {
       fetch(`${STYLES_URL}/static/${longitude},${latitude},${zoom},0,0/${width}x${height}?access_token=${MAPBOX_TOKEN}`)
         .then((data) => {
           this.setState({

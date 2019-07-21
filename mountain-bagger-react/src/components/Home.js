@@ -216,7 +216,14 @@ class Home extends Component {
             )
           }
           {selectedTab === 'weather' && <Weather />}
-          {selectedTab === 'metrics' && <Metrics routes={this.state.routes} />}
+          {selectedTab === 'metrics' &&
+            (
+            <Metrics
+              routes={this.state.routes}
+              onToggleLoading={this.toggleLoading}
+            />
+            )
+          }
           {selectedTab === 'saved' &&
             (
               <Saved
@@ -224,6 +231,7 @@ class Home extends Component {
                 onToggleLoading={this.toggleLoading}
                 handleOpenOfflineMap={this.openOfflineMap}
                 routes={this.state.routes}
+                getSavedRoutes={this.getSavedRoutes}
               />
             )
           }

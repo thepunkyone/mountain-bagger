@@ -152,8 +152,7 @@ const Map = (props) => {
         <CloudDownloadIcon
           style={{ ...downloadIconStyle, cursor: 'pointer' }}
           onClick={() => {
-            onClearRoute();
-            onGenerateStaticMap('Map', bounds);
+            onGenerateStaticMap('Map', bounds, 'mapOnly');
           }}
         />
         )

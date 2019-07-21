@@ -49,7 +49,7 @@ class Saved extends Component {
         headers: { Authorization: TokenManager.getToken() },
       })
       .then(() => {
-        this.getSavedRoutes();
+        this.props.getSavedRoutes();
       })
       .catch(error => {
         console.log(error, 'error');
@@ -63,6 +63,7 @@ class Saved extends Component {
         <div>You are not logged in!</div>
       );
     }
+    console.log(this.props.routes);
     return (
       <div className="menu-overlay">
         <h1>{user.firstName}'s saved routes</h1>
@@ -75,7 +76,7 @@ class Saved extends Component {
                   <p>{moment(route.createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a')}</p>
                   <div>Distance is {route.distance}km</div>
                   <div>Duration is {route.duration}min</div>
-                  <div>Route starts at lng: {route.route[0][0]}, lat: {route.route[0][1]} and ends at lng: {route.route[1][0]}, lat: {route.route[1][1]}</div>
+                  {/* <div>Route starts at lng: {route.route[0][0]}, lat: {route.route[0][1]} and ends at lng: {route.route[1][0]}, lat: {route.route[1][1]}</div> */}
                   {
                     route.mapId &&
                     (
