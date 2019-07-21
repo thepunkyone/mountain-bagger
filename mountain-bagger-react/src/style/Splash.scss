@@ -2,6 +2,8 @@
 
 .Splash {
   @include photo-background;
+  min-height: calc(100vh - 3rem);
+  padding-top: 3rem;
 
   .action {
     margin-bottom: 0.8rem;
@@ -33,6 +35,7 @@
   }
 
   .tagline {
+    margin: 0;
     background: $green-main;
     padding: 0.3rem;
   }

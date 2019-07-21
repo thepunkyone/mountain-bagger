@@ -11,7 +11,7 @@ const Splash = () => {
       <Link to="/login" className="action">Sign in</Link>
       <Link to="/register" className="action outlined transparent">Register</Link>
       <Slider />
-      <button className="action outlined slider-button">Get started</button>
+      <Link to="/register" className="action outlined slider-button">Get started</Link>
       <h3 className="tagline">
         MountainBagger
         <br />
