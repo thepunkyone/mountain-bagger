@@ -10,13 +10,11 @@ class Saved extends Component {
   constructor(props) {
     super(props);
     this.state = ({
-      routes: {},
       maps: [],
     });
   }
 
   componentDidMount() {
-    this.getSavedRoutes();
     this.getMaps();
   }
 
@@ -58,33 +56,16 @@ class Saved extends Component {
       });
   };
 
-  getSavedRoutes = () => {
-    axios
-      .get(`${BASE_URL}/routes/${this.props.user.id}`, {
-        headers: { Authorization: TokenManager.getToken() },
-      })
-      .then(response => {
-        this.setState({
-          routes: response.data,
-        });
-        this.props.onToggleLoading(false);
-      })
-      .catch(error => {
-        console.log(error, 'error');
-        this.props.onToggleLoading(false);
-      });
-  };
-
   render() {
-    const { routes } = this.state;
-    if (!this.props.user.firstName) {
+    const { user, routes } = this.props;
+    if (!user.firstName) {
       return (
         <div>You are not logged in!</div>
-      )
+      );
     }
     return (
       <div className="menu-overlay">
-        <h1>{this.props.user.firstName}'s saved routes</h1>
+        <h1>{user.firstName}'s saved routes</h1>
         {
           Object.keys(routes).length !== 0 && (
             routes.map(route => {
@@ -112,7 +93,7 @@ class Saved extends Component {
             })
           )
         }
-        <h1>{this.props.user.firstName}'s saved maps</h1>
+        <h1>{user.firstName}'s saved maps</h1>
         {
           this.state.maps.length !== 0 && (
             this.state.maps.map(map => {

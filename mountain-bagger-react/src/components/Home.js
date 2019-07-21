@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import TokenManager from '../utils/token-manager';
 import '../style/Home.scss';
 import loadingGif from '../img/loading.gif';
 
@@ -13,6 +15,8 @@ import MapContainer from './MapContainer';
 import OfflineMap from './OfflineMap';
 import LocationSearchInput from './LocationSearchInput';
 import Profile from './Profile';
+
+const BASE_URL = 'http://localhost:3030';
 
 class Home extends Component {
   constructor(props) {
@@ -29,6 +33,7 @@ class Home extends Component {
       locationWatchId: null,
       searchLocationCoords: '',
       offlineMap: '',
+      routes: '',
     };
     this.searchNode = React.createRef();
     this.searchInput = React.createRef();
@@ -38,12 +43,33 @@ class Home extends Component {
     document.addEventListener('mousedown', this.handleClick, false);
   }
 
+  componentDidMount() {
+    this.getSavedRoutes();
+  }
+
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClick, false);
   }
 
   closeOfflineMap = () => {
     this.setState({ offlineMap: '' });
+  };
+
+  getSavedRoutes = () => {
+    axios
+      .get(`${BASE_URL}/routes/${this.props.user.id}`, {
+        headers: { Authorization: TokenManager.getToken() },
+      })
+      .then(response => {
+        this.setState({
+          routes: response.data,
+        });
+        this.toggleLoading(false);
+      })
+      .catch(error => {
+        console.log(error, 'error');
+        this.toggleLoading(false);
+      });
   };
 
   handleClick = (e) => {
@@ -190,13 +216,14 @@ class Home extends Component {
             )
           }
           {selectedTab === 'weather' && <Weather />}
-          {selectedTab === 'metrics' && <Metrics />}
+          {selectedTab === 'metrics' && <Metrics routes={this.state.routes} />}
           {selectedTab === 'saved' &&
             (
               <Saved
                 {...this.props}
                 onToggleLoading={this.toggleLoading}
                 handleOpenOfflineMap={this.openOfflineMap}
+                routes={this.state.routes}
               />
             )
           }
