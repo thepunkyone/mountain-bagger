@@ -21,7 +21,6 @@ const downloadIconStyle = {
   position: 'absolute',
   top: '1rem',
   right: '1rem',
-  filter: 'drop-shadow(1px 1px 2px #222222)',
 };
 
 const placeIconStyle = {
@@ -149,12 +148,13 @@ const Map = (props) => {
       </div>
       { selectedTab !== 'search' && !(saveForm && selectedTab === 'create-new') &&
         (
-        <CloudDownloadIcon
-          style={{ ...downloadIconStyle, cursor: 'pointer' }}
-          onClick={() => {
-            onGenerateStaticMap('Map', bounds, 'mapOnly');
-          }}
-        />
+          <CloudDownloadIcon
+            style={{ ...downloadIconStyle }}
+            id="download-icon"
+            onClick={() => {
+              onGenerateStaticMap('Map', bounds, 'mapOnly');
+            }}
+          />
         )
       }
       { route && selectedTab === 'create-new' &&

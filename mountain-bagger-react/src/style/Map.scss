@@ -67,6 +67,18 @@
 
 }
 
+#download-icon {
+  color: $white;
+  cursor: pointer;
+  transition: all .3s;
+  filter: drop-shadow(1px 1px 2px $grey-dark);
+}
+
+#download-icon:hover {
+  color: $green-accent;
+  filter: drop-shadow(1px 1px 2px $white);
+}
+
 .save-form {
   input {
     width: calc(100% - 1rem);
