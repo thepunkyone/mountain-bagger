@@ -2,6 +2,11 @@
 
 .user-form {
   @include photo-background;
+  padding-top: 3rem;
+
+  a {
+    color: $white;
+  }
 
   form {
     background: $green-main;
@@ -43,6 +48,8 @@
     .action {
       width: 100%;
       margin-top: 1rem;
+      text-decoration: none;
+      cursor: pointer;
     }
   }
 }
