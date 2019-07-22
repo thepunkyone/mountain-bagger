@@ -14,7 +14,7 @@ const login = (req, res) => {
           const payload = {
             id: user._id,
             firstName: user.firstName,
-            lastName: user.lastName,
+            surname: user.surname,
             email: user.email,
           };
           
