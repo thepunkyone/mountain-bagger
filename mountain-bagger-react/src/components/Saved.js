@@ -68,7 +68,7 @@ class Saved extends Component {
         <div>You are not logged in!</div>
       );
     }
-    console.log(this.props.routes);
+
     return (
       <div className="menu-overlay">
         <h1>{user.firstName}'s saved routes</h1>
@@ -76,42 +76,44 @@ class Saved extends Component {
           Object.keys(routes).length !== 0 && (
             routes.map(route => {
               return (
-                <div key={route._id} style={{ border: '1px solid black', margin: '5px', padding: '5px' }}>
-                  <h1>{route.name}</h1>
-                  <p>{moment(route.createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a')}</p>
-                  <div>Distance is {route.distance}km</div>
-                  <div>Duration is {route.duration}min</div>
-                  {/* <div>Route starts at lng: {route.route[0][0]}, lat: {route.route[0][1]} and ends at lng: {route.route[1][0]}, lat: {route.route[1][1]}</div> */}
+                <div key={route._id} className="saved-item">
+                  <h2>{route.name}</h2>
+                  <p>Added on {moment(route.createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a')}</p>
+                  <div className="saved-item__route-details">
+                    <h3>Distance: {route.distance}km</h3>
+                    <h3>Estimated duration: {route.duration}min</h3>
+                    {/* <div>Route starts at lng: {route.route[0][0]}, lat: {route.route[0][1]} and ends at lng: {route.route[1][0]}, lat: {route.route[1][1]}</div> */}
+                  </div>
                   {
                     route.mapId &&
                     (
                       <Fragment>
-                        <div className="map-thumbnail">
+                        <div className="image-container map-thumbnail">
                           <img src={route.mapId.img} />
                         </div>
-                        <button onClick={() => this.props.handleOpenOfflineMap(route.mapId)}>Use offline map</button>
+                        <button className="route-button" onClick={() => this.props.handleOpenOfflineMap(route.mapId)}>Use offline map</button>
                       </Fragment>
                     )
                   }
-                  <button onClick={() => this.handleOnClick(route._id)}>Delete</button>
+                  <button className="route-button" onClick={() => this.handleOnClick(route._id)}>Delete</button>
                 </div>
               );
             })
           )
         }
-        <h1>{user.firstName}'s saved maps</h1>
+        <h1 className="clear-h1">{user.firstName}'s saved maps</h1>
         {
           this.state.maps.length !== 0 && (
             this.state.maps.map(map => {
               return (
-                <div className="saved-map" key={map._id} style={{ border: '1px solid black', margin: '5px', padding: '5px' }}>
-                  <h1>{map.name}</h1>
-                  <p>{moment(map.createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a')}</p>
+                <div className="saved-map saved-item" key={map._id}>
+                  <h2>{map.name}</h2>
+                  <p>Added on {moment(map.createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a')}</p>
                   <div className="image-container">
                     <img src={map.img} />
                   </div>
-                  <button onClick={() => this.props.handleOpenOfflineMap(map)}>Use offline map</button>
-                  <button onClick={() => this.deleteSavedMap(map._id)}>Delete</button>
+                  <button className="route-button" onClick={() => this.props.handleOpenOfflineMap(map)}>Use offline map</button>
+                  <button className="route-button" onClick={() => this.deleteSavedMap(map._id)}>Delete</button>
                 </div>
               );
             })
