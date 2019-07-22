@@ -2,6 +2,7 @@
 $green-main: #79D317;
 $green-accent: #20B11D;
 $dark-green-accent: #0F590D;
+$orange-accent: orange;
 $brown-accent: #816856;
 $grey-dark: #222222;
 $grey-light: #888888;
@@ -13,7 +14,5 @@ $box-padding: 1rem;
 @mixin photo-background {
   background-image: url('../img/jake-colling-1554403-unsplash.jpg');
   background-size: cover;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  min-height: calc(100vh - 4rem);
+  min-height: 100vh;
 }

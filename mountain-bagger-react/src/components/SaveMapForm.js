@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 
-class SaveForm extends Component {
+class SaveMapForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       saveName: '',
-      error: false,
-      errorValue: 'A route name must be given',
     };
     this.inputRef = React.createRef();
   }
@@ -23,31 +21,29 @@ class SaveForm extends Component {
     });
   };
 
-  onSubmit = (event) => {
-    event.preventDefault();
-
-    this.props.saveRoute(this.state.saveName);
-  };
-
   render() {
     return (
-      <div className="save-form">
+      <div className="route-options save-form">
         <div className="save-clear">
-          <input ref={this.inputRef} type="text" name="save" onChange={this.onChange} value={this.state.saveName} placeholder="Name of route" />
-          <button onClick={() => {this.props.saveStaticMap(this.state.saveName, this.props.boundingBox); this.props.toggleSaveForm(false)}}>
+          <h3>Save Offline Map</h3>
+          <input ref={this.inputRef} type="text" name="save" onChange={this.onChange} value={this.state.saveName} placeholder="Name of map" />
+          <button onClick={() => {
+            this.props.saveStaticMap(this.state.saveName, this.props.boundingBox, 'mapOnly');
+            this.props.toggleSaveForm(false);
+          }}
+          >
             <CheckCircleIcon />
             <span>
-              Save route
+              Save map
             </span>
           </button>
           <button onClick={() => {
-            this.props.clearRoute();
             this.props.toggleSaveForm(false);
           }}
           >
             <CancelIcon />
             <span>
-              Clear route
+              Cancel
             </span>
           </button>
         </div>
@@ -56,4 +52,4 @@ class SaveForm extends Component {
   }
 }
 
-export default SaveForm;
+export default SaveMapForm;

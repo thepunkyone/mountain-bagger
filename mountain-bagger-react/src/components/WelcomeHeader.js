@@ -14,10 +14,10 @@ const iconStyle = {
 const WelcomeHeader = () => {
   return (
     <Fragment>
-      <h2>
+      <h2 className="welcome__h2">
         Welcome to
       </h2>
-      <h1>
+      <h1 className="welcome__h1">
         <Logo iconStyle={iconStyle} iconImage={logoDark} />
       </h1>
     </Fragment>

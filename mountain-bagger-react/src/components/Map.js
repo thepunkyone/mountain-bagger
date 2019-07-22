@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactMapboxG1, { Layer, Feature, Marker } from 'react-mapbox-gl';
 import SaveForm from './SaveForm';
+import SaveMapForm from './SaveMapForm';
 import '../style/Map.scss';
 import GpsFixedIcon from '../img/gps_fixed_24px.svg';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
@@ -21,7 +22,6 @@ const downloadIconStyle = {
   position: 'absolute',
   top: '1rem',
   right: '1rem',
-  filter: 'drop-shadow(1px 1px 2px #222222)',
 };
 
 const placeIconStyle = {
@@ -37,6 +37,7 @@ const directionsIconStyle = {
   borderRadius: '100px',
   background: '#20B11D',
   padding: '8px',
+  transition: 'all .3s',
 };
 
 let center;
@@ -56,6 +57,7 @@ const Map = (props) => {
     onMapClick,
     onSaveRoute,
     onToggleSaveForm,
+    onToggleMapSaveForm,
     onZoom,
 
     width,
@@ -71,10 +73,11 @@ const Map = (props) => {
     duration,
     distance,
     saveForm,
+    saveMapForm,
   } = props;
 
   // const modeOfTravel = walkingOrCycling.charAt(0).toUpperCase() + walkingOrCycling.slice(1);
-
+  console.log('WIDTH', width, 'HEIGHT', height);
   return (
     <div className="map_container">
       <div ref={props.mapRef} className={selectedTab === 'create-new' ? 'map_div crosshair' : 'map_div'}>
@@ -147,15 +150,26 @@ const Map = (props) => {
           }
         </MapBox>
       </div>
-      { selectedTab !== 'search' && !(saveForm && selectedTab === 'create-new') &&
+      { selectedTab !== 'search' && !(saveForm && selectedTab === 'create-new') && !saveMapForm &&
         (
-        <CloudDownloadIcon
-          style={{ ...downloadIconStyle, cursor: 'pointer' }}
-          onClick={() => onGenerateStaticMap('Map', bounds)}
-        />
+          <CloudDownloadIcon
+            style={{ ...downloadIconStyle }}
+            id="download-icon"
+            onClick={() => {
+              onToggleMapSaveForm(true);
+            }}
+          />
         )
       }
-      { route && selectedTab === 'create-new' &&
+      { selectedTab !== 'search' && !(saveForm && selectedTab === 'create-new') && saveMapForm &&
+        (
+          <SaveMapForm
+            toggleSaveForm={onToggleMapSaveForm}
+            saveStaticMap={onGenerateStaticMap}
+          />
+        )
+      }
+      { route && selectedTab === 'create-new' && !saveMapForm &&
         (
         <div className="route-options">
           <div className="save-options">
@@ -201,7 +215,7 @@ const Map = (props) => {
                 </div>
                 )
             }
-            { !saveForm &&
+            { !saveForm && !saveMapForm &&
               (
               <div className="save-clear">
                 <button onClick={() => onToggleSaveForm(true)}>

@@ -37,8 +37,13 @@ class MapContainer extends Component {
         boundingBox: '',
       },
       saveForm: false,
+      saveMapForm: false,
     };
     this.mapRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this.setMapDimensions();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -64,11 +69,11 @@ class MapContainer extends Component {
     }
   }
 
-  generateStaticMap = (name, bounds) => {
+  generateStaticMap = (name, bounds, mapOnly) => {
     const { longitude, latitude, width, height } = this.state;
     const { route, zoom } = this.state;
 
-    if (!route && bounds) {
+    if (!route && bounds || route && bounds && mapOnly) {
       fetch(`${STYLES_URL}/static/${longitude},${latitude},${zoom},0,0/${width}x${height}?access_token=${MAPBOX_TOKEN}`)
         .then((data) => {
           this.setState({
@@ -190,6 +195,7 @@ class MapContainer extends Component {
       const walkingOrCycling = this.state.walkingOrCycling;
       this.getRoute(endLongitude, endLatitude, walkingOrCycling);
     }
+    this.toggleMapSaveForm(false);
   };
 
   handleModeOfTransport = (event) => {
@@ -209,6 +215,10 @@ class MapContainer extends Component {
 
   toggleSaveForm = (boolean) => {
     this.setState({ saveForm: boolean });
+  };
+
+  toggleMapSaveForm = (boolean) => {
+    this.setState({ saveMapForm: boolean });
   };
 
   postStaticMap = () => {
@@ -311,6 +321,7 @@ class MapContainer extends Component {
       distance,
       routeName,
       saveForm,
+      saveMapForm,
     } = this.state;
 
     return (
@@ -328,6 +339,7 @@ class MapContainer extends Component {
         onMapClick={this.handleMapClick}
         onSaveRoute={this.saveRoute}
         onToggleSaveForm={this.toggleSaveForm}
+        onToggleMapSaveForm={this.toggleMapSaveForm}
         onZoom={this.saveZoomSetting}
 
         width={width}
@@ -344,6 +356,7 @@ class MapContainer extends Component {
         distance={distance}
         routeName={routeName}
         saveForm={saveForm}
+        saveMapForm={saveMapForm}
       />
     );
   }
